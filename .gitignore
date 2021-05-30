@@ -1,0 +1,17 @@
+*.pyc
+.DS_Store
+
+/temp/
+/.project
+/.pydevproject
+
+# checkpoint
+checkpoints/
+
+# For PyCharm users
+.idea/
+
+/referenced_repositories/alpha-zero-general/alpha-zero-general-pretrained_models/
+
+
+.ipynb
