@@ -2,6 +2,10 @@
 
 This project aims to construct an agent thatuses Deep Neural Networks and RHEA to play a game of deterministic, competitive, zero-sum game with full information. Some possible games that arein this category include Chess, Go, Checkers and Othello.
 
+# Setup and Run:
+
+ToDo.
+
 # Referenced Repositories:
 
 This project uses repositories of different authors. These repositories are listed below for further reference.
