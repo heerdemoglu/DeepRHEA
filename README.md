@@ -6,9 +6,8 @@ This project aims to construct an agent thatuses Deep Neural Networks and RHEA t
 
 This project uses repositories of different authors. These repositories are listed below for further reference.
 
-* Alpha Zero General, Surag Nair et. al.
-* ToDo: Other repositories and links.
-* ToDo
+* Alpha Zero General, Surag Nair et. al. 
+* ToDo: Other repositories and links. Reference specific authors if they are known.
 
 # Acknowledgements:
 * I would like to thank my project supervisor, Dr. Diego Perez-Liebana for his support and guidance throughout this project. 
