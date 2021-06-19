@@ -3,7 +3,6 @@ import logging
 import coloredlogs
 
 from Coach import Coach
-# from alpha-zero-general.alpha-zero-general-games.othello.OthelloGame import OthelloGame as Game
 from othello.OthelloGame import OthelloGame as Game
 from othello.pytorch.NNet import NNetWrapper as nn
 from utils import *
@@ -24,7 +23,7 @@ args = dotdict({
 
     'checkpoint': './temp/',
     'load_model': False,
-    'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
+    'load_folder_file': ('/dev/models/8x100x50', 'best.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
 })
