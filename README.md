@@ -6,8 +6,14 @@ This project aims to construct an agent thatuses Deep Neural Networks and RHEA t
 
 This project uses repositories of different authors. These repositories are listed below for further reference.
 
-* Alpha Zero General, Surag Nair et. al. 
-* ToDo: Other repositories and links. Reference specific authors if they are known.
+## Alpha Zero General, Surag Nair et. al. 
+
+The repository is created by Surag Nair and the repository can be reached through [this](https://github.com/suragnair/alpha-zero-general) link.
+
+This repository implements some games where agents inspired from AlphaGo is trained. This repository is used as a baseline to train AlphaGo agent; where DeepRHEA agent 
+will be coupled with the same environment for comparison purposes.
+
+ToDo: Other repositories and links. Reference specific authors if they are known.
 
 # Acknowledgements:
 * I would like to thank my project supervisor, Dr. Diego Perez-Liebana for his support and guidance throughout this project. 
