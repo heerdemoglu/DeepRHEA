@@ -12,7 +12,7 @@ This project uses repositories of different authors. These repositories are list
 
 ## Alpha Zero General, Surag Nair et. al. 
 
-The code is inspired from Surag Nair's implementation (Alpha Zero General) and the repository can be reached through [this](https://github.com/suragnair/alpha-zero-general) link.
+The repository is created by Surag Nair and the repository can be reached through [this](https://github.com/suragnair/alpha-zero-general) link.
 
 This repository implements some games where agents inspired from AlphaGo is trained. This repository is used as a baseline to train AlphaGo agent; where DeepRHEA agent 
 will be coupled with the same environment for comparison purposes.
@@ -21,4 +21,4 @@ ToDo: Other repositories and links. Reference specific authors if they are known
 
 # Acknowledgements:
 * I would like to thank my project supervisor, Dr. Diego Perez-Liebana for his support and guidance throughout this project. 
-* This research utilised Queen Mary's Apocrita HPC facility, supported by QMUL Research-IT. http://doi.org/10.5281/zenodo.438045
+* * This research utilised Queen Mary's Apocrita HPC facility, supported by QMUL Research-IT. http://doi.org/10.5281/zenodo.438045
