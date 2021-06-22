@@ -1,7 +1,7 @@
 import logging  # Log everything for debugging purposes.
 import numpy as np
 
-from apocrita_deeprhea.Game import Game
+from apocrita_deeprhea.deep_rhea.Game import Game
 
 log = logging.getLogger(__name__)
 
