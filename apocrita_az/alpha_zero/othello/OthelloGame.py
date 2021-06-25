@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys
 sys.path.append('../apocrita_az')
-from alpha_zero_general_code.Game import Game
+from apocrita_deeprhea.deep_rhea.Game import Game
 from othello.OthelloLogic import Board
 import numpy as np
 

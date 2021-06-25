@@ -1,8 +1,6 @@
 import logging  # Log everything for debugging purposes.
 import numpy as np
 
-from apocrita_deeprhea.deep_rhea.Game import Game
-
 log = logging.getLogger(__name__)
 
 
@@ -45,57 +43,3 @@ class RHEAPopulation:
         """
         raise NotImplementedError
 
-    class RHEAIndividual:
-        """
-        Each RHEA Individual handles their operations themselves and reports
-        to RHEAPopulation.
-        """
-
-        def __init__(self, game: Game, args, board, parent1=None, parent2=None):
-            self.INDIVIDUAL_LENGTH = args.INDIVIDUAL_LENGTH  # How long is the action plan.
-            self.MUTATION_STRENGTH = args.MUTATION_STRENGTH  # How many mutations after crossover.
-            self.parent1 = parent1                           # If exists, the first associated parent.
-            self.parent2 = parent2                           # If exists, the second parent.
-            self.action_plan = None                          # The action plan for the individual.
-            self.fitness = None                              # Fitness of the individual.
-            self.game = game                                 # Game information relayed to individual.
-            self.board = board
-
-            # Set the action plan:
-            if parent1 is not None and parent2 is not None:
-                self.build_from_parents()
-            elif parent2 is None and parent2 is None:
-                # If there are no parents: Construct a random sequence.
-                self.build_from_scratch()
-            else:
-                raise ValueError("You need to input two parents or no parents!")
-
-            # Execute the action plan and learn the fitness:
-            self.measure_fitness()
-
-        def build_from_parents(self):
-            """
-            From the current state of the game, build a VALID action plan of given
-            individual length and parents. Mutations must return a valid action plan.
-
-            :return: Returns a valid action plan with uniform crossover and random mutation.
-            """
-
-            # Build boolean sequence: 0 for parent 1, 1 for parent 2.
-            crossover_idx = np.random.randint(2, size=self.INDIVIDUAL_LENGTH)
-
-            # Build the sequence: (Does uniform crossover)
-            # If crossover index is zero; take the value from parent 1, else from parent 2 for all indices available.
-            # ToDo: Implement different kind of crossovers. (?-Further Refinements)
-            draft_plan = [self.parent1.action_plan[i] if crossover_idx[i] == 0
-                          else self.parent2.action_plan[i] for i in crossover_idx]
-
-            self.action_plan = draft_plan  # FixMe: For now ignore the mutations. Mutate into a valid sequence:
-
-        # ToDo: Complete this:
-        def measure_fitness(self):
-            raise NotImplementedError
-
-        # ToDo: Complete this:
-        def build_from_scratch(self):
-            raise NotImplementedError
