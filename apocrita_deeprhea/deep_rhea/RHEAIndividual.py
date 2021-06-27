@@ -1,10 +1,11 @@
-from copy import copy
+from copy import deepcopy
 
 import numpy as np
 
 from apocrita_deeprhea.deep_rhea.Game import Game
 
 
+# ToDo: Some code can be optimized (repeated code).
 class RHEAIndividual:
     """
     Each RHEA Individual handles their operations themselves and reports
@@ -49,19 +50,77 @@ class RHEAIndividual:
         :return: Returns a valid action plan with uniform crossover and random mutation.
         """
 
+        temp_gamestate = deepcopy(self.game)  # Play on a virtual game state to plan the sequence.
+        temp_board = deepcopy(self.board)     # Virtual board to play on.
+
         # Build boolean sequence: 0 for parent 1, 1 for parent 2.
         crossover_idx = np.random.randint(2, size=self.INDIVIDUAL_LENGTH)
-        print('Crossover idx:', crossover_idx)
+        # print('Crossover idx:', crossover_idx)
         # Build the sequence: (Does uniform crossover)
         # If crossover index is zero; take the value from parent 1, else from parent 2 for all indices available.
         draft_plan = [self.parent1.action_plan[i] if crossover_idx[i] == 0
                       else self.parent2.action_plan[i] for i in range(self.INDIVIDUAL_LENGTH)]
 
-        # ToDo: Assure validity after cross-over.
+        # Assure validity after cross-over.
+        for action in draft_plan:
+            # Find valid moves:
+            valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)  # this is a numpy vector.
+
+            # temp_board = deepcopy(self.board)
+            # temp_gamestate = deepcopy(self.game)
+
+            # If action is in the valid moves continue, otherwise mutate it from set of valid functions.
+            if action not in np.where(valid_moves == 1)[0]:
+
+                # Pick a valid move play:
+                valid_indices = np.where(valid_moves == 1)[0]  # gives all valid indices
+
+                # Pick action order by random: get the first one to append to list.
+                np.random.shuffle(valid_indices)
+                selected_action = valid_indices[0]
+
+                # Move the game state forward:
+                move = (int(selected_action / temp_board.n), selected_action % temp_board.n)
+                temp_board.execute_move(move, self.player)
+
+                # Mutate action plan: (for RHEA agent)
+                draft_plan[np.where(action)[0][0]] = selected_action
+
+                # Play 2nd player's turn randomly as well to determine new valid states.
+                competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
+                competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
+                np.random.shuffle(competitor_valid_indices)
+                competitor_selected_action = competitor_valid_indices[0]
+                # print(competitor_selected_action)
+
+                # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
+                competitor_move = (int(competitor_selected_action / temp_board.n),
+                                   competitor_selected_action % temp_board.n)
+                temp_board.execute_move(competitor_move, -self.player)
+
+            else:
+                # The action taken works, so play it and the competitor's move: -- Move the game state forward:
+                move = (int(action / temp_board.n), action % temp_board.n)
+                temp_board.execute_move(move, self.player)
+
+                # Simulate the opponent's action and play it:
+                # Play 2nd player's turn randomly as well to determine new valid states.
+                competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
+                competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
+                np.random.shuffle(competitor_valid_indices)
+                competitor_selected_action = competitor_valid_indices[0]
+                # print(competitor_selected_action)
+
+                # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
+                competitor_move = (int(competitor_selected_action / temp_board.n),
+                                   competitor_selected_action % temp_board.n)
+                temp_board.execute_move(competitor_move, -self.player)
+
+                # start indexing next state's valid moves for player 1.
+                # valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)
 
         self.action_plan = draft_plan
 
-    # ToDo: Valid move checking. This should be progressing over time. P1 then P2 then P1 and so on.
     def build_from_scratch(self, board):
         """
         Get valid moves from the game and build a sequence from scratch. Sets the action plan. Returns -1 for genes
@@ -69,8 +128,8 @@ class RHEAIndividual:
         :param board: Board positioning is provided by the Coach
         """
 
-        temp_gamestate = copy(self.game)
-        temp_board = copy(board)
+        temp_gamestate = deepcopy(self.game)
+        temp_board = deepcopy(board)
         draft_plan_indices = []
 
         # Progressively construct the gene:
@@ -98,11 +157,13 @@ class RHEAIndividual:
             competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
             np.random.shuffle(competitor_valid_indices)
             competitor_selected_action = competitor_valid_indices[0]
+            # print('Competitor selects: ', competitor_selected_action)
             # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
-            competitor_move = (int(competitor_selected_action / temp_board.n), competitor_selected_action % temp_board.n)
+            competitor_move = (int(competitor_selected_action / temp_board.n),
+                               competitor_selected_action % temp_board.n)
             temp_board.execute_move(competitor_move, -self.player)
 
-        self.action_plan = draft_plan_indices
+        self.action_plan = [int(action) for action in draft_plan_indices]
 
     # ToDo: Complete this:
     def measure_fitness(self, board):

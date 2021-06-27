@@ -8,7 +8,7 @@ from random import shuffle
 import numpy as np
 from tqdm import tqdm
 
-from alpha_zero_general_code import MCTS, Arena
+from apocrita_deeprhea.deep_rhea import RHEAPopulation, Arena
 
 log = logging.getLogger(__name__)
 
