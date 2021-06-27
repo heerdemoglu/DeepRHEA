@@ -15,11 +15,13 @@ args = dotdict({
 # Creating sample board:
 board = Board(6)
 
-# Creating individuals
-indv_1 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, parent1=None, parent2=None)
-indv_2 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, parent1=None, parent2=None)
-indv_3 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, parent1=indv_1, parent2=indv_2)
+# Creating individuals: -- No meaning meant here, random creations.
+indv_1 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, player=1, parent1=None, parent2=None)
+indv_2 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, player=-1, parent1=None, parent2=None)
+indv_3 = RHEAIndividual.RHEAIndividual(game=game, args=args, board=board, player=1, parent1=indv_1, parent2=indv_2)
 
 print('Indv 1: ', indv_1.get_gene())
 print('Indv 2: ', indv_2.get_gene())
 print('Indv 3: ', indv_3.get_gene())
+
+# Get fitness of all cases:

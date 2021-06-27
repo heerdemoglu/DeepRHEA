@@ -39,7 +39,7 @@ class RHEAIndividual:
         # Execute the action plan and learn the fitness:
         self.measure_fitness()
 
-    # ToDo: Valid move checking. Which board config would be correct?
+    # ToDo: Assure validity after cross-over.
     def build_from_parents(self):
         """
         From the current state of the game, build a VALID action plan of given
@@ -58,24 +58,38 @@ class RHEAIndividual:
 
         self.action_plan = draft_plan
 
-    # ToDo: Valid move checking.
+    # ToDo: Valid move checking. This should be progressing over time. P1 then P2 then P1 and so on.
     def build_from_scratch(self, board):
         """
-        Get valid moves from the game and build a sequence from scratch. Sets the action plan.
+        Get valid moves from the game and build a sequence from scratch. Sets the action plan. Returns -1 for genes
+        if there are enough valid moves available given individual length.
         :param board: Board positioning is provided by the Coach
         """
 
         # Find valid moves:
         valid_moves = self.game.getValidMoves(board, self.player)  # this is a numpy vector.
 
-        # Construct a random sequence without replacement from set of valid_moves:
-        ## fixme: returns value not index
-        draft_plan = np.random.choice(valid_moves, self.INDIVIDUAL_LENGTH, replace=False)
+        # Random shuffle:
+        # np.random.shuffle(valid_moves)
 
-        self.action_plan = draft_plan
+        valid_indices = np.where(valid_moves == 1)[0]
+
+        # Pick action order by random: # ToDo: Better initializations can be implemented.
+        np.random.shuffle(valid_indices)
+
+        # Construct a random sequence without replacement from set of valid_moves:
+        if len(valid_indices) >= self.INDIVIDUAL_LENGTH:
+            draft_plan_indices = np.random.choice(valid_indices, self.INDIVIDUAL_LENGTH, replace=False)[0]
+
+        else:
+            draft_plan_indices = valid_indices
+            for i in range(len(draft_plan_indices), self.INDIVIDUAL_LENGTH):
+                draft_plan_indices = np.append(draft_plan_indices,-1)
+
+        self.action_plan = draft_plan_indices
 
     # ToDo: Complete this:
-    def measure_fitness(self):
+    def measure_fitness(self, board):
         pass
 
     def set_action_plan(self, gene):
@@ -94,7 +108,7 @@ class RHEAIndividual:
 
     def set_board_status(self, board):
         """
-        Sets the board status to the new board status
+        Sets the board status known by the individual to  new board status
         :param board:
         :return:
         """
