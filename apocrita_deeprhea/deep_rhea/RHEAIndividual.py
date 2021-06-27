@@ -1,3 +1,5 @@
+from copy import copy
+
 import numpy as np
 
 from apocrita_deeprhea.deep_rhea.Game import Game
@@ -37,9 +39,8 @@ class RHEAIndividual:
             raise ValueError("You need to input two parents or no parents!")
 
         # Execute the action plan and learn the fitness:
-        self.measure_fitness()
+        self.measure_fitness(board)
 
-    # ToDo: Assure validity after cross-over.
     def build_from_parents(self):
         """
         From the current state of the game, build a VALID action plan of given
@@ -56,6 +57,8 @@ class RHEAIndividual:
         draft_plan = [self.parent1.action_plan[i] if crossover_idx[i] == 0
                       else self.parent2.action_plan[i] for i in range(self.INDIVIDUAL_LENGTH)]
 
+        # ToDo: Assure validity after cross-over.
+
         self.action_plan = draft_plan
 
     # ToDo: Valid move checking. This should be progressing over time. P1 then P2 then P1 and so on.
@@ -66,25 +69,38 @@ class RHEAIndividual:
         :param board: Board positioning is provided by the Coach
         """
 
-        # Find valid moves:
-        valid_moves = self.game.getValidMoves(board, self.player)  # this is a numpy vector.
+        temp_gamestate = copy(self.game)
+        temp_board = copy(board)
+        draft_plan_indices = []
 
-        # Random shuffle:
-        # np.random.shuffle(valid_moves)
+        # Progressively construct the gene:
+        for i in range(self.INDIVIDUAL_LENGTH):
 
-        valid_indices = np.where(valid_moves == 1)[0]
+            # Find valid moves:
+            valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)  # this is a numpy vector.
 
-        # Pick action order by random: # ToDo: Better initializations can be implemented.
-        np.random.shuffle(valid_indices)
+            # Pick a valid move play:
+            valid_indices = np.where(valid_moves == 1)[0]  # gives all valid indices
 
-        # Construct a random sequence without replacement from set of valid_moves:
-        if len(valid_indices) >= self.INDIVIDUAL_LENGTH:
-            draft_plan_indices = np.random.choice(valid_indices, self.INDIVIDUAL_LENGTH, replace=False)[0]
+            # Pick action order by random: get the first one to append to list.
+            np.random.shuffle(valid_indices)
+            selected_action = valid_indices[0]
 
-        else:
-            draft_plan_indices = valid_indices
-            for i in range(len(draft_plan_indices), self.INDIVIDUAL_LENGTH):
-                draft_plan_indices = np.append(draft_plan_indices,-1)
+            # Play the action on temporary board, append selected action to gene.
+            # temp_board.pieces = temp_gamestate.getNextState(temp_board, self.player, selected_action)
+            move = (int(selected_action / temp_board.n), selected_action % temp_board.n)
+            temp_board.execute_move(move, self.player)
+
+            draft_plan_indices = np.append(draft_plan_indices, selected_action)
+
+            # Play the turn for the competitor; random action selection:
+            competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
+            competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
+            np.random.shuffle(competitor_valid_indices)
+            competitor_selected_action = competitor_valid_indices[0]
+            # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
+            competitor_move = (int(competitor_selected_action / temp_board.n), competitor_selected_action % temp_board.n)
+            temp_board.execute_move(competitor_move, -self.player)
 
         self.action_plan = draft_plan_indices
 
