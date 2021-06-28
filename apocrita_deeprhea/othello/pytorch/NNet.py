@@ -56,7 +56,8 @@ class NNetWrapper(NeuralNet):
 
                 # predict
                 if args.cuda:
-                    boards, target_pis, target_vs = boards.contiguous().cuda(), target_pis.contiguous().cuda(), target_vs.contiguous().cuda()
+                    boards, target_pis, target_vs = boards.contiguous().cuda(), target_pis.contiguous().cuda(), \
+                                                    target_vs.contiguous().cuda()
 
                 # compute output
                 out_pi, out_v = self.nnet(boards)
@@ -83,7 +84,8 @@ class NNetWrapper(NeuralNet):
 
         # preparing input
         board = torch.FloatTensor(board.astype(np.float64))
-        if args.cuda: board = board.contiguous().cuda()
+        if args.cuda:
+            board = board.contiguous().cuda()
         board = board.view(1, self.board_x, self.board_y)
         self.nnet.eval()
         with torch.no_grad():

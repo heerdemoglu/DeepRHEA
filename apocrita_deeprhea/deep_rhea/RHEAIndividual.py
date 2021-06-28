@@ -167,7 +167,22 @@ class RHEAIndividual:
 
     # ToDo: Complete this:
     def measure_fitness(self, board):
-        pass
+        """
+
+        :param board:
+        :return:
+        """
+        # Neural network predicts on the canonical board; which takes +1 as ally locations and -1 as enemy locations.
+
+        # For all actions in action plan:
+        # Play
+
+        canonical_board = self.game.getCanonicalForm(board, self.player)
+
+        self.Ps[s], v = self.nnet.predict(canonicalBoard)
+
+
+
 
     def set_action_plan(self, gene):
         """
