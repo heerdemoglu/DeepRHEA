@@ -1,196 +1,124 @@
-from copy import deepcopy
-
+import random
 import numpy as np
 
+from copy import deepcopy
 from apocrita_deeprhea.deep_rhea.Game import Game
 
 
-# ToDo: Some code can be optimized (repeated code).
 class RHEAIndividual:
     """
     Each RHEA Individual handles their operations themselves and reports
     to RHEAPopulation.
     """
 
-    def __init__(self, game: Game, args, board=None, player=1, parent1=None, parent2=None):
+    def __init__(self, game: Game, args, nnet, board=None, action_plan=None, player=1):
         self.INDIVIDUAL_LENGTH = args.INDIVIDUAL_LENGTH  # How long is the action plan.
-        self.MUTATION_STRENGTH = args.MUTATION_STRENGTH  # How many mutations after crossover.
-        self.parent1 = parent1  # If exists, the first associated parent.
-        self.parent2 = parent2  # If exists, the second parent.
-        self.action_plan = None  # The action plan for the individual.
+        self.MUTATION_CHANCE = args.MUTATION_CHANCE  # Chance of having a mutation on a gene.
+        self.action_plan = action_plan  # The action plan for the individual.
         self.fitness = None  # Fitness of the individual.
         self.game = game  # Game information relayed to individual.
-        self.player = player  # Player 1 is +1, player 2 is -1
+        self.player = player  # Player 1 is +1, player 2 is -1.
+        self.board = board  # Board state controlled by RHEAPopulation.
+        self.nnet = nnet  # N.Network, used to fetch policy/value.
 
-        # Set the board of the game, this has to be changed every generation.
-        if board is None:
-            self.board = self.game.getInitBoard()
+        # If individual is created from scratch, fitness is also calculated. Otherwise calculate individual's fitness.
+        if self.action_plan is None:
+            self.action_plan, self.fitness = self.build_plan()
         else:
-            self.board = board
+            self.fitness = self.measure_fitness()
 
-        # Set the action plan:
-        if parent1 is not None and parent2 is not None:
-            self.build_from_parents()
-
-        # If there are no parents: Construct a random sequence.
-        elif parent2 is None and parent2 is None:
-            self.build_from_scratch(self.board)
-
-        else:
-            raise ValueError("You need to input two parents or no parents!")
-
-        # Execute the action plan and learn the fitness:
-        self.measure_fitness(board)
-
-    def build_from_parents(self):
+    def build_plan(self):
         """
-        From the current state of the game, build a VALID action plan of given
-        individual length and parents. Mutations must return a valid action plan.
-
-        :return: Returns a valid action plan with uniform crossover and random mutation.
-        """
-
-        temp_gamestate = deepcopy(self.game)  # Play on a virtual game state to plan the sequence.
-        temp_board = deepcopy(self.board)     # Virtual board to play on.
-
-        # Build boolean sequence: 0 for parent 1, 1 for parent 2.
-        crossover_idx = np.random.randint(2, size=self.INDIVIDUAL_LENGTH)
-        # print('Crossover idx:', crossover_idx)
-        # Build the sequence: (Does uniform crossover)
-        # If crossover index is zero; take the value from parent 1, else from parent 2 for all indices available.
-        draft_plan = [self.parent1.action_plan[i] if crossover_idx[i] == 0
-                      else self.parent2.action_plan[i] for i in range(self.INDIVIDUAL_LENGTH)]
-
-        # Assure validity after cross-over.
-        for action in draft_plan:
-            # Find valid moves:
-            valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)  # this is a numpy vector.
-
-            # temp_board = deepcopy(self.board)
-            # temp_gamestate = deepcopy(self.game)
-
-            # If action is in the valid moves continue, otherwise mutate it from set of valid functions.
-            if action not in np.where(valid_moves == 1)[0]:
-
-                # Pick a valid move play:
-                valid_indices = np.where(valid_moves == 1)[0]  # gives all valid indices
-
-                # Pick action order by random: get the first one to append to list.
-                np.random.shuffle(valid_indices)
-                selected_action = valid_indices[0]
-
-                # Move the game state forward:
-                move = (int(selected_action / temp_board.n), selected_action % temp_board.n)
-                temp_board.execute_move(move, self.player)
-
-                # Mutate action plan: (for RHEA agent)
-                draft_plan[np.where(action)[0][0]] = selected_action
-
-                # Play 2nd player's turn randomly as well to determine new valid states.
-                competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
-                competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
-                np.random.shuffle(competitor_valid_indices)
-                competitor_selected_action = competitor_valid_indices[0]
-                # print(competitor_selected_action)
-
-                # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
-                competitor_move = (int(competitor_selected_action / temp_board.n),
-                                   competitor_selected_action % temp_board.n)
-                temp_board.execute_move(competitor_move, -self.player)
-
-            else:
-                # The action taken works, so play it and the competitor's move: -- Move the game state forward:
-                move = (int(action / temp_board.n), action % temp_board.n)
-                temp_board.execute_move(move, self.player)
-
-                # Simulate the opponent's action and play it:
-                # Play 2nd player's turn randomly as well to determine new valid states.
-                competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
-                competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
-                np.random.shuffle(competitor_valid_indices)
-                competitor_selected_action = competitor_valid_indices[0]
-                # print(competitor_selected_action)
-
-                # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
-                competitor_move = (int(competitor_selected_action / temp_board.n),
-                                   competitor_selected_action % temp_board.n)
-                temp_board.execute_move(competitor_move, -self.player)
-
-                # start indexing next state's valid moves for player 1.
-                # valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)
-
-        self.action_plan = draft_plan
-
-    def build_from_scratch(self, board):
-        """
-        Get valid moves from the game and build a sequence from scratch. Sets the action plan. Returns -1 for genes
-        if there are enough valid moves available given individual length.
-        :param board: Board positioning is provided by the Coach
+            Construct's individual's action plan from scratch.
+            @:return A valid action plan for this game.
         """
 
         temp_gamestate = deepcopy(self.game)
-        temp_board = deepcopy(board)
-        draft_plan_indices = []
+        temp_board = deepcopy(self.board)
+        draft_plan = []
 
-        # Progressively construct the gene:
+        # For each action that is to be filled in the action plan do the following:
         for i in range(self.INDIVIDUAL_LENGTH):
 
-            # Find valid moves:
-            valid_moves = temp_gamestate.getValidMoves(temp_board, self.player)  # this is a numpy vector.
+            # If game ended put -1 to the sequence: (getGameEnded outputs +1:won, -1:lose, 0:not finished, ~0 draw)
+            if temp_gamestate.getGameEnded(temp_board.pieces, self.player) != 0:
+                draft_plan.append(-1)
+            else:
+                # If game not ended: Get the best performing action from the neural network and apply it to the network:
+                action, temp_gamestate, temp_board = self.plan_base_action(temp_gamestate, temp_board,
+                                                                           self.player)
 
-            # Pick a valid move play:
-            valid_indices = np.where(valid_moves == 1)[0]  # gives all valid indices
+                # Append planned action to the sequence.
+                draft_plan.append(action)
 
-            # Pick action order by random: get the first one to append to list.
-            np.random.shuffle(valid_indices)
-            selected_action = valid_indices[0]
+                # Play the Neural Network based optimal action for the opponent as well:
+                # No need to append this to the Neural network. This is to ensure validity of the action taken.
+                opp_act, temp_gamestate, temp_board = self.plan_base_action(temp_gamestate, temp_board,
+                                                                            -self.player)
+                print("Picked opponent action (debug): ", opp_act)
 
-            # Play the action on temporary board, append selected action to gene.
-            # temp_board.pieces = temp_gamestate.getNextState(temp_board, self.player, selected_action)
-            move = (int(selected_action / temp_board.n), selected_action % temp_board.n)
+        # Final board configuration also estimates the fitness of the individual.
+        _, fitness = self.nnet.predict(self.player * (np.array(temp_board.pieces)))
+
+        return draft_plan, fitness
+
+    def plan_base_action(self, game, board, player):
+        """
+        Plans 1 action that is to be taken by the agent using the neural network provided.
+        :return: action, game and board states after playing a hypothetical turn.
+        """
+        # Get valid indices:
+        valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
+
+        # If game not ended: Get the best performing action from the neural network:
+        action, _ = self.nnet.predict(np.array(board.pieces) * player)  # board*player is canonical form of board.
+
+        if action in valid_action_indices:
+            action = np.argmax(action)
+        else:
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices)
+            action = valid_action_indices[0]
+
+        # For each gene, there is a chance that it mutates into a random valid gene:
+        if random.uniform(0, 1) >= self.MUTATION_CHANCE:
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices)
+            action = valid_action_indices[0]
+
+        # Play this turn to for the player:
+        board.pieces = game.getNextState(np.array(board.pieces), player, action)[0]
+        move = (int(action / board.n), action % board.n)
+        board.execute_move(move, player)
+
+        # Append planned action to the sequence.
+        return action, game, board
+
+    def measure_fitness(self):
+        temp_game = self.game
+        temp_board = self.board
+
+        # Simulate the game throughout the horizon: (Opponent Modelling: RHEA)
+        for i in range(len(self.action_plan)):
+            action = self.action_plan[i]
+
+            # Play this turn to for the player:
+            temp_board.pieces = temp_game.getNextState(temp_board, self.player, action)
+            move = (int(action / temp_board.n), action % temp_board.n)
             temp_board.execute_move(move, self.player)
 
-            draft_plan_indices = np.append(draft_plan_indices, selected_action)
+            # Play a best policy valid move for the opponent:
+            action_opponent, _ = self.nnet.predict(temp_board * -self.player)
 
-            # Play the turn for the competitor; random action selection:
-            competitor_valid_moves = self.game.getValidMoves(temp_board, -self.player)
-            competitor_valid_indices = np.where(competitor_valid_moves == 1)[0]  # gives all valid indices
-            np.random.shuffle(competitor_valid_indices)
-            competitor_selected_action = competitor_valid_indices[0]
-            # print('Competitor selects: ', competitor_selected_action)
-            # temp_board.getNextState(temp_board, -self.player, competitor_selected_action)
-            competitor_move = (int(competitor_selected_action / temp_board.n),
-                               competitor_selected_action % temp_board.n)
-            temp_board.execute_move(competitor_move, -self.player)
+            # Play this turn to for the opponent player:
+            temp_board.pieces = temp_game.getNextState(temp_board, -self.player, action_opponent)
+            move = (int(action_opponent / temp_board.n), action_opponent % temp_board.n)
+            temp_board.execute_move(move, -self.player)
 
-        self.action_plan = [int(action) for action in draft_plan_indices]
+        # If game not ended: Get the best performing action from the neural network:
+        _, fitness = self.nnet.predict(temp_board * self.player)  # temp_board*cls.player is canonical form of board.
 
-    # ToDo: Complete this:
-    def measure_fitness(self, board):
-        """
-
-        :param board:
-        :return:
-        """
-        # Neural network predicts on the canonical board; which takes +1 as ally locations and -1 as enemy locations.
-
-        # For all actions in action plan:
-        # Play
-
-        canonical_board = self.game.getCanonicalForm(board, self.player)
-
-        self.Ps[s], v = self.nnet.predict(canonicalBoard)
-
-
-
-
-    def set_action_plan(self, gene):
-        """
-        Sets the action plan to the gene provided.
-        :param gene: Gene sequence replace object's action plan.
-        :return: Replaces current action plan with the plan specified.
-        """
-        self.action_plan = gene
+        return fitness
 
     def get_gene(self):
         """
@@ -198,10 +126,13 @@ class RHEAIndividual:
         """
         return self.action_plan
 
-    def set_board_status(self, board):
+    def set_gene(self, action_plan):
         """
-        Sets the board status known by the individual to  new board status
-        :param board:
+
+        :param action_plan:
         :return:
         """
-        self.board = board
+        self.action_plan = action_plan
+
+    def get_fitness(self):
+        return self.fitness

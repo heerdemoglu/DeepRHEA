@@ -1,5 +1,5 @@
 import logging  # Log everything for debugging purposes.
-import numpy as np
+import RHEAIndividual
 
 log = logging.getLogger(__name__)
 
@@ -11,7 +11,6 @@ class RHEAPopulation:
     generations to current generations.
     """
 
-    # From MCTS implementation must use.
     def __init__(self, game, nnet, args):
         """
         Initializes the RHE Search with a population of N;
@@ -24,22 +23,29 @@ class RHEAPopulation:
         """
         self.game = game
         self.nnet = nnet
-        # {num_of_individuals, individual_length, num_of_best_individuals}
+        # {num_of_individuals, individual_length, num_of_best_individuals, mutation_chance, max_generation_budget}
         self.args = args
+        self.current_player = 1  # Always start with player 1. (design choice)
 
-    # From MCTS implementation must use.
-    def get_action_prob(self, canonical_board, temp=1):
-        raise NotImplementedError
+        # Get the initial board configuration to set up the individuals.
+        board = self.game.getInitBoard()
 
-    # From MCTS implementation must use.
-    def search(self, canonical_board):
-        raise NotImplementedError
+        # Construct the list of individuals and their fitness:
+        self.individuals = []
+        self.indv_fitness = []
+        for i in range(self.args.NUM_OF_INDIVIDUALS):
+            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=board)
+            self.indv_fitness = indv.get_fitness()
+            self.individuals.append(indv)
 
-    def update_population_boards(self, canonical_board):
-        """
-        Updates all parents of the population with the new state of the board for future game ticks.
-        :param canonical_board:
-        :return:
-        """
-        raise NotImplementedError
+    def sort_population_fitness(self):
+        pass
 
+    def pick_best_individuals(self):
+        pass
+
+    def crossover_parents(self):
+        pass
+
+    def executeGeneration(self):
+        pass
