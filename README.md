@@ -21,4 +21,4 @@ ToDo: Other repositories and links. Reference specific authors if they are known
 
 # Acknowledgements:
 * I would like to thank my project supervisor, Dr. Diego Perez-Liebana for his support and guidance throughout this project. 
-* * This research utilised Queen Mary's Apocrita HPC facility, supported by QMUL Research-IT. http://doi.org/10.5281/zenodo.438045
+* This research utilised Queen Mary's Apocrita HPC facility, supported by QMUL Research-IT. http://doi.org/10.5281/zenodo.438045
