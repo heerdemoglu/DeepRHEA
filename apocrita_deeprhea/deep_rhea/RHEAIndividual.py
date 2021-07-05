@@ -55,7 +55,7 @@ class RHEAIndividual:
                 # No need to append this to the Neural network. This is to ensure validity of the action taken.
                 opp_act, temp_gamestate, temp_board = self.plan_base_action(temp_gamestate, temp_board,
                                                                             -self.player)
-                print("Picked opponent action (debug): ", opp_act)
+                # print("Picked opponent action (debug): ", opp_act)
 
         # Final board configuration also estimates the fitness of the individual.
         _, fitness = self.nnet.predict(self.player * (np.array(temp_board.pieces)))

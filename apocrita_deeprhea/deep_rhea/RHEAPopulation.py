@@ -1,6 +1,8 @@
 import logging  # Log everything for debugging purposes.
 import RHEAIndividual
 
+from apocrita_deeprhea.othello.OthelloLogic import Board
+
 log = logging.getLogger(__name__)
 
 
@@ -28,24 +30,45 @@ class RHEAPopulation:
         self.current_player = 1  # Always start with player 1. (design choice)
 
         # Get the initial board configuration to set up the individuals.
-        board = self.game.getInitBoard()
+        self.board = Board(6)
 
         # Construct the list of individuals and their fitness:
         self.individuals = []
         self.indv_fitness = []
         for i in range(self.args.NUM_OF_INDIVIDUALS):
-            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=board)
-            self.indv_fitness = indv.get_fitness()
+            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=self.board)
+            self.indv_fitness.append(indv.get_fitness())
             self.individuals.append(indv)
 
-    def sort_population_fitness(self):
-        pass
+        # FixMe: These sections will be migrated to evolve and execute methods of this class.
+        # Sort the population with respect to their fitness: (descending order)
+        sorted_population = self.sort_population_fitness()
 
-    def pick_best_individuals(self):
-        pass
+        # Calculate the rankings, apply them to sorted population:
+        total_fitness = sum(self.indv_fitness)
+
+        for i in range(len(sorted_population)):  # each list element is a tuple with (fitness, individual)
+            sorted_population[i][0] = sorted_population[i][0] / total_fitness * 100
+
+        print('test')
+
+        # Pick first elite individuals (NUM_OF_BEST_INDIVIDUALS) that will ascend to the next generation.
+        elites = sorted_population[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del sorted_population[:self.args.NUM_OF_BEST_INDIVIDUALS]
+
+        # Pick rest of the individuals by Rank Selection, cross over and mutate.
+
+        # Evolve the population while computational budget is not reached (different method -- search)
+
+    def sort_population_fitness(self):
+        list_ = list(zip(self.indv_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
+        listed = [list(a) for a in list_]
+        sorted_individuals = sorted(listed, reverse=True)
+
+        return sorted_individuals
 
     def crossover_parents(self):
         pass
 
-    def executeGeneration(self):
+    def evolve(self):
         pass
