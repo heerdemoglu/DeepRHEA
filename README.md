@@ -1,4 +1,4 @@
-# DeepRHEA - Deep Rolling Horizon Evolutionary Algorithm in the Game of Go
+# DeepRHEA - Deep Rolling Horizon Evolutionary Algorithm
 
 This project aims to construct an agent thatuses Deep Neural Networks and RHEA to play a game of deterministic, competitive, zero-sum game with full information. Some possible games that arein this category include Chess, Go, Checkers and Othello.
 
