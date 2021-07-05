@@ -1,4 +1,8 @@
 import logging  # Log everything for debugging purposes.
+import random
+
+import numpy as np
+
 import RHEAIndividual
 
 from apocrita_deeprhea.othello.OthelloLogic import Board
@@ -42,33 +46,72 @@ class RHEAPopulation:
 
         # FixMe: These sections will be migrated to evolve and execute methods of this class.
         # Sort the population with respect to their fitness: (descending order)
-        sorted_population = self.sort_population_fitness()
-
-        # Calculate the rankings, apply them to sorted population:
-        total_fitness = sum(self.indv_fitness)
-
-        for i in range(len(sorted_population)):  # each list element is a tuple with (fitness, individual)
-            sorted_population[i][0] = sorted_population[i][0] / total_fitness * 100
-
-        print('test')
+        self.sort_population_fitness()
 
         # Pick first elite individuals (NUM_OF_BEST_INDIVIDUALS) that will ascend to the next generation.
-        elites = sorted_population[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        del sorted_population[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        elites = self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
 
-        # Pick rest of the individuals by Rank Selection, cross over and mutate.
+        # Calculate the rankings, apply them to sorted population:
+        # See: https://stackoverflow.com/questions/34961489/rank-selection-in-ga
+        remaining_indv = self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS
+        total_fitness = remaining_indv * (remaining_indv + 1) / 2
+
+        for i in range(len(self.individuals)):  # each list element is a tuple with (fitness, individual)
+            self.individuals[i][0] = (
+                                                 self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
+
+        # Cumulative probabilities needed to pick individuals:
+        self.cumulative_probabilities = []
+        prob = 0
+        for i in range(len(self.individuals)):
+            prob += self.individuals[i][0]
+            self.cumulative_probabilities.append(round(prob, 4))
+
+        # todo: below.
+
+        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
+        new_population = []
+        [new_population.append(elite) for elite in elites]
+        [new_population.append(self.crossover_parents()) for _ in range(len(self.individuals))]
+
+        print("test")
 
         # Evolve the population while computational budget is not reached (different method -- search)
 
     def sort_population_fitness(self):
+        """
+        Sorts the population by their fitness in descending order.
+        :return: Returns the sorted versions of populations and their fitnesses
+        """
         list_ = list(zip(self.indv_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
         listed = [list(a) for a in list_]
-        sorted_individuals = sorted(listed, reverse=True)
 
-        return sorted_individuals
+        self.indv_fitness = sorted(self.indv_fitness, reverse=True)
+        self.individuals = sorted(listed, reverse=True)
 
     def crossover_parents(self):
-        pass
+        """
+        Creates an action plan using crossover of two individuals from its generation.
+        :return: Returns an individual for the next generation.
+        """
+        # Select 2 parents: (Using rank)
+        select1 = random.random()
+        select2 = random.random()
+
+        diff1 = [i - select1 for i in self.cumulative_probabilities]
+        parent1_idx = np.where(np.min(diff1[diff1 >= 0]))  # todo: inner part of np.min might be destructive.
+        diff2 = [i - select2 for i in self.cumulative_probabilities]
+
+        # Do crossover and form a valid sequence:
+
+        # return new action plan that can be used to generate the new individual:
+        return
 
     def evolve(self):
+        # While computational budget is not reached - Continuously evolve the generations.
+        pass
+
+    def select_and_execute_individual(self):
         pass
