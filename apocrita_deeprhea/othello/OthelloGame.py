@@ -49,7 +49,7 @@ class OthelloGame(Game):
         # return a fixed size binary vector
         valids = [0] * self.getActionSize()
         b = Board(self.n)
-        b.pieces = np.copy(board.pieces) ##  fixed point to object problem.
+        b.pieces = np.copy(board.pieces)  # fixed point to object problem.
         legalMoves = b.get_legal_moves(player)
         if len(legalMoves) == 0:
             valids[-1] = 1

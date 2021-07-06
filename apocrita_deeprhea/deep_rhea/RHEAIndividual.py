@@ -18,7 +18,7 @@ class RHEAIndividual:
         self.fitness = None  # Fitness of the individual.
         self.game = game  # Game information relayed to individual.
         self.player = player  # Player 1 is +1, player 2 is -1.
-        self.board = board  # Board state controlled by RHEAPopulation.
+        self.board = deepcopy(board)  # Board state controlled by RHEAPopulation.
         self.nnet = nnet  # N.Network, used to fetch policy/value.
 
         # If individual is created from scratch, fitness is also calculated. Otherwise calculate individual's fitness.
