@@ -37,7 +37,7 @@ class OthelloGame(Game):
     def getNextState(self, board, player, action):
         # if player takes action on board, return next (board,player)
         # action must be a valid move
-        if action == self.n * self.n:
+        if action == self.n * self.n:  # 0-35 are board positions for a 6x6 board; 37th tile is idx 36; which is a noop.
             return (board, -player)
         b = Board(self.n)
         b.pieces = np.copy(board)
