@@ -21,4 +21,5 @@ board = Board(6)
 # Creating individuals: -- No meaning meant here, random creations.
 population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
+print('end test')
 # print(population)

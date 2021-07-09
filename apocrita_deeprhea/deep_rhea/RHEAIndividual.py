@@ -67,7 +67,7 @@ class RHEAIndividual:
         Plans 1 action that is to be taken by the agent using the neural network provided.
         :return: action, game and board states after playing a hypothetical turn.
         """
-        # Get valid indices:
+        # Get valid indices: ##fixme: put this argmax and validity operation to measure fitness as well
         valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
 
         # If game not ended: Get the best performing action from the neural network:
@@ -95,28 +95,37 @@ class RHEAIndividual:
         return action, game, board
 
     def measure_fitness(self):
-        temp_game = self.game
-        temp_board = self.board
+        temp_game = deepcopy(self.game)
+        temp_board = deepcopy(self.board)
 
         # Simulate the game throughout the horizon: (Opponent Modelling: RHEA)
         for i in range(len(self.action_plan)):
             action = self.action_plan[i]
 
             # Play this turn to for the player:
-            temp_board.pieces = temp_game.getNextState(temp_board, self.player, action)
+            temp_board.pieces = temp_game.getNextState(np.array(temp_board.pieces), self.player, action)[0]
             move = (int(action / temp_board.n), action % temp_board.n)
             temp_board.execute_move(move, self.player)
 
             # Play a best policy valid move for the opponent:
-            action_opponent, _ = self.nnet.predict(temp_board * -self.player)
+            valid_action_indices = np.where(temp_game.getValidMoves(temp_board, -self.player) == 1)[0]
+            action_opponent, _ = self.nnet.predict(np.array(temp_board.pieces) * -self.player)
+
+            if action_opponent in valid_action_indices:
+                action_opponent = np.argmax(action)
+            else:
+                #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+                np.random.shuffle(valid_action_indices)
+                action_opponent = valid_action_indices[0]
 
             # Play this turn to for the opponent player:
-            temp_board.pieces = temp_game.getNextState(temp_board, -self.player, action_opponent)
+            temp_board.pieces = temp_game.getNextState(np.array(temp_board.pieces), -self.player, action_opponent)[0]
             move = (int(action_opponent / temp_board.n), action_opponent % temp_board.n)
             temp_board.execute_move(move, -self.player)
 
         # If game not ended: Get the best performing action from the neural network:
-        _, fitness = self.nnet.predict(temp_board * self.player)  # temp_board*cls.player is canonical form of board.
+        # temp_board*cls.player is canonical form of board.
+        _, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
 
         return fitness
 

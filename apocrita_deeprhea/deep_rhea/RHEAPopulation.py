@@ -1,11 +1,7 @@
-import logging  # Log everything for debugging purposes.
 import random
-
 import RHEAIndividual
 
 from apocrita_deeprhea.othello.OthelloLogic import Board
-
-log = logging.getLogger(__name__)
 
 
 class RHEAPopulation:
@@ -48,35 +44,6 @@ class RHEAPopulation:
         # Sort the population with respect to their fitness: (descending order)
         self.sort_population_fitness()
 
-        # FixMe: These sections will be migrated to evolve and execute methods of this class.
-        # Pick first elite individuals (NUM_OF_BEST_INDIVIDUALS) that will ascend to the next generation.
-        elites = self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        del self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
-
-        # Calculate the rankings, apply them to sorted population:
-        # See: https://stackoverflow.com/questions/34961489/rank-selection-in-ga
-        remaining_indv = self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS
-        total_fitness = remaining_indv * (remaining_indv + 1) / 2
-
-        for i in range(len(self.individuals)):  # each list element is a tuple with (fitness, individual)
-            self.individuals[i][0] = (self.args.NUM_OF_INDIVIDUALS -
-                                      self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
-
-        # Cumulative probabilities needed to pick individuals:
-        self.cumulative_probabilities = []
-        prob = 0
-        for i in range(len(self.individuals)):
-            prob += self.individuals[i][0]
-            self.cumulative_probabilities.append(round(prob, 4))
-
-        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
-        new_population = []
-        [new_population.append(elite) for elite in elites]
-        [new_population.append(self.crossover_parents()) for _ in range(len(self.individuals))]
-
-        # Evolve the population while computational budget is not reached (different method -- search)
-
     def sort_population_fitness(self):
         """
         Sorts the population by their fitness in descending order.
@@ -88,7 +55,7 @@ class RHEAPopulation:
         self.indv_fitness = sorted(self.indv_fitness, reverse=True)
         self.individuals = sorted(listed, reverse=True)
 
-    def crossover_parents(self):
+    def crossover_parents(self, cum_probs):  # fixme: validity of the plan checking! is it needed?
         """
         Creates an action plan using crossover of two individuals from its generation.
         :return: Returns an individual for the next generation.
@@ -97,29 +64,83 @@ class RHEAPopulation:
         select1 = random.random()
         select2 = random.random()
 
-        diff1 = [i - select1 for i in self.cumulative_probabilities]
+        diff1 = [i - select1 for i in cum_probs]
         parent1_idx = diff1.index(min([i for i in diff1 if i > 0]))
-        diff2 = [i - select2 for i in self.cumulative_probabilities]
+        diff2 = [i - select2 for i in cum_probs]
         parent2_idx = diff2.index(min([i for i in diff2 if i > 0]))
 
         # Do 1-point crossover and form a valid sequence: (between 0 and indv. length - 1: boundaries included)
-        crossover_idx = random.randint(0, self.args.INDIVIDUAL_LENGTH-1)
+        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH-2)  # start from first end from last index.
 
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
         draft_plan = [self.individuals[parent1_idx][1].get_gene()[i] if i <= crossover_idx
                       else self.individuals[parent2_idx][1].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
 
         # return new action plan that can be used to generate the new individual:
-        # fixme: self.board return invalid object.
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
                                              board=self.board, action_plan=draft_plan)
 
-        print("test")
         return indv
 
+    def evolve_generation(self):
+        """
+        Assumes sorted individuals. Evolves the population for 1 generation.
+        :return: Mutates the individuals and their fitness values after doing crossover and mutations on the current
+        population.
+        """
+        # Pick first elite individuals (NUM_OF_BEST_INDIVIDUALS) that will ascend to the next generation.
+        elites = self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        elites_fitness = self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+
+        # Remove elites from current generation as they will not be used in evolution.
+        del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+
+        # Calculate the rankings, apply them to sorted population:
+        # See: https://stackoverflow.com/questions/34961489/rank-selection-in-ga
+        # Normalizing fitness: fitness is based on rank ie Prob of selection.
+        remaining_indv = self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS
+        total_fitness = remaining_indv * (remaining_indv + 1) / 2
+
+        for i in range(len(self.individuals)):  # each list element is a tuple with (fitness, individual)
+            self.individuals[i][0] = (self.args.NUM_OF_INDIVIDUALS -
+                                      self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
+
+        # Cumulative probabilities needed to pick individuals:
+        cumulative_probabilities = []
+        prob = 0
+        for i in range(len(self.individuals)):
+            prob += self.individuals[i][0]
+            cumulative_probabilities.append(round(prob, 4))  # cap floating points at 4 decimal places.
+
+        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
+        new_population = []
+        new_fitness = []
+        [new_population.append(elite) for elite in elites]
+        [new_fitness.append(fitness) for fitness in elites_fitness]
+
+        [new_population.append(self.crossover_parents(cumulative_probabilities))
+         for _ in range(len(self.individuals))]
+        [new_fitness.append(self.crossover_parents(cumulative_probabilities).get_fitness())
+         for _ in range(len(self.individuals))]
+
+        # Evolve the population while computational budget is not reached (different method -- search)
+        self.individuals = new_population
+        self.indv_fitness = new_fitness
+
     def evolve(self):
-        # While computational budget is not reached - Continuously evolve the generations.
-        pass
+        """
+        To be used by RHEA population to plan the best sequences to play.
+        :return:
+        """
+        for i in range(self.args.MAX_GENERATION_BUDGET):
+            raise NotImplementedError
 
     def select_and_execute_individual(self):
         pass
+
+    def debug_print_population(self):
+        """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
+        for indv in self.individuals:
+            print('Individual plan:', indv.get_gene())
+        print('Fitness:', indv.get_fitness())
