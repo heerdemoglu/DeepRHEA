@@ -128,13 +128,18 @@ class RHEAPopulation:
         self.individuals = new_population
         self.indv_fitness = new_fitness
 
+        # Sort the new population as well:
+        self.sort_population_fitness()
+
     def evolve(self):
         """
         To be used by RHEA population to plan the best sequences to play.
         :return:
         """
-        for i in range(self.args.MAX_GENERATION_BUDGET):
-            raise NotImplementedError
+        # Until computational budget is reached, do the following:
+        for _ in range(self.args.MAX_GENERATION_BUDGET):
+            # Evolve the generation for 1 step.
+            self.evolve_generation()
 
     def select_and_execute_individual(self):
         pass
@@ -142,5 +147,5 @@ class RHEAPopulation:
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         for indv in self.individuals:
-            print('Individual plan:', indv.get_gene())
-        print('Fitness:', indv.get_fitness())
+            print('Individual plan:', indv[1].get_gene())
+            print('Fitness:', indv[1].get_fitness())
