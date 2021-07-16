@@ -67,7 +67,7 @@ class RHEAIndividual:
         Plans 1 action that is to be taken by the agent using the neural network provided.
         :return: action, game and board states after playing a hypothetical turn.
         """
-        # Get valid indices: ##fixme: put this argmax and validity operation to measure fitness as well
+        # Get valid indices:
         valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
 
         # If game not ended: Get the best performing action from the neural network:

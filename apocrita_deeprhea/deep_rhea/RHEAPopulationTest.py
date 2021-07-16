@@ -21,7 +21,6 @@ board = Board(6)
 # Creating individuals: -- No meaning meant here, random creations.
 population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
-## TODO: first initialization and evolution population/fitness data types change so common methods become incompatible.
 print(population.debug_print_population())
 print("*******************************************************************")
 population.evolve()
