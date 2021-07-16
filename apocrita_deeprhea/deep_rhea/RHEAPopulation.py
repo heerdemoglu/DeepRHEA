@@ -46,10 +46,11 @@ class RHEAPopulation:
 
     def sort_population_fitness(self):
         """
-        Sorts the population by their fitness in descending order.
+        Sorts the population by their fitness in descending order. Do not change the fitness values
         :return: Returns the sorted versions of populations and their fitness
         """
-        list_ = list(zip(self.indv_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
+        temp_fitness = self.indv_fitness
+        list_ = list(zip(temp_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
         listed = [list(a) for a in list_]
 
         self.indv_fitness = sorted(self.indv_fitness, reverse=True)
@@ -105,26 +106,29 @@ class RHEAPopulation:
         remaining_indv = self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS
         total_fitness = remaining_indv * (remaining_indv + 1) / 2
 
+        temp_individuals = self.individuals
+
         for i in range(len(self.individuals)):  # each list element is a tuple with (fitness, individual)
-            self.individuals[i][0] = (self.args.NUM_OF_INDIVIDUALS -
+            temp_individuals[i][0] = (self.args.NUM_OF_INDIVIDUALS -
                                       self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
 
         # Cumulative probabilities needed to pick individuals:
         cumulative_probabilities = []
         prob = 0
         for i in range(len(self.individuals)):
-            prob += self.individuals[i][0]
+            prob += temp_individuals[i][0]
             cumulative_probabilities.append(round(prob, 3))  # cap floating points at 3 decimal places.
 
-        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.  # fixme: something wrong here.
+        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
         new_population = []
         new_fitness = []
         [new_population.append(elite) for elite in elites]
         [new_fitness.append(fitness) for fitness in elites_fitness]
 
-        fitness_indv = self.crossover_parents(cumulative_probabilities)
-        [new_population.append(fitness_indv) for _ in range(len(self.individuals))]
-        [new_fitness.append(fitness_indv[0]) for _ in range(len(self.individuals))]
+        for _ in range(len(self.individuals)):
+            fitness_indv = self.crossover_parents(cumulative_probabilities)
+            new_population.append(fitness_indv)
+            new_fitness.append(fitness_indv[0])
 
         # Evolve the population while computational budget is not reached (different method -- search)
         self.individuals = new_population
