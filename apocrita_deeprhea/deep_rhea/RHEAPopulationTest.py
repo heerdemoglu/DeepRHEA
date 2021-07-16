@@ -25,5 +25,4 @@ population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, boar
 print(population.debug_print_population())
 print("*******************************************************************")
 population.evolve()
-
 print(population.debug_print_population())

@@ -55,7 +55,7 @@ class RHEAPopulation:
         self.indv_fitness = sorted(self.indv_fitness, reverse=True)
         self.individuals = sorted(listed, reverse=True)
 
-    def crossover_parents(self, cum_probs):  # fixme: validity of the plan checking! is it needed?
+    def crossover_parents(self, cum_probs):  # fixme: validity of the plan checking!
         """
         Creates an action plan using crossover of two individuals from its generation.
         :return: Returns an individual for the next generation.
@@ -70,7 +70,7 @@ class RHEAPopulation:
         parent2_idx = diff2.index(min([i for i in diff2 if i > 0]))
 
         # Do 1-point crossover and form a valid sequence: (between 0 and indv. length - 1: boundaries included)
-        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH-2)  # start from first end from last index.
+        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 2)  # start from first end from last index.
 
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
         draft_plan = [self.individuals[parent1_idx][1].get_gene()[i] if i <= crossover_idx
@@ -80,7 +80,10 @@ class RHEAPopulation:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
                                              board=self.board, action_plan=draft_plan)
 
-        return indv
+        fitness = indv.get_fitness()
+        fitness_indv = [fitness, indv]
+
+        return fitness_indv
 
     def evolve_generation(self):
         """
@@ -111,18 +114,17 @@ class RHEAPopulation:
         prob = 0
         for i in range(len(self.individuals)):
             prob += self.individuals[i][0]
-            cumulative_probabilities.append(round(prob, 4))  # cap floating points at 4 decimal places.
+            cumulative_probabilities.append(round(prob, 3))  # cap floating points at 3 decimal places.
 
-        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
+        # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.  # fixme: something wrong here.
         new_population = []
         new_fitness = []
         [new_population.append(elite) for elite in elites]
         [new_fitness.append(fitness) for fitness in elites_fitness]
 
-        [new_population.append(self.crossover_parents(cumulative_probabilities))
-         for _ in range(len(self.individuals))]
-        [new_fitness.append(self.crossover_parents(cumulative_probabilities).get_fitness())
-         for _ in range(len(self.individuals))]
+        fitness_indv = self.crossover_parents(cumulative_probabilities)
+        [new_population.append(fitness_indv) for _ in range(len(self.individuals))]
+        [new_fitness.append(fitness_indv[0]) for _ in range(len(self.individuals))]
 
         # Evolve the population while computational budget is not reached (different method -- search)
         self.individuals = new_population
@@ -137,9 +139,10 @@ class RHEAPopulation:
         :return:
         """
         # Until computational budget is reached, do the following:
-        for _ in range(self.args.MAX_GENERATION_BUDGET):
+        for i in range(self.args.MAX_GENERATION_BUDGET):
             # Evolve the generation for 1 step.
             self.evolve_generation()
+            print('gen', i)
 
     def select_and_execute_individual(self):
         pass
