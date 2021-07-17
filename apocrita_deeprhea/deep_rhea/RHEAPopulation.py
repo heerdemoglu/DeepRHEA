@@ -35,10 +35,10 @@ class RHEAPopulation:
 
         # Construct the list of individuals and their fitness:
         self.individuals = []
-        self.indv_fitness = []
+        self.pop_fitness = []
         for i in range(self.args.NUM_OF_INDIVIDUALS):
             indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=self.board)
-            self.indv_fitness.append(indv.get_fitness())
+            self.pop_fitness.append(indv.get_fitness())
             self.individuals.append(indv)
 
         # Sort the population with respect to their fitness: (descending order)
@@ -49,12 +49,15 @@ class RHEAPopulation:
         Sorts the population by their fitness in descending order. Do not change the fitness values
         :return: Returns the sorted versions of populations and their fitness
         """
-        temp_fitness = self.indv_fitness
+        temp_fitness = self.pop_fitness
         list_ = list(zip(temp_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
         listed = [list(a) for a in list_]
 
-        self.indv_fitness = sorted(self.indv_fitness, reverse=True)
-        self.individuals = sorted(listed, reverse=True)
+        self.pop_fitness = sorted(self.pop_fitness, reverse=True)
+        temp_indvs = sorted(listed, reverse=True, key=lambda x: x[0])
+
+        for i in range(len(self.individuals)):
+            self.individuals[i] = temp_indvs[i][1]
 
     def crossover_parents(self, cum_probs):  # fixme: validity of the plan checking!
         """
@@ -74,8 +77,8 @@ class RHEAPopulation:
         crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 2)  # start from first end from last index.
 
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
-        draft_plan = [self.individuals[parent1_idx][1].get_gene()[i] if i <= crossover_idx
-                      else self.individuals[parent2_idx][1].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
+        draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
+                      else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
 
         # return new action plan that can be used to generate the new individual:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
@@ -94,11 +97,11 @@ class RHEAPopulation:
         """
         # Pick first elite individuals (NUM_OF_BEST_INDIVIDUALS) that will ascend to the next generation.
         elites = self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        elites_fitness = self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        elites_fitness = self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
 
         # Remove elites from current generation as they will not be used in evolution.
         del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        del self.indv_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
 
         # Calculate the rankings, apply them to sorted population:
         # See: https://stackoverflow.com/questions/34961489/rank-selection-in-ga
@@ -106,17 +109,17 @@ class RHEAPopulation:
         remaining_indv = self.args.NUM_OF_INDIVIDUALS - self.args.NUM_OF_BEST_INDIVIDUALS
         total_fitness = remaining_indv * (remaining_indv + 1) / 2
 
-        temp_individuals = self.individuals
+        temp_individuals_fitness = self.pop_fitness
 
-        for i in range(len(self.individuals)):  # each list element is a tuple with (fitness, individual)
-            temp_individuals[i][0] = (self.args.NUM_OF_INDIVIDUALS -
+        for i in range(len(self.pop_fitness)):  # each list element is a tuple with (fitness, individual)
+            temp_individuals_fitness[i] = (self.args.NUM_OF_INDIVIDUALS -
                                       self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
 
         # Cumulative probabilities needed to pick individuals:
         cumulative_probabilities = []
         prob = 0
         for i in range(len(self.individuals)):
-            prob += temp_individuals[i][0]
+            prob += temp_individuals_fitness[i]
             cumulative_probabilities.append(round(prob, 3))  # cap floating points at 3 decimal places.
 
         # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
@@ -127,12 +130,12 @@ class RHEAPopulation:
 
         for _ in range(len(self.individuals)):
             fitness_indv = self.crossover_parents(cumulative_probabilities)
-            new_population.append(fitness_indv)
+            new_population.append(fitness_indv[1])
             new_fitness.append(fitness_indv[0])
 
         # Evolve the population while computational budget is not reached (different method -- search)
         self.individuals = new_population
-        self.indv_fitness = new_fitness
+        self.pop_fitness = new_fitness
 
         # Sort the new population as well:
         self.sort_population_fitness()
@@ -146,7 +149,8 @@ class RHEAPopulation:
         for i in range(self.args.MAX_GENERATION_BUDGET):
             # Evolve the generation for 1 step.
             self.evolve_generation()
-            print('gen', i)
+            # print('gen', i)
+            # self.debug_print_population()
 
     def select_and_execute_individual(self):
         pass
@@ -154,5 +158,9 @@ class RHEAPopulation:
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         for indv in self.individuals:
-            print('Individual plan:', indv[1].get_gene())
-            print('Fitness:', indv[1].get_fitness())
+            print('Individual plan:', indv.get_gene())
+            print('Fitness:', indv.get_fitness())
+        print("*******************************************************************")
+
+    def get_indv_fitness(self):
+        return self.pop_fitness

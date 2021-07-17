@@ -9,10 +9,10 @@ nnet = NNetWrapper(game)
 
 args = dotdict({
         'NUM_OF_INDIVIDUALS': 50,
-        'INDIVIDUAL_LENGTH': 5,
-        'NUM_OF_BEST_INDIVIDUALS': 10,
-        'MAX_GENERATION_BUDGET': 25,
-        'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
+        'INDIVIDUAL_LENGTH': 10,
+        'NUM_OF_BEST_INDIVIDUALS': 5,
+        'MAX_GENERATION_BUDGET': 100,
+        'MUTATION_CHANCE': 0.1,  # Number of complete self-play games to simulate during a new iteration.
 })
 
 # Creating sample board:
@@ -22,6 +22,5 @@ board = Board(6)
 population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
 print(population.debug_print_population())
-print("*******************************************************************")
 population.evolve()
 print(population.debug_print_population())
