@@ -1,4 +1,7 @@
 import random
+
+import numpy as np
+
 import RHEAIndividual
 
 from apocrita_deeprhea.othello.OthelloLogic import Board
@@ -157,8 +160,41 @@ class RHEAPopulation:
 
     def select_and_execute_individual(self):
         # ToDo: Write me, also add shift buffer.
+        # ToDo; Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
+        #  In such case; opponent evolves the best model which is then played; also removes validity problems.
+        #  However, this compresses the search space as each player individual will
+        #  have only a single opponent behavior.
         # ToDo: Also prune invalid opponent actions and create valid sequences from the individuals that are valid.
-        pass
+
+        # Select best individual, pop it's initial plan:
+        player_action = self.individuals[0].action_plan.pop(0)
+
+        # Play this action in the game:
+        self.board.pieces = self.game.getNextState(np.array(self.board.pieces), self.current_player, player_action)
+        move = (int(player_action / self.board.n), player_action % self.board.n)
+        self.board.execute_move(move, self.current_player)
+
+        # Play opponent action optimized by neural network:
+        # Play a best policy valid move for the opponent:
+        valid_action_indices = np.where(self.game.getValidMoves(self.board, -self.current_player) == 1)[0]
+        action_opponent, _ = self.nnet.predict(np.array(self.board.pieces) * -self.current_player)
+
+        if action_opponent in valid_action_indices:
+            action_opponent = np.argmax(action_opponent)
+        else:
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices)
+            action_opponent = valid_action_indices[0]
+
+        # Play this turn to for the opponent player:
+        self.board.pieces = self.game.getNextState(np.array(self.board.pieces), -self.player, action_opponent)[0]
+        move = (int(action_opponent / self.board.n), action_opponent % self.board.n)
+        self.board.execute_move(move, -self.current_player)
+
+        # Pop all initial actions of all individuals, append a neural network based output at the end
+        # Check if new board configs create validity problems; remove and replace invalid individuals.
+
+        # Update individual's boards and other information as well.
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
