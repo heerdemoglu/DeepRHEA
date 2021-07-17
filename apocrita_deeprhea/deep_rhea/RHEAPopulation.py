@@ -59,7 +59,7 @@ class RHEAPopulation:
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
 
-    def crossover_parents(self, cum_probs):  # fixme: validity of the plan checking!
+    def crossover_parents(self, cum_probs):
         """
         Creates an action plan using crossover of two individuals from its generation.
         :return: Returns an individual for the next generation.
@@ -113,7 +113,7 @@ class RHEAPopulation:
 
         for i in range(len(self.pop_fitness)):  # each list element is a tuple with (fitness, individual)
             temp_individuals_fitness[i] = (self.args.NUM_OF_INDIVIDUALS -
-                                      self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
+                                           self.args.NUM_OF_BEST_INDIVIDUALS - i) / total_fitness
 
         # Cumulative probabilities needed to pick individuals:
         cumulative_probabilities = []
@@ -152,7 +152,12 @@ class RHEAPopulation:
             # print('gen', i)
             # self.debug_print_population()
 
+        # Select the best individual and play it; proceed with the game tick:
+        self.select_and_execute_individual()
+
     def select_and_execute_individual(self):
+        # ToDo: Write me, also add shift buffer.
+        # ToDo: Also prune invalid opponent actions and create valid sequences from the individuals that are valid.
         pass
 
     def debug_print_population(self):
