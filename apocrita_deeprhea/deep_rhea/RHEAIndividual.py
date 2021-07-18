@@ -25,7 +25,7 @@ class RHEAIndividual:
         if self.action_plan is None:
             self.action_plan, self.fitness = self.build_plan()
         else:
-            self.fitness = self.measure_fitness()
+            _, self.fitness = self.measure_fitness()
 
     def build_plan(self):
         """
@@ -125,9 +125,9 @@ class RHEAIndividual:
 
         # If game not ended: Get the best performing action from the neural network:
         # temp_board*cls.player is canonical form of board.
-        _, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+        action, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
 
-        return fitness
+        return np.argmax(action), fitness
 
     def get_gene(self):
         """
@@ -145,3 +145,13 @@ class RHEAIndividual:
 
     def get_fitness(self):
         return self.fitness
+
+    def check_gene_validity(self):
+        pass
+
+    # fixme: always appends the same value to the end of each individual of a population.
+    def append_next_action_from_nn(self):
+        """Appends a valid action to the end of the current action plan."""
+
+        next_action, fitness = self.measure_fitness()
+        self.action_plan.append(next_action)

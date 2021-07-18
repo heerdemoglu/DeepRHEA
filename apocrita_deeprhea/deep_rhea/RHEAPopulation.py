@@ -62,7 +62,7 @@ class RHEAPopulation:
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
 
-    def crossover_parents(self, cum_probs):
+    def crossover_parents(self, cum_probs):  # todo: check validity at crossover, ensure valid sequencing throughout.
         """
         Creates an action plan using crossover of two individuals from its generation.
         :return: Returns an individual for the next generation.
@@ -154,9 +154,6 @@ class RHEAPopulation:
             self.evolve_generation()
             # self.debug_print_population()
 
-        # Select the best individual and play it; proceed with the game tick:
-        self.select_and_execute_individual()
-
     def select_and_execute_individual(self):
         # ToDo; Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
@@ -196,15 +193,15 @@ class RHEAPopulation:
         [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
 
         # Update individual's game and boards as well.
+        # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
+        # ToDo: Prune invalid opponent actions and create valid sequences from the individuals that are valid.
+        #  (Is it necessary?)
         for i in range(len(self.individuals)):
             self.individuals[i].game = self.game
             self.individuals[i].board = self.board
 
-        # ToDo: Prune invalid opponent actions and create valid sequences from the individuals that are valid.
-        # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
-
-        # ToDo: Add shift buffer.
-        # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
+            # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
+            self.individuals[i].append_next_action_from_nn()
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
