@@ -10,8 +10,8 @@ nnet = NNetWrapper(game)
 args = dotdict({
         'NUM_OF_INDIVIDUALS': 50,
         'INDIVIDUAL_LENGTH': 3,
-        'NUM_OF_BEST_INDIVIDUALS': 5,
-        'MAX_GENERATION_BUDGET': 100,
+        'NUM_OF_BEST_INDIVIDUALS': 1,
+        'MAX_GENERATION_BUDGET': 10,
         'MUTATION_CHANCE': 0.1,  # Number of complete self-play games to simulate during a new iteration.
 })
 

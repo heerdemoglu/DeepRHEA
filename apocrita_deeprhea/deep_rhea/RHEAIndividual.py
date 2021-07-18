@@ -112,7 +112,7 @@ class RHEAIndividual:
             action_opponent, _ = self.nnet.predict(np.array(temp_board.pieces) * -self.player)
 
             if action_opponent in valid_action_indices:
-                action_opponent = np.argmax(action_opponent)  # fixme: bug? action is player's action, not opponents.
+                action_opponent = np.argmax(action_opponent)
             else:
                 #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
                 np.random.shuffle(valid_action_indices)

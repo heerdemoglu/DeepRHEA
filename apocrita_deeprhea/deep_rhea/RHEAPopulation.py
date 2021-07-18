@@ -149,28 +149,28 @@ class RHEAPopulation:
         :return:
         """
         # Until computational budget is reached, do the following:
-        for i in range(self.args.MAX_GENERATION_BUDGET):
+        for _ in range(self.args.MAX_GENERATION_BUDGET):
             # Evolve the generation for 1 step.
             self.evolve_generation()
-            # print('gen', i)
             # self.debug_print_population()
 
         # Select the best individual and play it; proceed with the game tick:
         self.select_and_execute_individual()
 
     def select_and_execute_individual(self):
-        # ToDo: Write me, also add shift buffer.
         # ToDo; Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
         #  However, this compresses the search space as each player individual will
         #  have only a single opponent behavior.
-        # ToDo: Also prune invalid opponent actions and create valid sequences from the individuals that are valid.
 
-        # Select best individual, pop it's initial plan:
-        player_action = self.individuals[0].action_plan.pop(0)
+        # Note: (Neural Network's dual usage (for both players) mimic co-evolution.)
+
+        # Select best individual, get its first action:
+        player_action = self.individuals[0].action_plan[0]
 
         # Play this action in the game:
-        self.board.pieces = self.game.getNextState(np.array(self.board.pieces), self.current_player, player_action)
+        self.board.pieces = list(
+            self.game.getNextState(np.array(self.board.pieces), self.current_player, player_action)[0])
         move = (int(player_action / self.board.n), player_action % self.board.n)
         self.board.execute_move(move, self.current_player)
 
@@ -187,14 +187,24 @@ class RHEAPopulation:
             action_opponent = valid_action_indices[0]
 
         # Play this turn to for the opponent player:
-        self.board.pieces = self.game.getNextState(np.array(self.board.pieces), -self.player, action_opponent)[0]
+        self.board.pieces = list(
+            self.game.getNextState(np.array(self.board.pieces), -self.current_player, player_action)[0])
         move = (int(action_opponent / self.board.n), action_opponent % self.board.n)
         self.board.execute_move(move, -self.current_player)
 
         # Pop all initial actions of all individuals, append a neural network based output at the end
-        # Check if new board configs create validity problems; remove and replace invalid individuals.
+        [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
 
-        # Update individual's boards and other information as well.
+        # Update individual's game and boards as well.
+        for i in range(len(self.individuals)):
+            self.individuals[i].game = self.game
+            self.individuals[i].board = self.board
+
+        # ToDo: Prune invalid opponent actions and create valid sequences from the individuals that are valid.
+        # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
+
+        # ToDo: Add shift buffer.
+        # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
