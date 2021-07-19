@@ -62,7 +62,7 @@ class RHEAPopulation:
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
 
-    def crossover_parents(self, cum_probs):  # todo: check validity at crossover, ensure valid sequencing throughout.
+    def crossover_parents(self, cum_probs):
         """
         Creates an action plan using crossover of two individuals from its generation.
         :return: Returns an individual for the next generation.
@@ -82,6 +82,9 @@ class RHEAPopulation:
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
         draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
                       else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
+
+        # todo: check validity at crossover, ensure valid sequencing throughout.
+
 
         # return new action plan that can be used to generate the new individual:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
@@ -166,31 +169,20 @@ class RHEAPopulation:
         player_action = self.individuals[0].action_plan[0]
 
         # Play this action in the game:
-        self.board.pieces = list(
-            self.game.getNextState(np.array(self.board.pieces), self.current_player, player_action)[0])
-        move = (int(player_action / self.board.n), player_action % self.board.n)
-        self.board.execute_move(move, self.current_player)
+        self.individuals[0].play_ply(self.game, self.board, self.current_player, player_action)
 
         # Play opponent action optimized by neural network:
         # Play a best policy valid move for the opponent:
-        valid_action_indices = np.where(self.game.getValidMoves(self.board, -self.current_player) == 1)[0]
-        action_opponent, _ = self.nnet.predict(np.array(self.board.pieces) * -self.current_player)
-
-        if action_opponent in valid_action_indices:
-            action_opponent = np.argmax(action_opponent)
-        else:
-            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
-            np.random.shuffle(valid_action_indices)
-            action_opponent = valid_action_indices[0]
+        action_opponent, valid_action_indices, fitness = \
+            self.individuals[0].plan_valid_ply(self.game, self.board, -self.current_player)
 
         print('Debug - RHEA Action Executed: ', player_action)
         print('Debug - Opponent Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
-        self.board.pieces = list(
-            self.game.getNextState(np.array(self.board.pieces), -self.current_player, player_action)[0])
-        move = (int(action_opponent / self.board.n), action_opponent % self.board.n)
-        self.board.execute_move(move, -self.current_player)
+        self.individuals[0].play_ply(self.game, self.board, -self.current_player, action_opponent)
+
+        print(self.debug_print_population())
 
         # Pop all initial actions of all individuals, append a neural network based output at the end
         [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
@@ -208,11 +200,9 @@ class RHEAPopulation:
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
-        for indv in self.individuals:
-            print('Individual plan:', indv.get_gene())
-            print('Fitness:', indv.get_fitness())
-            print(np.array(indv.board.pieces))
-            break
+        print('Individual plan:', self.individuals[0].get_gene())
+        print('Fitness:', self.individuals[0].get_fitness())
+        print(np.array(self.individuals[0].board.pieces))
         print("*******************************************************************")
 
     def get_indv_fitness(self):

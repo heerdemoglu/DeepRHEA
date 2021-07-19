@@ -8,8 +8,8 @@ game = OthelloGame(n=6)
 nnet = NNetWrapper(game)
 
 # FixMe: Loading pre-trained model gives almost 1 fitness (implying player 1 will certainly win)
-# nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x6_153checkpoints_best.pth.tar')
-nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x100x25_best.pth.tar')
+nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x6_153checkpoints_best.pth.tar')
+# nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x100x25_best.pth.tar')
 
 
 args = dotdict({
@@ -28,11 +28,10 @@ population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, boar
 print(population.debug_print_population())
 
 # Play 5 turns:
-for i in range(8):
+for i in range(5):
     print('Turn ', i)
     population.evolve()
 
     # Select the best individual and play it; proceed with the game tick:
     population.select_and_execute_individual()
-    print(population.debug_print_population())
 

@@ -14,8 +14,10 @@ class RHEAIndividual:
     def __init__(self, game: Game, args, nnet, board=None, action_plan=None, player=1):
         self.INDIVIDUAL_LENGTH = args.INDIVIDUAL_LENGTH  # How long is the action plan.
         self.MUTATION_CHANCE = args.MUTATION_CHANCE  # Chance of having a mutation on a gene.
-        self.action_plan = action_plan  # The action plan for the individual.
+
         self.fitness = None  # Fitness of the individual.
+        self.action_plan = action_plan  # The action plan for the individual.
+
         self.game = game  # Game information relayed to individual.
         self.player = player  # Player 1 is +1, player 2 is -1.
         self.board = deepcopy(board)  # Board state controlled by RHEAPopulation.
@@ -67,17 +69,8 @@ class RHEAIndividual:
         Plans 1 action that is to be taken by the agent using the neural network provided.
         :return: action, game and board states after playing a hypothetical turn.
         """
-        # Get valid indices:
-        valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
-
-        # If game not ended: Get the best performing action from the neural network:
-        action, _ = self.nnet.predict(np.array(board.pieces) * player)  # board*player is canonical form of board.
-        action = np.argmax(action)
-
-        if action not in valid_action_indices:
-            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
-            np.random.shuffle(valid_action_indices)
-            action = valid_action_indices[0]
+        # Plan a valid action:
+        action, valid_action_indices, _ = self.plan_valid_ply(game, board, player)
 
         # For each gene, there is a chance that it mutates into a random valid gene:
         if random.uniform(0, 1) >= self.MUTATION_CHANCE:
@@ -85,15 +78,38 @@ class RHEAIndividual:
             np.random.shuffle(valid_action_indices)
             action = valid_action_indices[0]
 
+        # Play the action (ply-half turn) for this player:
+        self.play_ply(game, board, player, action)
+
+        # Append planned action to the sequence.
+        return action, game, board
+
+    def plan_valid_ply(self, game, board, player):
+        # Get valid indices:
+        valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
+
+        # If game not ended: Get the best performing action from the neural network:
+        action, fitness = self.nnet.predict(np.array(board.pieces) * player)  # board*player is canonical form of board.
+        action = np.argmax(action)
+
+        if action not in valid_action_indices:  # This is for safety; do not allow invalid actions in training.
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices)
+            action = valid_action_indices[0]
+        return action, valid_action_indices, fitness
+
+    @staticmethod
+    def play_ply(game, board, player, action):
         # Play this turn to for the player:
         board.pieces = game.getNextState(np.array(board.pieces), player, action)[0]
         move = (int(action / board.n), action % board.n)
         board.execute_move(move, player)
 
-        # Append planned action to the sequence.
-        return action, game, board
-
     def measure_fitness(self):
+        """
+        Measures fitness for the player and also gives best action wrt to neural network as the next move.
+        :return:
+        """
         temp_game = deepcopy(self.game)
         temp_board = deepcopy(self.board)
 
@@ -102,35 +118,17 @@ class RHEAIndividual:
             action = self.action_plan[i]
 
             # Play this turn to for the player:
-            temp_board.pieces = temp_game.getNextState(np.array(temp_board.pieces), self.player, action)[0]
-            move = (int(action / temp_board.n), action % temp_board.n)
-            temp_board.execute_move(move, self.player)
+            self.play_ply(temp_game, temp_board, self.player, action)
 
             # Play a best policy valid move for the opponent:
-            valid_action_indices = np.where(temp_game.getValidMoves(temp_board, -self.player) == 1)[0]
-            action_opponent, _ = self.nnet.predict(np.array(temp_board.pieces) * -self.player)
-            action_opponent = np.argmax(action_opponent)
-
-            if action_opponent not in valid_action_indices:
-                # Returns all possible valid indices, then randomize and get the first action on list of valid actions.
-                np.random.shuffle(valid_action_indices)
-                action_opponent = valid_action_indices[0]
+            action_opponent, valid_action_indices_opponent, _ = self.plan_valid_ply(temp_game, temp_board, -self.player)
 
             # Play this turn to for the opponent player:
-            temp_board.pieces = temp_game.getNextState(np.array(temp_board.pieces), -self.player, action_opponent)[0]
-            move = (int(action_opponent / temp_board.n), action_opponent % temp_board.n)
-            temp_board.execute_move(move, -self.player)
+            self.play_ply(temp_game, temp_board, -self.player, action_opponent)
 
         # If game not ended: Get the best performing action from the neural network:
         # temp_board*cls.player is canonical form of board.
-        action, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
-        action = np.argmax(action)
-
-        valid_action_indices_new_move = np.where(temp_game.getValidMoves(temp_board, self.player) == 1)[0]
-        if action not in valid_action_indices_new_move:
-            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
-            np.random.shuffle(valid_action_indices_new_move)
-            action = valid_action_indices_new_move[0]
+        action, _, fitness = self.plan_valid_ply(temp_game, temp_board, self.player)
 
         return action, fitness
 
@@ -154,7 +152,6 @@ class RHEAIndividual:
     def check_gene_validity(self):
         pass
 
-    # fixme: always appends the same value to the end of each individual of a population.
     def append_next_action_from_nn(self):
         """Appends a valid action to the end of the current action plan."""
 
