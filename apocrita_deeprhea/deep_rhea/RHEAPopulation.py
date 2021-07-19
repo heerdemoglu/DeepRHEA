@@ -183,6 +183,9 @@ class RHEAPopulation:
             np.random.shuffle(valid_action_indices)
             action_opponent = valid_action_indices[0]
 
+        print('Debug - RHEA Action Executed: ', player_action)
+        print('Debug - Opponent Action Executed: ', action_opponent)
+
         # Play this turn to for the opponent player:
         self.board.pieces = list(
             self.game.getNextState(np.array(self.board.pieces), -self.current_player, player_action)[0])
@@ -208,6 +211,8 @@ class RHEAPopulation:
         for indv in self.individuals:
             print('Individual plan:', indv.get_gene())
             print('Fitness:', indv.get_fitness())
+            print(np.array(indv.board.pieces))
+            break
         print("*******************************************************************")
 
     def get_indv_fitness(self):

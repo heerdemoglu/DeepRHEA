@@ -72,10 +72,9 @@ class RHEAIndividual:
 
         # If game not ended: Get the best performing action from the neural network:
         action, _ = self.nnet.predict(np.array(board.pieces) * player)  # board*player is canonical form of board.
+        action = np.argmax(action)
 
-        if action in valid_action_indices:
-            action = np.argmax(action)
-        else:
+        if action not in valid_action_indices:
             #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
             np.random.shuffle(valid_action_indices)
             action = valid_action_indices[0]
@@ -110,11 +109,10 @@ class RHEAIndividual:
             # Play a best policy valid move for the opponent:
             valid_action_indices = np.where(temp_game.getValidMoves(temp_board, -self.player) == 1)[0]
             action_opponent, _ = self.nnet.predict(np.array(temp_board.pieces) * -self.player)
+            action_opponent = np.argmax(action_opponent)
 
-            if action_opponent in valid_action_indices:
-                action_opponent = np.argmax(action_opponent)
-            else:
-                #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            if action_opponent not in valid_action_indices:
+                # Returns all possible valid indices, then randomize and get the first action on list of valid actions.
                 np.random.shuffle(valid_action_indices)
                 action_opponent = valid_action_indices[0]
 
@@ -126,8 +124,15 @@ class RHEAIndividual:
         # If game not ended: Get the best performing action from the neural network:
         # temp_board*cls.player is canonical form of board.
         action, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+        action = np.argmax(action)
 
-        return np.argmax(action), fitness
+        valid_action_indices_new_move = np.where(temp_game.getValidMoves(temp_board, self.player) == 1)[0]
+        if action not in valid_action_indices_new_move:
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices_new_move)
+            action = valid_action_indices_new_move[0]
+
+        return action, fitness
 
     def get_gene(self):
         """
