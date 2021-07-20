@@ -26,10 +26,11 @@ class RHEAIndividual:
         # If individual is created from scratch, fitness is also calculated. Otherwise calculate individual's fitness.
         if self.action_plan is None:
             self.action_plan = self.build_plan()
-            self.fitness = self.fitness / (2 * self.INDIVIDUAL_LENGTH)
+            self.fitness = self.fitness / (2 * len(self.action_plan))  # Average over all actions.
         else:
             self.measure_fitness()
-            self.fitness = self.fitness / (2 * self.INDIVIDUAL_LENGTH)
+            self.fitness = self.fitness / (2 * len(self.action_plan))
+
     def build_plan(self):
         """
             Construct's individual's action plan from scratch.
@@ -169,4 +170,5 @@ class RHEAIndividual:
         """Appends a valid action to the end of the current action plan."""
 
         next_action = self.measure_fitness()
+        self.fitness = self.fitness / (2 * len(self.action_plan))
         self.action_plan.append(next_action)

@@ -83,9 +83,6 @@ class RHEAPopulation:
         draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
                       else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
 
-        # todo: check validity at crossover, ensure valid sequencing throughout.
-
-
         # return new action plan that can be used to generate the new individual:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
                                              board=self.board, action_plan=draft_plan)
@@ -158,7 +155,7 @@ class RHEAPopulation:
             # self.debug_print_population()
 
     def select_and_execute_individual(self):
-        # ToDo; Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
+        # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
         #  However, this compresses the search space as each player individual will
         #  have only a single opponent behavior.
@@ -176,21 +173,18 @@ class RHEAPopulation:
         action_opponent, valid_action_indices, fitness = \
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.current_player)
 
+        print('Debug - Individual Plan: ', self.individuals[0].get_gene())
         print('Debug - RHEA Action Executed: ', player_action)
         print('Debug - Opponent Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
         self.individuals[0].play_ply(self.game, self.board, -self.current_player, action_opponent)
 
-        print(self.debug_print_population())
-
         # Pop all initial actions of all individuals, append a neural network based output at the end
         [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
 
         # Update individual's game and boards as well.
         # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
-        # ToDo: Prune invalid opponent actions and create valid sequences from the individuals that are valid.
-        #  (Is it necessary?)
         for i in range(len(self.individuals)):
             self.individuals[i].game = self.game
             self.individuals[i].board = self.board
@@ -198,11 +192,14 @@ class RHEAPopulation:
             # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
             self.individuals[i].append_next_action_from_nn()
 
+        print(self.debug_print_population())
+
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
-        print('Individual plan:', self.individuals[0].get_gene())
+        print('Remaining Individual plan:', self.individuals[0].get_gene())
         print('Fitness:', self.individuals[0].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
+        print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.current_player))
         print("*******************************************************************")
 
     def get_indv_fitness(self):
