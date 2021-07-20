@@ -56,8 +56,8 @@ class RHEAPopulation:
         list_ = list(zip(temp_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
         listed = [list(a) for a in list_]
 
-        self.pop_fitness = sorted(self.pop_fitness, reverse=False)
-        temp_indvs = sorted(listed, reverse=False, key=lambda x: x[0])
+        self.pop_fitness = sorted(self.pop_fitness, reverse=True)
+        temp_indvs = sorted(listed, reverse=True, key=lambda x: x[0])
 
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
@@ -76,9 +76,16 @@ class RHEAPopulation:
         diff2 = [i - select2 for i in cum_probs]
         parent2_idx = diff2.index(min([i for i in diff2 if i > 0]))
 
-        # Do 1-point crossover and form a valid sequence: (between 0 and indv. length - 1: boundaries included)
-        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 2)  # start from first end from last index.
+        # # Uniform crossover:
+        # draft_plan = []
+        # for i in range(len(self.individuals[0].get_gene())):
+        #     if random.random() < 0.5:
+        #         draft_plan.append(self.individuals[parent1_idx].get_gene()[i])
+        #     else:
+        #         draft_plan.append(self.individuals[parent2_idx].get_gene()[i])
 
+        # Do 1-point crossover and form a valid sequence: (between 0 and indv. length - 1: boundaries included)
+        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 2)  # start from first end from last index
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
         draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
                       else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
@@ -92,6 +99,7 @@ class RHEAPopulation:
 
         return fitness_indv
 
+    # Fixme: Crossovers do not work as intended, fills the population with the same individual.
     def evolve_generation(self):
         """
         Assumes sorted individuals. Evolves the population for 1 generation.
@@ -152,9 +160,13 @@ class RHEAPopulation:
         for j in range(self.args.MAX_GENERATION_BUDGET):
             if (j+1) % 10 == 0:
                 print('Generation ', j + 1, ' computed.')
+                # for i in range(len(self.individuals)):
+                #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene())
+                # print('')
             # Evolve the generation for 1 step.
             self.evolve_generation()
             # self.debug_print_population()
+            self.sort_population_fitness()
 
     def select_and_execute_individual(self):
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
@@ -196,11 +208,14 @@ class RHEAPopulation:
 
         print(self.debug_print_population())
 
+
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         print('Remaining Individual plan:', self.individuals[0].get_gene())
-        for i in range(len(self.individuals)):
-            print('Fitness:', self.individuals[i].get_fitness())
+        # for i in range(len(self.individuals)):
+        #     print('Individual ', i+1)
+        #     print(self.individuals[i].get_gene())
+        print('Fitness:', self.individuals[0].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
         print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.current_player))
         print("*******************************************************************")

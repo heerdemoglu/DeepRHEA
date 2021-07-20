@@ -167,9 +167,6 @@ class RHEAIndividual:
     def get_fitness(self):
         return self.fitness
 
-    def check_gene_validity(self):
-        pass
-
     def append_next_action_from_nn(self):
         """Appends a valid action to the end of the current action plan."""
 
