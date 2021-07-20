@@ -12,9 +12,9 @@ nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '
 
 
 args = dotdict({
-    'NUM_OF_INDIVIDUALS': 100,
+    'NUM_OF_INDIVIDUALS': 25,
     'INDIVIDUAL_LENGTH': 5,
-    'NUM_OF_BEST_INDIVIDUALS': 20,
+    'NUM_OF_BEST_INDIVIDUALS': 5,
     'MAX_GENERATION_BUDGET': 10,
     'MUTATION_CHANCE': 0.2,  # Number of complete self-play games to simulate during a new iteration.
 })
@@ -26,10 +26,10 @@ board = Board(6)
 population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
 # Play 10 turns: - Why so slow? Optimize!
-for i in range(10):
+for i in range(5):
     print('Turn ', i)
     # Evolve 10 iterations:
-    for j in range(10):
+    for j in range(5):
         print('Generation ', j+1, ' computed.')
         population.evolve()
 
