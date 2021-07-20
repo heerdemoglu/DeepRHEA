@@ -27,7 +27,7 @@ population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, boar
 
 # Play 10 turns: - Why so slow? Optimize!
 for i in range(5):
-    print('Turn ', i)
+    print('Turn ', i+1)
     # Evolve 10 iterations:
     for j in range(5):
         print('Generation ', j+1, ' computed.')
