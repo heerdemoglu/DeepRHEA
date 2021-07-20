@@ -8,15 +8,14 @@ game = OthelloGame(n=6)
 nnet = NNetWrapper(game)
 
 nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x6_153checkpoints_best.pth.tar')
-# nnet.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\trained_model', '6x100x25_best.pth.tar')
-
 
 args = dotdict({
-    'NUM_OF_INDIVIDUALS': 25,
-    'INDIVIDUAL_LENGTH': 5,
-    'NUM_OF_BEST_INDIVIDUALS': 5,
-    'MAX_GENERATION_BUDGET': 10,
-    'MUTATION_CHANCE': 0.2,  # Number of complete self-play games to simulate during a new iteration.
+    'NUM_OF_INDIVIDUALS': 10,
+    'INDIVIDUAL_LENGTH': 10,
+    'NUM_OF_BEST_INDIVIDUALS': 2,
+    'MAX_GENERATION_BUDGET': 30,
+    'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
+    'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
 })
 
 # Creating sample board:
@@ -26,12 +25,9 @@ board = Board(6)
 population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
 # Play 10 turns: - Why so slow? Optimize!
-for i in range(5):
+for i in range(17):
     print('Turn ', i+1)
-    # Evolve 10 iterations:
-    for j in range(5):
-        print('Generation ', j+1, ' computed.')
-        population.evolve()
+    population.evolve()
 
     # Select the best individual and play it; proceed with the game tick:
     population.select_and_execute_individual()

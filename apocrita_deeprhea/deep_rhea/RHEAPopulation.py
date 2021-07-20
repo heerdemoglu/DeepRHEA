@@ -56,8 +56,8 @@ class RHEAPopulation:
         list_ = list(zip(temp_fitness, self.individuals))  # list(), otherwise iterator ends and returns empty.
         listed = [list(a) for a in list_]
 
-        self.pop_fitness = sorted(self.pop_fitness, reverse=True)
-        temp_indvs = sorted(listed, reverse=True, key=lambda x: x[0])
+        self.pop_fitness = sorted(self.pop_fitness, reverse=False)
+        temp_indvs = sorted(listed, reverse=False, key=lambda x: x[0])
 
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
@@ -149,7 +149,9 @@ class RHEAPopulation:
         :return:
         """
         # Until computational budget is reached, do the following:
-        for _ in range(self.args.MAX_GENERATION_BUDGET):
+        for j in range(self.args.MAX_GENERATION_BUDGET):
+            if (j+1) % 10 == 0:
+                print('Generation ', j + 1, ' computed.')
             # Evolve the generation for 1 step.
             self.evolve_generation()
             # self.debug_print_population()
@@ -174,8 +176,8 @@ class RHEAPopulation:
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.current_player)
 
         print('Debug - Individual Plan: ', self.individuals[0].get_gene())
-        print('Debug - RHEA Action Executed: ', player_action)
-        print('Debug - Opponent Action Executed: ', action_opponent)
+        print('Debug - RHEA (+1) Action Executed: ', player_action)
+        print('Debug - Opponent (-1) Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
         self.individuals[0].play_ply(self.game, self.board, -self.current_player, action_opponent)
@@ -197,7 +199,8 @@ class RHEAPopulation:
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         print('Remaining Individual plan:', self.individuals[0].get_gene())
-        print('Fitness:', self.individuals[0].get_fitness())
+        for i in range(len(self.individuals)):
+            print('Fitness:', self.individuals[i].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
         print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.current_player))
         print("*******************************************************************")
