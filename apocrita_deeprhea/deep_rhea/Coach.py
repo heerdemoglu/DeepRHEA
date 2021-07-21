@@ -8,6 +8,7 @@ from random import shuffle
 import numpy as np
 from tqdm import tqdm
 
+from apocrita_az.alpha_zero.MCTS import MCTS
 from apocrita_deeprhea.deep_rhea import RHEAPopulation, Arena
 
 log = logging.getLogger(__name__)
@@ -107,13 +108,13 @@ class Coach():
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            pmcts = MCTS(self.game, self.pnet, self.args)
+            rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args)
 
             self.nnet.train(trainExamples)
             nmcts = MCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena(lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
+            arena = Arena(lambda x: np.argmax(rhea.getActionProb(x, temp=0)),
                           lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare)
 
