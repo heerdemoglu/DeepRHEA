@@ -40,7 +40,7 @@ class RHEAPopulation:
         self.individuals = []
         self.pop_fitness = []
         for i in range(self.args.NUM_OF_INDIVIDUALS):
-            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=self.board)
+            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet)
             self.pop_fitness.append(indv.get_fitness())
             self.individuals.append(indv)
 
@@ -212,9 +212,9 @@ class RHEAPopulation:
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         print('Remaining Individual plan:', self.individuals[0].get_gene())
-        # for i in range(len(self.individuals)):
-        #     print('Individual ', i+1)
-        #     print(self.individuals[i].get_gene())
+        for i in range(len(self.individuals)):
+            print('Individual ', i+1)
+            print(self.individuals[i].get_gene())
         print('Fitness:', self.individuals[0].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
         print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.current_player))

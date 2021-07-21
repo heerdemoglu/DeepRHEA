@@ -1,13 +1,14 @@
-import os
 import sys
 import logging
 import coloredlogs
-from alpha_zero.Coach import Coach
-from alpha_zero.utils import dotdict
-from othello.pytorch.NNet import NNetWrapper
-from othello.OthelloGame import OthelloGame
 
 # todo: change for DeepRHEA
+from apocrita_deeprhea.deep_rhea.Coach import Coach
+from apocrita_deeprhea.deep_rhea.utils import dotdict
+from apocrita_deeprhea.othello.OthelloGame import OthelloGame
+from apocrita_deeprhea.othello.pytorch.NNet import NNetWrapper
+
+
 def main(home):
     # Directory Setup:
     # Fetch and setup to Apocrita directory.
@@ -33,6 +34,13 @@ def main(home):
         'load_model': False,
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
+        'NUM_OF_INDIVIDUALS': 10,
+        'INDIVIDUAL_LENGTH': 3,
+        'NUM_OF_BEST_INDIVIDUALS': 2,
+        'MAX_GENERATION_BUDGET': 20,
+        'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
+        'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
+        'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
     })
 
     # # This is for debugging purposes; actual model has to run for a long time:
