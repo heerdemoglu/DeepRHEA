@@ -2,10 +2,10 @@ import logging
 
 import coloredlogs
 
-from Coach import Coach
+from deep_rhea.Coach import Coach
 from othello.OthelloGame import OthelloGame as Game
 from othello.pytorch.NNet import NNetWrapper as nn
-from utils import *
+from core_game.utils import *
 
 log = logging.getLogger(__name__)
 

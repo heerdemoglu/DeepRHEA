@@ -1,8 +1,8 @@
-import RHEAIndividual
-from apocrita_deeprhea.othello.OthelloGame import OthelloGame
-from apocrita_deeprhea.othello.pytorch.NNet import NNetWrapper
-from apocrita_deeprhea.othello.OthelloLogic import Board
-from utils import dotdict
+import deep_rhea.RHEAIndividual as RHEAIndividual
+from othello.OthelloGame import OthelloGame
+from othello.pytorch.NNet import NNetWrapper
+from othello.OthelloLogic import Board
+from core_game.utils import dotdict
 
 game = OthelloGame(n=6)
 nnet = NNetWrapper(game)
@@ -10,6 +10,7 @@ nnet = NNetWrapper(game)
 args = dotdict({
         'INDIVIDUAL_LENGTH': 5,
         'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
+        'REWARD_DECAY_RATE': 0.9
 })
 
 # Creating sample board:

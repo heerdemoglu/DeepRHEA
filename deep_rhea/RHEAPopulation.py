@@ -2,9 +2,9 @@ import random
 
 import numpy as np
 
-import RHEAIndividual
+import deep_rhea.RHEAIndividual as RHEAIndividual
 
-from apocrita_deeprhea.othello.OthelloLogic import Board
+from othello.OthelloLogic import Board
 
 
 class RHEAPopulation:
@@ -28,7 +28,7 @@ class RHEAPopulation:
         self.nnet = nnet
         # {num_of_individuals, individual_length, num_of_best_individuals, mutation_chance, max_generation_budget}
         self.args = args
-        self.current_player = 1  # Always start with player 1. (design choice)
+        self.player = 1  # Always start with player 1. (design choice)
 
         # Get the initial board configuration to set up the individuals.
         if board is None:
@@ -62,6 +62,7 @@ class RHEAPopulation:
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
 
+    # FixMe: Fix crossover; add mutation, utilize opponent model at individual level.
     def crossover_parents(self, cum_probs):
         """
         Creates an action plan using crossover of two individuals from its generation.
@@ -170,6 +171,8 @@ class RHEAPopulation:
         action = self.select_and_execute_individual()
         return action
 
+    # FixMe: Select best individual, play it; according to opponent's move, filter the generation; renew the generation #
+    #  and the evolution.
     def select_and_execute_individual(self):
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
@@ -182,19 +185,19 @@ class RHEAPopulation:
         player_action = self.individuals[0].action_plan[0]
 
         # Play this action in the game:
-        self.individuals[0].play_ply(self.game, self.board, self.current_player, player_action)
+        self.individuals[0].play_ply(self.game, self.board, self.player, player_action)
 
         # Play opponent action optimized by neural network:
         # Play a best policy valid move for the opponent:
         action_opponent, valid_action_indices, fitness = \
-            self.individuals[0].plan_valid_ply(self.game, self.board, -self.current_player)
+            self.individuals[0].plan_valid_ply(self.game, self.board, -self.player)
 
         # print('Debug - Individual Plan: ', self.individuals[0].get_gene())
         # print('Debug - RHEA (+1) Action Executed: ', player_action)
         # print('Debug - Opponent (-1) Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
-        self.individuals[0].play_ply(self.game, self.board, -self.current_player, action_opponent)
+        self.individuals[0].play_ply(self.game, self.board, -self.player, action_opponent)
 
         # Pop all initial actions of all individuals, append a neural network based output at the end
         [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
@@ -220,7 +223,7 @@ class RHEAPopulation:
             print(self.individuals[i].get_gene())
         print('Fitness:', self.individuals[0].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
-        print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.current_player))
+        print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.player))
         print("*******************************************************************")
 
     def get_indv_fitness(self):

@@ -1,16 +1,15 @@
 import os
-import sys
 import time
 
 import numpy as np
 from tqdm import tqdm
 
-from alpha_zero_general_code.utils import *
-from alpha_zero_general_code.NeuralNet import NeuralNet
+from core_game.NeuralNet import NeuralNet
 
 import torch
 import torch.optim as optim
 
+from core_game.utils import dotdict, AverageMeter
 from othello.pytorch import OthelloNNet as onnet
 
 args = dotdict({
@@ -25,7 +24,7 @@ args = dotdict({
 
 class NNetWrapper(NeuralNet):
     def __init__(self, game):
-        self.nnet = onnet(game, args)
+        self.nnet = onnet.OthelloNNet(game, args)
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
 
@@ -56,7 +55,8 @@ class NNetWrapper(NeuralNet):
 
                 # predict
                 if args.cuda:
-                    boards, target_pis, target_vs = boards.contiguous().cuda(), target_pis.contiguous().cuda(), target_vs.contiguous().cuda()
+                    boards, target_pis, target_vs = boards.contiguous().cuda(), target_pis.contiguous().cuda(), \
+                                                    target_vs.contiguous().cuda()
 
                 # compute output
                 out_pi, out_v = self.nnet(boards)
@@ -83,7 +83,8 @@ class NNetWrapper(NeuralNet):
 
         # preparing input
         board = torch.FloatTensor(board.astype(np.float64))
-        if args.cuda: board = board.contiguous().cuda()
+        if args.cuda:
+            board = board.contiguous().cuda()
         board = board.view(1, self.board_x, self.board_y)
         self.nnet.eval()
         with torch.no_grad():

@@ -1,8 +1,8 @@
-import RHEAPopulation
-from apocrita_deeprhea.othello.OthelloGame import OthelloGame
-from apocrita_deeprhea.othello.OthelloLogic import Board
-from apocrita_deeprhea.othello.pytorch.NNet import NNetWrapper
-from utils import dotdict
+import deep_rhea.RHEAPopulation as RHEAPopulation
+from othello.OthelloGame import OthelloGame
+from othello.OthelloLogic import Board
+from othello.pytorch.NNet import NNetWrapper
+from core_game.utils import dotdict
 
 game = OthelloGame(n=6)
 nnet = NNetWrapper(game)
@@ -15,7 +15,7 @@ args = dotdict({
     'NUM_OF_BEST_INDIVIDUALS': 2,
     'MAX_GENERATION_BUDGET': 20,
     'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
-    'CROSSOVER_MUTATIONS': 3,   #  must be less than number of individuals.
+    'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
     'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
 })
 

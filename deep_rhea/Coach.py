@@ -9,8 +9,8 @@ import numpy as np
 from tqdm import tqdm
 
 from apocrita_az.alpha_zero.MCTS import MCTS
-from apocrita_deeprhea.deep_rhea import RHEAPopulation, Arena
-from apocrita_deeprhea.othello.OthelloLogic import Board
+from deep_rhea import RHEAPopulation, Arena
+from othello.OthelloLogic import Board
 
 log = logging.getLogger(__name__)
 
