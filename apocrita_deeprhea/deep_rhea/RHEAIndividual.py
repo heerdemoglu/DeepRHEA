@@ -64,6 +64,7 @@ class RHEAIndividual:
                 # print("Picked opponent action (debug): ", opp_act)
 
                 self.fitness += self.epsilon * fitness_opponent
+                self.fitness += self.epsilon * fitness_opponent
                 self.epsilon *= self.args.REWARD_DECAY_RATE
         return draft_plan
 
@@ -174,3 +175,4 @@ class RHEAIndividual:
         next_action = self.measure_fitness()
         self.action_plan.append(next_action)
         self.fitness *= 1 / (2 * self.args.INDIVIDUAL_LENGTH)
+        return next_action

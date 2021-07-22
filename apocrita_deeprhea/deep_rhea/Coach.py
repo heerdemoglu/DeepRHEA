@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 from apocrita_az.alpha_zero.MCTS import MCTS
 from apocrita_deeprhea.deep_rhea import RHEAPopulation, Arena
+from apocrita_deeprhea.othello.OthelloLogic import Board
 
 log = logging.getLogger(__name__)
 
@@ -25,8 +26,8 @@ class Coach():
         self.nnet = nnet
         self.pnet = self.nnet.__class__(self.game)  # the competitor network
         self.args = args
-        self.mcts = MCTS(self.game, self.nnet, self.args)
-        self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iterations
+        self.rhea = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=Board(6))
+        self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iteration
         self.skipFirstSelfPlay = True  # can be overriden in loadTrainExamples()
 
     def executeEpisode(self):
@@ -85,7 +86,8 @@ class Coach():
                 iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
 
                 for _ in tqdm(range(self.args.numEps), desc="Self Play"):
-                    self.mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
+                    self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
+                                                              args=self.args, board=Board(6))  # reset search tree
                     iterationTrainExamples += self.executeEpisode()
 
                 # save the iteration examples to the history 
@@ -108,14 +110,17 @@ class Coach():
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args)
+
+            board = Board(6)
+            rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args, board=board)
 
             self.nnet.train(trainExamples)
+
             nmcts = MCTS(self.game, self.nnet, self.args)
 
+            # ToDo; Fix arena to play between these versions.
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena(lambda x: np.argmax(rhea.getActionProb(x, temp=0)),
-                          lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
+            arena = Arena(rhea.evolve(), lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))

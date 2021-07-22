@@ -158,8 +158,8 @@ class RHEAPopulation:
         """
         # Until computational budget is reached, do the following:
         for j in range(self.args.MAX_GENERATION_BUDGET):
-            if (j+1) % 10 == 0:
-                print('Generation ', j + 1, ' computed.')
+            # if (j+1) % 10 == 0:
+                # print('Generation ', j + 1, ' computed.')
                 # for i in range(len(self.individuals)):
                 #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene())
                 # print('')
@@ -167,6 +167,8 @@ class RHEAPopulation:
             self.evolve_generation()
             # self.debug_print_population()
             self.sort_population_fitness()
+        action = self.select_and_execute_individual()
+        return action
 
     def select_and_execute_individual(self):
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
@@ -187,9 +189,9 @@ class RHEAPopulation:
         action_opponent, valid_action_indices, fitness = \
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.current_player)
 
-        print('Debug - Individual Plan: ', self.individuals[0].get_gene())
-        print('Debug - RHEA (+1) Action Executed: ', player_action)
-        print('Debug - Opponent (-1) Action Executed: ', action_opponent)
+        # print('Debug - Individual Plan: ', self.individuals[0].get_gene())
+        # print('Debug - RHEA (+1) Action Executed: ', player_action)
+        # print('Debug - Opponent (-1) Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
         self.individuals[0].play_ply(self.game, self.board, -self.current_player, action_opponent)
@@ -207,6 +209,7 @@ class RHEAPopulation:
             self.individuals[i].append_next_action_from_nn()
 
         print(self.debug_print_population())
+        return player_action
 
 
     def debug_print_population(self):
