@@ -40,7 +40,7 @@ class RHEAPopulation:
         self.individuals = []
         self.pop_fitness = []
         for i in range(self.args.NUM_OF_INDIVIDUALS):
-            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet)
+            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=board)
             self.pop_fitness.append(indv.get_fitness())
             self.individuals.append(indv)
 

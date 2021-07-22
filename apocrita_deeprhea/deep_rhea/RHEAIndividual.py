@@ -12,9 +12,7 @@ class RHEAIndividual:
     """
 
     def __init__(self, game: Game, args, nnet, board=None, action_plan=None, player=1):
-        self.INDIVIDUAL_LENGTH = args.INDIVIDUAL_LENGTH  # How long is the action plan.
-        self.MUTATION_CHANCE = args.MUTATION_CHANCE  # Chance of having a mutation on a gene.
-        self.DECAY_RATE = args.REWARD_DECAY_RATE
+        self.args = args
         self.epsilon = 1
 
         self.fitness = 0  # Fitness of the individual.
@@ -28,8 +26,10 @@ class RHEAIndividual:
         # If individual is created from scratch, fitness is also calculated. Otherwise calculate individual's fitness.
         if self.action_plan is None:
             self.action_plan = self.build_plan()
+            self.fitness *= 1/(2*self.args.INDIVIDUAL_LENGTH)
         else:
             self.measure_fitness()
+            self.fitness *= 1/(2*self.args.INDIVIDUAL_LENGTH)
 
     def build_plan(self):
         """
@@ -42,7 +42,7 @@ class RHEAIndividual:
         draft_plan = []
 
         # For each action that is to be filled in the action plan do the following:
-        for i in range(self.INDIVIDUAL_LENGTH):
+        for i in range(self.args.INDIVIDUAL_LENGTH):
 
             # If game ended put -1 to the sequence: (getGameEnded outputs +1:won, -1:lose, 0:not finished, ~0 draw)
             if temp_gamestate.getGameEnded(temp_board.pieces, self.player) != 0:
@@ -51,6 +51,8 @@ class RHEAIndividual:
                 # If game not ended: Get the best performing action from the neural network and apply it to the network:
                 action, temp_gamestate, temp_board, fitness_rhea = self.plan_base_action(temp_gamestate, temp_board,
                                                                                          self.player)
+
+                self.fitness += self.epsilon * fitness_rhea
 
                 # Append planned action to the sequence.
                 draft_plan.append(action)
@@ -61,7 +63,8 @@ class RHEAIndividual:
                                                                                               temp_board, -self.player)
                 # print("Picked opponent action (debug): ", opp_act)
 
-        _, self.fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+                self.fitness += self.epsilon * fitness_opponent
+                self.epsilon *= self.args.REWARD_DECAY_RATE
         return draft_plan
 
     def plan_base_action(self, game, board, player):
@@ -73,7 +76,7 @@ class RHEAIndividual:
         action, valid_action_indices, fitness = self.plan_valid_ply(game, board, player)
 
         # For each gene, there is a chance that it mutates into a random valid gene:
-        if random.uniform(0, 1) >= self.MUTATION_CHANCE:
+        if random.uniform(0, 1) >= self.args.MUTATION_CHANCE:
             #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
             np.random.shuffle(valid_action_indices)
             action = valid_action_indices[0]
@@ -89,7 +92,7 @@ class RHEAIndividual:
         temp_game = deepcopy(game)
 
         # Get valid indices:
-        valid_action_indices = np.where(game.getValidMoves(board, player) == 1)[0]
+        valid_action_indices = np.where(game.getValidMoves(np.array(board.pieces), player) == 1)[0]
 
         # If game not ended: Get the best performing action from the neural network:
         action, _ = self.nnet.predict(np.array(board.pieces) * player)  # board*player is canonical form of board.
@@ -120,6 +123,8 @@ class RHEAIndividual:
         """
         temp_game = deepcopy(self.game)
         temp_board = deepcopy(self.board)
+        self.fitness = 0
+        self.epsilon = 1
 
         # Simulate the game throughout the horizon: (Opponent Modelling: RHEA)
         for i in range(len(self.action_plan)):
@@ -128,6 +133,9 @@ class RHEAIndividual:
             # Play this turn to for the player:
             self.play_ply(temp_game, temp_board, self.player, action)
 
+            _, fitness_rhea = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+            self.fitness += self.epsilon * fitness_rhea
+
             # Play a best policy valid move for the opponent:
             action_opponent, valid_action_indices_opponent, fitness_opponent = \
                 self.plan_valid_ply(temp_game, temp_board, -self.player)
@@ -135,10 +143,13 @@ class RHEAIndividual:
             # Play this turn to for the opponent player:
             self.play_ply(temp_game, temp_board, -self.player, action_opponent)
 
-        next_action, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+        next_action, fitness_opponent = self.nnet.predict(np.array(temp_board.pieces) * self.player)
         next_action = np.argmax(next_action)
-        self.fitness = fitness
-        return next_action
+
+        self.fitness += self.epsilon * fitness_opponent
+        self.epsilon *= self.args.REWARD_DECAY_RATE
+
+        return next_action  # for appending the next action for the shift buffer.
 
     def get_gene(self):
         """
@@ -162,3 +173,4 @@ class RHEAIndividual:
 
         next_action = self.measure_fitness()
         self.action_plan.append(next_action)
+        self.fitness *= 1 / (2 * self.args.INDIVIDUAL_LENGTH)
