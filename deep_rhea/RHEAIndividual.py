@@ -5,7 +5,7 @@ from copy import deepcopy
 from core_game.Game import Game
 
 
-# Fixme: Same action plans may lead to different board configs due to opponent behavior. Different boards correspond to
+#  Same action plans may lead to different board configs due to opponent behavior. Different boards correspond to
 #  different fitness; which is not distinguishable by the individual only by using action plan.
 #  Maybe it is best to double the plan size; including opponent. Play two ply and re-order individuals so that opponent
 #  models are kept valid.
@@ -144,11 +144,11 @@ class RHEAIndividual:
             self.play_ply(temp_game, temp_board, -self.player, opp_action)
 
         # From Neural Network get a new action fo the shift buffer (more trained --> less random)
-        next_action, _ = self.plan_base_action(temp_game, temp_board, self.player)
-        self.play_ply(temp_game, temp_board, self.player, action)
+        next_action, _, _, _ = self.plan_base_action(temp_game, temp_board, self.player)
+        self.play_ply(temp_game, temp_board, self.player, next_action)
 
         # Get a new opponent action
-        next_opponent_action, _ = self.plan_base_action(temp_game, temp_board, -self.player)
+        next_opponent_action, _, _, _ = self.plan_base_action(temp_game, temp_board, -self.player)
         self.play_ply(temp_game, temp_board, -self.player, next_opponent_action)
 
         # Fitness after these planning are not necessary, as they will be used in the next iteration.
@@ -167,6 +167,9 @@ class RHEAIndividual:
         :return: Returns the action plan of the individual.
         """
         return self.action_plan
+
+    def get_opponent_gene(self):
+        return self.opp_plan
 
     def set_gene(self, action_plan):
         """

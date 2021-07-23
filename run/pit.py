@@ -7,7 +7,7 @@ from othello.pytorch.NNet import NNetWrapper as NNet
 
 import numpy as np
 from utils import *
-
+# Todo: this has to be modified for RHEA
 """
 use this script to play any two agents against each other, or play manually with
 any agent.

@@ -62,7 +62,6 @@ class RHEAPopulation:
         for i in range(len(self.individuals)):
             self.individuals[i] = temp_indvs[i][1]
 
-    # FixMe: Fix crossover; add mutation, utilize opponent model at individual level.
     def crossover_parents(self, cum_probs):
         """
         Creates an action plan using crossover of two individuals from its generation.
@@ -77,27 +76,30 @@ class RHEAPopulation:
         diff2 = [i - select2 for i in cum_probs]
         parent2_idx = diff2.index(min([i for i in diff2 if i > 0]))
 
-        # # Uniform crossover:
-        # draft_plan = []
-        # for i in range(len(self.individuals[0].get_gene())):
-        #     if random.random() < 0.5:
-        #         draft_plan.append(self.individuals[parent1_idx].get_gene()[i])
-        #     else:
-        #         draft_plan.append(self.individuals[parent2_idx].get_gene()[i])
+        parent1 = self.individuals[parent1_idx]
+        parent2 = self.individuals[parent2_idx]
 
-        # Do 1-point crossover and form a valid sequence: (between 0 and indv. length - 1: boundaries included)
-        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 2)  # start from first end from last index
+        # Decide on crossover index:
+        crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 1)  # start from first end from last index
+
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
         draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
                       else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
 
-        # return new action plan that can be used to generate the new individual:
+        draft_opp_plan = [self.individuals[parent1_idx].get_opponent_gene()[i] if i <= crossover_idx
+                          else self.individuals[parent2_idx].get_opponent_gene()[i]
+                          for i in range(self.args.INDIVIDUAL_LENGTH)]
+
+        # ToDo: Mutate the plans:
+
+        # ToDo: Repair the genes:
+
+        # Create and Return child individual along with its fitness:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
-                                             board=self.board, action_plan=draft_plan)
+                                             board=self.board, action_plan=draft_plan, opp_plan=draft_opp_plan)
 
         fitness = indv.get_fitness()
         fitness_indv = [fitness, indv]
-
         return fitness_indv
 
     # Fixme: Crossovers do not work as intended, fills the population with the same individual.
@@ -160,10 +162,10 @@ class RHEAPopulation:
         # Until computational budget is reached, do the following:
         for j in range(self.args.MAX_GENERATION_BUDGET):
             # if (j+1) % 10 == 0:
-                # print('Generation ', j + 1, ' computed.')
-                # for i in range(len(self.individuals)):
-                #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene())
-                # print('')
+            # print('Generation ', j + 1, ' computed.')
+            # for i in range(len(self.individuals)):
+            #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene())
+            # print('')
             # Evolve the generation for 1 step.
             self.evolve_generation()
             # self.debug_print_population()
@@ -171,7 +173,7 @@ class RHEAPopulation:
         action = self.select_and_execute_individual()
         return action
 
-    # FixMe: Select best individual, play it; according to opponent's move, filter the generation; renew the generation #
+    # FixMe: Select best individual, play it; according to opponent's move, filter the generation; renew the generation
     #  and the evolution.
     def select_and_execute_individual(self):
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
@@ -209,11 +211,10 @@ class RHEAPopulation:
             self.individuals[i].board = self.board
 
             # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
-            self.individuals[i].append_next_action_from_nn()
+            _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
 
         print(self.debug_print_population())
         return player_action
-
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
