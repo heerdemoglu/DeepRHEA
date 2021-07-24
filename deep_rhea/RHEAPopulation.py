@@ -83,26 +83,26 @@ class RHEAPopulation:
         crossover_idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 1)  # start from first end from last index
 
         # From individuals list, get the individual at index [parent_idx][1] and fetch its gene at ith index.
-        draft_plan = [self.individuals[parent1_idx].get_gene()[i] if i <= crossover_idx
-                      else self.individuals[parent2_idx].get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
+        draft_plan = [parent1.get_gene()[i] if i <= crossover_idx
+                      else parent2.get_gene()[i] for i in range(self.args.INDIVIDUAL_LENGTH)]
 
-        draft_opp_plan = [self.individuals[parent1_idx].get_opponent_gene()[i] if i <= crossover_idx
-                          else self.individuals[parent2_idx].get_opponent_gene()[i]
+        draft_opp_plan = [parent1.get_opponent_gene()[i] if i <= crossover_idx
+                          else parent2.get_opponent_gene()[i]
                           for i in range(self.args.INDIVIDUAL_LENGTH)]
-
-        # ToDo: Mutate the plans:
-
-        # ToDo: Repair the genes:
 
         # Create and Return child individual along with its fitness:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
                                              board=self.board, action_plan=draft_plan, opp_plan=draft_opp_plan)
 
+        # Mutate and repair the genes of the new individual.
+        for i in range(self.args.CROSSOVER_MUTATIONS):
+            idx = random.randint(1, self.args.INDIVIDUAL_LENGTH - 1)
+            indv.mutate_genes(idx)
+
         fitness = indv.get_fitness()
         fitness_indv = [fitness, indv]
         return fitness_indv
 
-    # Fixme: Crossovers do not work as intended, fills the population with the same individual.
     def evolve_generation(self):
         """
         Assumes sorted individuals. Evolves the population for 1 generation.
@@ -161,10 +161,11 @@ class RHEAPopulation:
         """
         # Until computational budget is reached, do the following:
         for j in range(self.args.MAX_GENERATION_BUDGET):
-            # if (j+1) % 10 == 0:
-            # print('Generation ', j + 1, ' computed.')
+            if (j+1) % 10 == 0:
+                print('Generation ', j + 1, ' computed.')
             # for i in range(len(self.individuals)):
-            #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene())
+            #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene(), 'Fitness: ',
+            #           self.individuals[i].get_fitness())
             # print('')
             # Evolve the generation for 1 step.
             self.evolve_generation()
@@ -195,8 +196,8 @@ class RHEAPopulation:
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.player)
 
         # print('Debug - Individual Plan: ', self.individuals[0].get_gene())
-        # print('Debug - RHEA (+1) Action Executed: ', player_action)
-        # print('Debug - Opponent (-1) Action Executed: ', action_opponent)
+        print('Debug - RHEA (+1) Action Executed: ', player_action)
+        print('Debug - Opponent (-1) Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
         self.individuals[0].play_ply(self.game, self.board, -self.player, action_opponent)
@@ -219,9 +220,9 @@ class RHEAPopulation:
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""
         print('Remaining Individual plan:', self.individuals[0].get_gene())
-        for i in range(len(self.individuals)):
-            print('Individual ', i+1)
-            print(self.individuals[i].get_gene())
+        # for i in range(len(self.individuals)):
+        #     print('Individual ', i+1)
+        #     print(self.individuals[i].get_gene())
         print('Fitness:', self.individuals[0].get_fitness())
         print(np.array(self.individuals[0].board.pieces))
         print('Score for RHEA Agent: ', self.game.getScore(self.individuals[0].board.pieces, self.player))

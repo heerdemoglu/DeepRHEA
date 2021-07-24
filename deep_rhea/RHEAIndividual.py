@@ -9,6 +9,9 @@ from core_game.Game import Game
 #  different fitness; which is not distinguishable by the individual only by using action plan.
 #  Maybe it is best to double the plan size; including opponent. Play two ply and re-order individuals so that opponent
 #  models are kept valid.
+from othello.OthelloLogic import Board
+
+
 class RHEAIndividual:
     """
     Each RHEA Individual handles their operations themselves and reports
@@ -51,8 +54,8 @@ class RHEAIndividual:
 
             # If game ended put -1 to the sequence: (getGameEnded outputs +1:won, -1:lose, 0:not finished)
             if temp_gamestate.getGameEnded(temp_board.pieces, self.player) != 0:
-                draft_plan.append(-1)
-                opp_plan.append(-1)
+                draft_plan.append(36)
+                opp_plan.append(36)
                 _, fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
             else:
                 # If game not ended: Get the best performing action from the neural network and apply it to the network:
@@ -151,7 +154,8 @@ class RHEAIndividual:
         next_opponent_action, _, _, _ = self.plan_base_action(temp_game, temp_board, -self.player)
         self.play_ply(temp_game, temp_board, -self.player, next_opponent_action)
 
-        # Fitness after these planning are not necessary, as they will be used in the next iteration.
+        _, self.fitness = self.nnet.predict(np.array(temp_board.pieces) * self.player)
+
         return next_action, next_opponent_action  # for appending the next action for the shift buffer.
 
     def append_next_action_from_nn(self):
@@ -181,3 +185,58 @@ class RHEAIndividual:
 
     def get_fitness(self):
         return self.fitness
+
+    def mutate_genes(self, index):
+        """
+        Mutate the gene at the given index and adjust the remaining sequence as close to the original sequence.
+        Mutations return valid action sets, given the current board configuration.
+        """
+        temp_board = Board(6)
+
+        # Play the hypothetical game until index is reached:
+        for i in range(index):
+            self.play_ply(self.game, temp_board, self.player, self.action_plan[i])
+            self.play_ply(self.game, temp_board, -self.player, self.opp_plan[i])
+
+        # Mutate the action plan for the RHEA player with a random valid action:
+        valid_action_indices = np.where(self.game.getValidMoves(np.array(temp_board.pieces), self.player) == 1)[0]
+        np.random.shuffle(valid_action_indices)
+        action = valid_action_indices[0]
+
+        # Reflect the changes and play this:
+        self.action_plan[index] = action
+        self.play_ply(self.game, temp_board, self.player, action)
+
+        # Check opponent action validity mutate it as well if it becomes invalid:
+        valid_action_indices = np.where(self.game.getValidMoves(np.array(temp_board.pieces), -self.player) == 1)[0]
+        if self.opp_plan[index] not in valid_action_indices:
+            #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+            np.random.shuffle(valid_action_indices)
+            opp_action = valid_action_indices[0]
+            self.opp_plan[index] = opp_action
+
+        self.play_ply(self.game, temp_board, -self.player, self.opp_plan[index])
+
+        # Repair procedure: (Check the rest)
+        for j in range(index+1, len(self.action_plan)):
+            # First RHEA Player:
+            self.action_plan[j] = action
+            valid_actions = np.where(self.game.getValidMoves(np.array(temp_board.pieces), self.player) == 1)[0]
+
+            if action not in valid_actions:
+                #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+                np.random.shuffle(valid_actions)
+                self.action_plan[j] = valid_actions[0]
+
+            self.play_ply(self.game, temp_board, self.player, action)
+
+            # Now, opponent player:
+            self.opp_plan[j] = action
+            valid_actions = np.where(self.game.getValidMoves(np.array(temp_board.pieces), -self.player) == 1)[0]
+
+            if action not in valid_actions:
+                #  Returns all possible valid indices, then randomize and get the first action on list of valid actions.
+                np.random.shuffle(valid_actions)
+                self.opp_plan[j] = valid_actions[0]
+
+            self.play_ply(self.game, temp_board, -self.player, action)
