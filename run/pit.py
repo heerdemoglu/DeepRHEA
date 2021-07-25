@@ -1,5 +1,7 @@
 import Arena
 from MCTS import MCTS
+
+from core_game.utils import dotdict
 from othello.OthelloGame import OthelloGame
 from othello.OthelloPlayers import *
 from othello.pytorch.NNet import NNetWrapper as NNet

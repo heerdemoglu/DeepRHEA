@@ -15,7 +15,7 @@ from othello.OthelloLogic import Board
 log = logging.getLogger(__name__)
 
 
-class Coach():
+class Coach:
     """
     This class executes the self-play + learning. It uses the functions defined
     in Game and NeuralNet. args are specified in main.py.
@@ -28,7 +28,7 @@ class Coach():
         self.args = args
         self.rhea = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=Board(6))
         self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iteration
-        self.skipFirstSelfPlay = True  # can be overriden in loadTrainExamples()
+        self.skipFirstSelfPlay = True  # can be overridden in loadTrainExamples()
 
     def executeEpisode(self):
         """

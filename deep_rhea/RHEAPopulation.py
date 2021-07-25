@@ -174,9 +174,9 @@ class RHEAPopulation:
         action = self.select_and_execute_individual()
         return action
 
-    # FixMe: Select best individual, play it; according to opponent's move, filter the generation; renew the generation
-    #  and the evolution.
     def select_and_execute_individual(self):
+        # FixMe: Should this play random actions or planned actions from individual's opponent list?
+        # FixMe: Should it play the opponent's action? Isn't that supposed to be done by the Coach and Arena?
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
         #  However, this compresses the search space as each player individual will
@@ -204,6 +204,7 @@ class RHEAPopulation:
 
         # Pop all initial actions of all individuals, append a neural network based output at the end
         [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
+        [self.individuals[i].opp_plan.pop(0) for i in range(len(self.individuals))]
 
         # Update individual's game and boards as well.
         # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.

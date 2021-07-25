@@ -1,4 +1,4 @@
-# Todo: this has to be modified for RHEA
+# THIS CODE WILL BE THE SAME WITH APOCRITA RUNTIME CODE EXCLUDING APOCRITA'S COMMANDS.
 
 import logging
 
