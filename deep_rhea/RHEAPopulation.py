@@ -161,8 +161,8 @@ class RHEAPopulation:
         """
         # Until computational budget is reached, do the following:
         for j in range(self.args.MAX_GENERATION_BUDGET):
-            if (j+1) % 10 == 0:
-                print('Generation ', j + 1, ' computed.')
+            # if (j+1) % 10 == 0:
+            #     print('Generation ', j + 1, ' computed.')
             # for i in range(len(self.individuals)):
             #     print('Individual ', i + 1, '  -  ', self.individuals[i].get_gene(), 'Fitness: ',
             #           self.individuals[i].get_fitness())
@@ -171,12 +171,11 @@ class RHEAPopulation:
             self.evolve_generation()
             # self.debug_print_population()
             self.sort_population_fitness()
-        action = self.select_and_execute_individual()
-        return action
+        # action = self.select_and_execute_individual()
+        return self.individuals[0]
 
     def select_and_execute_individual(self):
-        # FixMe: Should this play random actions or planned actions from individual's opponent list?
-        # FixMe: Should it play the opponent's action? Isn't that supposed to be done by the Coach and Arena?
+        # This is used for testing the population evolution process on RHEAPopulationTest.py.
         # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
         #  In such case; opponent evolves the best model which is then played; also removes validity problems.
         #  However, this compresses the search space as each player individual will
@@ -196,8 +195,8 @@ class RHEAPopulation:
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.player)
 
         # print('Debug - Individual Plan: ', self.individuals[0].get_gene())
-        print('Debug - RHEA (+1) Action Executed: ', player_action)
-        print('Debug - Opponent (-1) Action Executed: ', action_opponent)
+        # print('Debug - RHEA (+1) Action Executed: ', player_action)
+        # print('Debug - Opponent (-1) Action Executed: ', action_opponent)
 
         # Play this turn to for the opponent player:
         self.individuals[0].play_ply(self.game, self.board, -self.player, action_opponent)
@@ -215,7 +214,7 @@ class RHEAPopulation:
             # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
             _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
 
-        print(self.debug_print_population())
+        # print(self.debug_print_population())
         return player_action
 
     def debug_print_population(self):

@@ -33,7 +33,7 @@ for i in range(16):
 
     population = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
 
-    population.evolve()
+    best_indv = population.evolve()
 
     # Select the best individual and play it; proceed with the game tick:
     population.select_and_execute_individual()

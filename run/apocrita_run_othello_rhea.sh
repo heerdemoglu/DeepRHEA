@@ -17,4 +17,4 @@ cd /data/scratch/$USER/apocrita_deeprhea   # Move to the scratch directory
 
 
 # Replace the following line with a program or command
-python train_othello_rhea.py 'full_training'
+python train_othello_rhea.py 'deep_rhea_full_training'
