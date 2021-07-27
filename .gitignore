@@ -11,11 +11,5 @@ checkpoints/
 # For PyCharm users
 .idea/
 
-/referenced_repositories/alpha-zero-general/alpha-zero-general-pretrained_models/
-
-
 .ipynb
-/referenced_repositories/alpha-zero-general/alpha-zero-general-pretrained-models/
-/referenced_repositories/
-/deprecated/
-/trained_model/
+/run/models/
