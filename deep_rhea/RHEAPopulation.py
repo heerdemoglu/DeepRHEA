@@ -14,7 +14,7 @@ class RHEAPopulation:
     generations to current generations.
     """
 
-    def __init__(self, game, nnet, args, board=None):
+    def __init__(self, game, nnet, args, player=1, board=None):
         """
         Initializes the RHE Search with a population of N;
         evolves the best individual and passes it to the rest of the
@@ -28,7 +28,7 @@ class RHEAPopulation:
         self.nnet = nnet
         # {num_of_individuals, individual_length, num_of_best_individuals, mutation_chance, max_generation_budget}
         self.args = args
-        self.player = 1  # Always start with player 1. (design choice)
+        self.player = player  # Always start with player 1. (design choice)
 
         # Get the initial board configuration to set up the individuals.
         if board is None:
@@ -230,3 +230,9 @@ class RHEAPopulation:
 
     def get_indv_fitness(self):
         return self.pop_fitness
+
+    def set_board(self, pieces):
+        self.board = pieces
+
+    def get_board(self):
+        return self.board

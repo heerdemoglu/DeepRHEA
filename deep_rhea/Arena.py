@@ -2,6 +2,8 @@ import logging
 
 from tqdm import tqdm
 
+from othello.OthelloLogic import Board
+
 log = logging.getLogger(__name__)
 
 
@@ -39,28 +41,33 @@ class Arena():
         """
         players = [self.player2, None, self.player1]
         curPlayer = 1
-        board = self.game.getInitBoard()
+        board = Board(6)
         it = 0
-        while self.game.getGameEnded(board, curPlayer) == 0:
+        while self.game.getGameEnded(board.pieces, curPlayer) == 0:
             it += 1
             if verbose:
-                assert self.display
+                print('***********')
                 print("Turn ", str(it), "Player ", str(curPlayer))
-                self.display(board)
-            action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer))
+                print(board.pieces)
+            # action = players[curPlayer + 1].action_plan[0]
+            players[curPlayer + 1].evolve()
+            action = players[curPlayer + 1].select_and_execute_individual()
+            # valids = self.game.getValidMoves(self.game.getCanonicalForm(board.pieces, curPlayer), curPlayer)
+            #
+            # if valids[action] == 0:
+            #     print('***********')
+            #     log.error(f'Action {action} is not valid!')
+            #     log.debug(f'valids = {valids}')
+            #     assert valids[action] > 0
 
-            valids = self.game.getValidMoves(self.game.getCanonicalForm(board, curPlayer), 1)
+            board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
+            players[0].set_board(board)
+            players[2].set_board(board)
 
-            if valids[action] == 0:
-                log.error(f'Action {action} is not valid!')
-                log.debug(f'valids = {valids}')
-                assert valids[action] > 0
-            board, curPlayer = self.game.getNextState(board, curPlayer, action)
         if verbose:
-            assert self.display
-            print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board, 1)))
-            self.display(board)
-        return curPlayer * self.game.getGameEnded(board, curPlayer)
+            print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
+            print(board.pieces)
+        return curPlayer * self.game.getGameEnded(board.pieces, curPlayer)
 
     def playGames(self, num, verbose=False):
         """

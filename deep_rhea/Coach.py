@@ -128,13 +128,14 @@ class Coach:
             # Fixme: ValueError: setting an array element with a sequence. (After finishing self play)
             self.nnet.train(trainExamples)
 
-            n_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args, board=Board(6))
+            n_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args,
+                                                   player=-1, board=Board(6))
 
             # ToDo; Fix arena to play between these versions. (TypeError: 'RHEAIndividual' object is not callable at 138)
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena.Arena(p_rhea.evolve(), n_rhea.evolve(), self.game)
+            arena = Arena.Arena(p_rhea, n_rhea, self.game)
 
-            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare)
+            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare, verbose=False)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (n_wins, p_wins, draws))
             if p_wins + n_wins == 0 or float(n_wins) / (p_wins + n_wins) < self.args.updateThreshold:
