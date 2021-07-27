@@ -31,7 +31,7 @@ class Coach:
         self.trainExamplesHistory = []
 
         # Can be overridden in loadTrainExamples()
-        self.skipFirstSelfPlay = False
+        self.skipFirstSelfPlay = True
 
     def execute_episode(self):
         """
@@ -57,7 +57,6 @@ class Coach:
         while True:
             episodeStep += 1
 
-            # Fixme: infitinite loop
             best_indv = self.rhea.evolve()
             # self.rhea.debug_print_population()
             action = self.rhea.select_and_execute_individual()
@@ -125,13 +124,17 @@ class Coach:
             board = Board(6)
             p_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.pnet, args=self.args, board=board)
 
+
+             # Fixme: ValueError: setting an array element with a sequence. (After finishing self play)
+
             self.nnet.train(trainExamples)
 
             n_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args, board=Board(6))
 
-            # ToDo; Fix arena to play between these versions.
+            # ToDo; Fix arena to play between these versions. (TypeError: 'RHEAIndividual' object is not callable at 138)
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena.Arena(p_rhea.evolve(), lambda x: n_rhea.evolve(), self.game)
+            arena = Arena.Arena(p_rhea.evolve(), n_rhea.evolve(), self.game)
+
             p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (n_wins, p_wins, draws))

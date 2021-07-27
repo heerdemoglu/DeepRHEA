@@ -4,8 +4,6 @@ from othello.OthelloGame import OthelloGame
 from othello.OthelloPlayers import *
 from othello.pytorch.NNet import NNetWrapper as NNet
 
-
-# Todo: this has to be modified for RHEA
 """
 use this script to play any two agents against each other, or play manually with
 any agent.
@@ -31,7 +29,11 @@ if mini_othello:
 else:
     n1.load_checkpoint('./pretrained_models/othello/pytorch/', '8x8_100checkpoints_best.pth.tar')
 args1 = dotdict({'numMCTSSims': 50, 'cpuct': 1.0})
-mcts1 = MCTS(g, n1, args1)
+# mcts1 = MCTS(g, n1, args1)
+
+# FixMe: Start from here; modify for RHEA.
+rhea = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=board)
+
 n1p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
 
 if human_vs_cpu:
