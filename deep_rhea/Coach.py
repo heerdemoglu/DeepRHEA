@@ -125,8 +125,7 @@ class Coach:
             p_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.pnet, args=self.args, board=board)
 
 
-             # Fixme: ValueError: setting an array element with a sequence. (After finishing self play)
-
+            # Fixme: ValueError: setting an array element with a sequence. (After finishing self play)
             self.nnet.train(trainExamples)
 
             n_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args, board=Board(6))
