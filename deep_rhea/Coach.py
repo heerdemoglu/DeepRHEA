@@ -50,7 +50,7 @@ class Coach:
                            the player eventually won the game, else -1.
         """
         trainExamples = []
-        board = self.game.getInitBoard()
+        board = self.rhea.board
         self.curPlayer = 1
         episodeStep = 0
 
@@ -65,10 +65,13 @@ class Coach:
             # action[best_indv.action_plan[0]] = 1
 
             trainExamples.append([board, self.curPlayer, action, None])
-            board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
+            board.pieces, self.curPlayer = self.game.getNextState(np.array(board.pieces), self.curPlayer, action)
+            # print(' ')
+            # print(board.pieces)
+            # print('*******************')
 
-            r = self.game.getGameEnded(board, self.curPlayer)  # reward is received when the game ends
-
+            r = self.game.getGameEnded(np.array(board.pieces), self.curPlayer)  # reward is received when the game ends
+            self.rhea.board = board
             # Get board, action and give the reward to the player
             if r != 0:
                 return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]

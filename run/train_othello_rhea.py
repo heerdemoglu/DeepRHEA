@@ -2,7 +2,6 @@ import sys
 import logging
 import coloredlogs
 
-# todo: change for DeepRHEA
 from deep_rhea.Coach import Coach
 from core_game.utils import dotdict
 from othello.OthelloGame import OthelloGame
