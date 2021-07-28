@@ -63,7 +63,7 @@ class Coach:
             # action = np.zeros(self.game.getActionSize())
             # action[best_indv.action_plan[0]] = 1
 
-            trainExamples.append([board, self.curPlayer, action, None])
+            trainExamples.append([board.pieces, self.curPlayer, action, None])
             board.pieces, self.curPlayer = self.game.getNextState(np.array(board.pieces), self.curPlayer, action)
             # print(' ')
             # print(board.pieces)

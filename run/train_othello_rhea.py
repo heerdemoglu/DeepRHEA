@@ -18,6 +18,31 @@ def main(home):
     log = logging.getLogger(__name__)
     coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
+    # # Training arguments:
+    # args = dotdict({
+    #     'numIters': 1000,
+    #     'numEps': 3,  # Number of complete self-play games to simulate during a new iteration.
+    #     'tempThreshold': 15,  #
+    #     'updateThreshold': 0.6,
+    #
+    #     # During arena playoff, new nnet will be accepted if threshold or more of games are won.
+    #     'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
+    #     'numMCTSSims': 25,  # Number of games moves for MCTS to simulate.
+    #     'arenaCompare': 40,  # Number of games to play during arena play to determine if new net will be accepted.
+    #     'cpuct': 1,
+    #     'checkpoint': CHK_DIR,
+    #     'load_model': False,
+    #     'load_folder_file': (CHK_DIR, 'best.pth.tar'),
+    #     'numItersForTrainExamplesHistory': 20,
+    #     'NUM_OF_INDIVIDUALS': 5,
+    #     'INDIVIDUAL_LENGTH': 5,
+    #     'NUM_OF_BEST_INDIVIDUALS': 1,
+    #     'MAX_GENERATION_BUDGET': 20,
+    #     'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
+    #     'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
+    #     # 'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
+    # })
+
     # Training arguments:
     args = dotdict({
         'numIters': 1000,
@@ -27,19 +52,18 @@ def main(home):
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
-        'numMCTSSims': 25,  # Number of games moves for MCTS to simulate.
-        'arenaCompare': 40,  # Number of games to play during arena play to determine if new net will be accepted.
-        'cpuct': 1,
+        # 'numMCTSSims': 25,  # Number of games moves for MCTS to simulate.
+        'arenaCompare': 2,  # Number of games to play during arena play to determine if new net will be accepted.
         'checkpoint': CHK_DIR,
         'load_model': False,
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
         'NUM_OF_INDIVIDUALS': 5,
-        'INDIVIDUAL_LENGTH': 5,
+        'INDIVIDUAL_LENGTH': 3,
         'NUM_OF_BEST_INDIVIDUALS': 1,
-        'MAX_GENERATION_BUDGET': 20,
+        'MAX_GENERATION_BUDGET': 10,
         'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
-        'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
+        'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
         # 'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
     })
 
