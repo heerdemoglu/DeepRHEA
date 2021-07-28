@@ -15,7 +15,7 @@ from othello.pytorch import OthelloNNet as onnet
 args = dotdict({
     'lr': 0.001,
     'dropout': 0.3,
-    'epochs': 10,
+    'epochs': 20,
     'batch_size': 37,
     'cuda': torch.cuda.is_available(),
     'num_channels': 512,

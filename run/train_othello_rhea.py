@@ -45,24 +45,24 @@ def main(home):
 
     # Training arguments:
     args = dotdict({
-        'numIters': 100,
-        'numEps': 5,  # Number of complete self-play games to simulate during a new iteration.
+        'numIters': 200,
+        'numEps': 10,  # Number of complete self-play games to simulate during a new iteration.
         'tempThreshold': 15,  #
         'updateThreshold': 0.6,
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
         # 'numMCTSSims': 25,  # Number of games moves for MCTS to simulate.
-        'arenaCompare': 3,  # Number of games to play during arena play to determine if new net will be accepted.
+        'arenaCompare': 10,  # Number of games to play during arena play to determine if new net will be accepted.
         'checkpoint': CHK_DIR,
         'load_model': False,
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
 
-        'NUM_OF_INDIVIDUALS': 10,
+        'NUM_OF_INDIVIDUALS': 15,
         'INDIVIDUAL_LENGTH': 3,
-        'NUM_OF_BEST_INDIVIDUALS': 1,
-        'MAX_GENERATION_BUDGET': 10,
+        'NUM_OF_BEST_INDIVIDUALS': 2,
+        'MAX_GENERATION_BUDGET': 15,
         'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
         'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
         # 'REWARD_DECAY_RATE': 0.9,  # how the further states decade the fitness.
