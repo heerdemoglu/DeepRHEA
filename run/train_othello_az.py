@@ -3,7 +3,7 @@ import sys
 import logging
 import coloredlogs
 from alpha_zero.Coach import Coach
-from alpha_zero.utils import dotdict
+from core_game.utils import dotdict
 from othello.pytorch.NNet import NNetWrapper
 from othello.OthelloGame import OthelloGame
 
