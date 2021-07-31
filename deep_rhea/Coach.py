@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 class Coach:
     """
     This class executes the self-play + learning. It uses the functions defined
-    in Game and NeuralNet. args are specified in main.py.
+    in Game and NeuralNet. args are specified in main_rhea.py.
     """
 
     def __init__(self, game, nnet, args):
@@ -73,9 +73,9 @@ class Coach:
             self.rhea.board = board
             # Get board, action and give the reward to the player
             if r != 0:
-                return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
                 self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
                                                           args=self.args, board=Board(6))
+                return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
 
     def learn(self):
         """

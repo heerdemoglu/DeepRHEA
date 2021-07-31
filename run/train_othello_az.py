@@ -12,7 +12,7 @@ def main(home):
     # Directory Setup:
     # Fetch and setup to Apocrita directory.
     HOME_DIR = home
-    CHK_DIR = "models/checkpoint"
+    CHK_DIR = "models/az/checkpoint"
 
     # Set the loggers:
     log = logging.getLogger(__name__)

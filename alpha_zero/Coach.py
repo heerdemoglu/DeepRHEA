@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 class Coach():
     """
     This class executes the self-play + learning. It uses the functions defined
-    in Game and NeuralNet. args are specified in main.py.
+    in Game and NeuralNet. args are specified in main_rhea.py.
     """
 
     def __init__(self, game, nnet, args):
