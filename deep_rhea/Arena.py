@@ -41,7 +41,7 @@ class Arena():
         """
         players = [self.player2, None, self.player1]
         curPlayer = 1
-        board = Board(6)
+        board = players[curPlayer + 1].board
         it = 0
         while self.game.getGameEnded(board.pieces, curPlayer) == 0:
             it += 1
@@ -60,7 +60,7 @@ class Arena():
             #     log.debug(f'valids = {valids}')
             #     assert valids[action] > 0
 
-            board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
+            _, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
             players[0].set_board(board)
             players[2].set_board(board)
 
@@ -95,13 +95,13 @@ class Arena():
 
         self.player1, self.player2 = self.player2, self.player1
 
-        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-        #     gameResult = self.playGame(verbose=verbose)
-        #     if gameResult == -1:
-        #         oneWon += 1
-        #     elif gameResult == 1:
-        #         twoWon += 1
-        #     else:
-        #         draws += 1
+        for _ in tqdm(range(num), desc="Arena.playGames (2)"):
+            gameResult = self.playGame(verbose=verbose)
+            if gameResult == -1:
+                oneWon += 1
+            elif gameResult == 1:
+                twoWon += 1
+            else:
+                draws += 1
 
         return oneWon, twoWon, draws

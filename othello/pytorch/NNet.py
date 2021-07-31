@@ -11,6 +11,10 @@ import torch.optim as optim
 
 from core_game.utils import dotdict, AverageMeter
 from othello.pytorch import OthelloNNet as onnet
+from torch.utils.tensorboard import SummaryWriter
+
+
+writer = SummaryWriter()
 
 args = dotdict({
     'lr': 0.001,
@@ -22,11 +26,14 @@ args = dotdict({
 })
 
 
+
+
 class NNetWrapper(NeuralNet):
     def __init__(self, game):
         self.nnet = onnet.OthelloNNet(game, args)
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
+        self.epoch_count = 0
 
         if args.cuda:
             self.nnet.cuda()
@@ -73,6 +80,11 @@ class NNetWrapper(NeuralNet):
                 optimizer.zero_grad()
                 total_loss.backward()
                 optimizer.step()
+            self.epoch_count += 1
+
+            # Write losses to tensorboard
+            writer.add_scalar("Loss - Training (Pi): ", pi_losses.avg, self.epoch_count)
+            writer.add_scalar("Loss - Training (V): ", v_losses.avg, self.epoch_count)
 
     def predict(self, board):
         """

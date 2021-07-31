@@ -21,7 +21,7 @@ def main(home):
     # Training arguments:
     args = dotdict({
         'numIters': 100,
-        'numEps': 100,  # Number of complete self-play games to simulate during a new iteration.
+        'numEps': 5,  # Number of complete self-play games to simulate during a new iteration.
         'tempThreshold': 15,  #
         'updateThreshold': 0.5,
 
@@ -33,18 +33,13 @@ def main(home):
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
 
-        'NUM_OF_INDIVIDUALS': 20,
-        'INDIVIDUAL_LENGTH': 5,
-        'NUM_OF_BEST_INDIVIDUALS': 3,
-        'MAX_GENERATION_BUDGET': 25,
-        'MUTATION_CHANCE': 0.7,  # Number of complete self-play games to simulate during a new iteration.
-        'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
+        'NUM_OF_INDIVIDUALS': 10,
+        'INDIVIDUAL_LENGTH': 3,
+        'NUM_OF_BEST_INDIVIDUALS': 2,
+        'MAX_GENERATION_BUDGET': 10,
+        'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
+        'CROSSOVER_MUTATIONS': 1,  # must be less than number of individuals.
     })
-
-    # # This is for debugging purposes; actual model has to run for a long time:
-    # args['numIters'] = 100
-    # args['numEps'] = 50
-    # args['arenaCompare'] = 20
 
     # Create the game and the neural network:
     game = OthelloGame(n=6)

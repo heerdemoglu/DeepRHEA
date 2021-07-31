@@ -26,6 +26,7 @@ class Coach:
         self.pnet = self.nnet.__class__(self.game)  # the competitor network
         self.args = args
         self.rhea = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=Board(6))
+        self.rhea.evolve()
 
         # History of examples from args.numItersForTrainExamplesHistory latest iteration
         self.trainExamplesHistory = []
@@ -64,13 +65,15 @@ class Coach:
             # action[best_indv.action_plan[0]] = 1
 
             trainExamples.append([board.pieces, self.curPlayer, action, None])
-            board.pieces, self.curPlayer = self.game.getNextState(np.array(board.pieces), self.curPlayer, action)
+            board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),
+                                                                  self.curPlayer, action)
             # print(' ')
             # print(board.pieces)
             # print('*******************')
 
-            r = self.game.getGameEnded(np.array(board.pieces), self.curPlayer)  # reward is received when the game ends
-            self.rhea.board = board
+            # reward is received when the game ends:
+            r = self.game.getGameEnded(np.array(self.rhea.board.pieces), self.curPlayer)
+            # self.rhea.board = board
             # Get board, action and give the reward to the player
             if r != 0:
                 self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
@@ -97,9 +100,10 @@ class Coach:
                     # In MCTS resets reach tree; RHEA resets the entire population.
                     self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
                                                               args=self.args, board=Board(6))
+                    self.rhea.evolve()
                     iterationTrainExamples += self.execute_episode()
 
-                # save the iteration examples to the history 
+                # save the iteration examples to the history
                 self.trainExamplesHistory.append(iterationTrainExamples)
 
             if len(self.trainExamplesHistory) > self.args.numItersForTrainExamplesHistory:
@@ -123,11 +127,13 @@ class Coach:
 
             board = Board(6)
             p_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.pnet, args=self.args, board=board)
+            p_rhea.evolve()
 
             self.nnet.train(trainExamples)
 
             n_rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet, args=self.args,
                                                    player=-1, board=Board(6))
+            n_rhea.evolve()
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena.Arena(p_rhea, n_rhea, self.game)
