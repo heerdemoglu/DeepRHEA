@@ -80,7 +80,7 @@ class Arena():
             draws:  games won by nobody
         """
 
-        num = int(num / 2)
+        # num = int(num / 2)
         oneWon = 0
         twoWon = 0
         draws = 0
@@ -95,13 +95,13 @@ class Arena():
 
         self.player1, self.player2 = self.player2, self.player1
 
-        for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-            gameResult = self.playGame(verbose=verbose)
-            if gameResult == -1:
-                oneWon += 1
-            elif gameResult == 1:
-                twoWon += 1
-            else:
-                draws += 1
+        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
+        #     gameResult = self.playGame(verbose=verbose)
+        #     if gameResult == -1:
+        #         oneWon += 1
+        #     elif gameResult == 1:
+        #         twoWon += 1
+        #     else:
+        #         draws += 1
 
         return oneWon, twoWon, draws
