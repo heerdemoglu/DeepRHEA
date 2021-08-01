@@ -51,6 +51,7 @@ class Coach:
                            the player eventually won the game, else -1.
         """
         trainExamples = []
+
         board = self.rhea.board
         self.curPlayer = 1
         episodeStep = 0
@@ -58,13 +59,18 @@ class Coach:
         while True:
             episodeStep += 1
 
-            best_indv = self.rhea.evolve()
             # self.rhea.debug_print_population()
-            action = self.rhea.select_and_execute_individual()
-            # action = np.zeros(self.game.getActionSize())
-            # action[best_indv.action_plan[0]] = 1
+            best_indv = self.rhea.evolve()
 
-            trainExamples.append([board.pieces, self.curPlayer, action, None])
+            action = self.rhea.select_and_execute_individual()
+
+            action_vector = np.zeros(self.game.getActionSize())
+
+            # sym = self.game.getSymmetries(board.pieces, action_vector)
+            # for b, p in sym:
+            #     trainExamples.append([b, self.curPlayer, p, None])
+
+            trainExamples.append([board.pieces, self.curPlayer, action_vector, None])
             board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),
                                                                   self.curPlayer, action)
             # print(' ')
@@ -100,7 +106,6 @@ class Coach:
                     # In MCTS resets reach tree; RHEA resets the entire population.
                     self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
                                                               args=self.args, board=Board(6))
-                    self.rhea.evolve()
                     iterationTrainExamples += self.execute_episode()
 
                 # save the iteration examples to the history
