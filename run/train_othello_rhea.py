@@ -26,7 +26,7 @@ def main(home):
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
-        'arenaCompare': 20,  # Number of games to play during arena play to determine if new net will be accepted.
+        'arenaCompare': 5,  # Number of games to play during arena play to determine if new net will be accepted.
         'checkpoint': CHK_DIR,
         'load_model': False,
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),

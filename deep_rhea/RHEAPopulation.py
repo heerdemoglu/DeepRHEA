@@ -184,11 +184,46 @@ class RHEAPopulation:
 
         # Note: (Neural Network's dual usage (for both players) mimic co-evolution.)
 
-        # Select best individual, get its first action:
-        player_action = self.individuals[0].action_plan[0]
+        # Get valid indices:
+        valid_action_indices = np.where(self.game.getValidMoves(np.array(self.board.pieces), self.player) == 1)[0]
 
-        # Play this action in the game:
-        self.individuals[0].play_ply(self.game, self.board, self.player, player_action)
+        for idx in range(len(self.individuals)):
+            # Select best individual, get its first action:
+            indv = self.individuals[idx]
+            player_action = indv.action_plan[0]
+
+            if player_action in valid_action_indices:
+                # Play this action in the game:
+                indv.play_ply(self.game, self.board, self.player, player_action)
+                # Pop all initial actions of all individuals, append a neural network based output at the end
+                [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
+                [self.individuals[i].opp_plan.pop(0) for i in range(len(self.individuals))]
+
+                # Update individual's game and boards as well.
+                # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
+                for i in range(len(self.individuals)):
+                    self.individuals[i].game = self.game
+                    self.individuals[i].board = self.board
+
+                    # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
+                    _, _ = self.individuals[
+                        i].append_next_action_from_nn()  # next action for players are already handled.
+
+                # print(self.debug_print_population())
+                return player_action
+
+        else:
+                del self.individuals[idx]
+                self.individuals.append(indv)  # remove and append to end of list.
+
+
+        #  If nothing works:
+        if player_action not in valid_action_indices:
+            np.random.shuffle(valid_action_indices)
+            player_action = valid_action_indices[0]
+            indv.play_ply(self.game, self.board, self.player, player_action)
+            return player_action
+
 
         # Play opponent action optimized by neural network:
         # Play a best policy valid move for the opponent:
@@ -202,21 +237,21 @@ class RHEAPopulation:
         # Play this turn to for the opponent player:
         # self.individuals[0].play_ply(self.game, self.board, -self.player, action_opponent)
 
-        # Pop all initial actions of all individuals, append a neural network based output at the end
-        [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
-        [self.individuals[i].opp_plan.pop(0) for i in range(len(self.individuals))]
-
-        # Update individual's game and boards as well.
-        # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
-        for i in range(len(self.individuals)):
-            self.individuals[i].game = self.game
-            self.individuals[i].board = self.board
-
-            # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
-            _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
-
-        # print(self.debug_print_population())
-        return player_action
+        # # Pop all initial actions of all individuals, append a neural network based output at the end
+        # [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
+        # [self.individuals[i].opp_plan.pop(0) for i in range(len(self.individuals))]
+        #
+        # # Update individual's game and boards as well.
+        # # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
+        # for i in range(len(self.individuals)):
+        #     self.individuals[i].game = self.game
+        #     self.individuals[i].board = self.board
+        #
+        #     # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
+        #     _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
+        #
+        # # print(self.debug_print_population())
+        # return player_action
 
     def self_play(self):
         # This is used for testing the population evolution process on RHEAPopulationTest.py.
@@ -277,6 +312,8 @@ class RHEAPopulation:
 
     def set_board(self, pieces):
         self.board = pieces
+        for i in range(len(self.individuals)):
+            self.individuals[i].board = self.board
 
     def get_board(self):
         return self.board
