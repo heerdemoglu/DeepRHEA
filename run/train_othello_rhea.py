@@ -21,8 +21,7 @@ def main(home):
     # Training arguments:
     args = dotdict({
         'numIters': 50,
-        'numEps': 20,  # Number of complete self-play games to simulate during a new iteration.
-        'tempThreshold': 15,  #
+        'numEps': 5,  # Number of complete self-play games to simulate during a new iteration.
         'updateThreshold': 0.5,
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
@@ -33,12 +32,12 @@ def main(home):
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
 
-        'NUM_OF_INDIVIDUALS': 15,
+        'NUM_OF_INDIVIDUALS': 10,
         'INDIVIDUAL_LENGTH': 5,
         'NUM_OF_BEST_INDIVIDUALS': 2,
-        'MAX_GENERATION_BUDGET': 20,
+        'MAX_GENERATION_BUDGET': 10,
         'MUTATION_CHANCE': 0.5,  # Number of complete self-play games to simulate during a new iteration.
-        'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
+        'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
     })
     # tensorboard --logdir=C:\Users\heerd\PycharmProjects\DeepRHEA\run\runs
 

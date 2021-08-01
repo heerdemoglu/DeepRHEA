@@ -12,14 +12,11 @@ class Arena():
     An Arena class where any 2 agents can be pit against each other.
     """
 
-    def __init__(self, player1, player2, game, display=None):
+    def __init__(self, player1, player2, game):
         """
         Input:
             player 1,2: two functions that takes board as input, return action
             game: Game object
-            display: a function that takes board as input and prints it (e.g.
-                     display in othello/OthelloGame). Is necessary for verbose
-                     mode.
 
         see othello/OthelloPlayers.py for an example. See pit_rhea.py for pitting
         human players/other baselines with each other.
@@ -27,7 +24,6 @@ class Arena():
         self.player1 = player1
         self.player2 = player2
         self.game = game
-        self.display = display
 
     def playGame(self, verbose=False):
         """
@@ -45,13 +41,24 @@ class Arena():
         it = 0
         while self.game.getGameEnded(board.pieces, curPlayer) == 0:
             it += 1
-            if verbose:
-                print('***********')
-                print("Turn ", str(it), "Player ", str(curPlayer))
-                print(board.pieces)
+
             # action = players[curPlayer + 1].action_plan[0]
             players[curPlayer + 1].evolve()
             action = players[curPlayer + 1].select_and_execute_individual()
+            board = players[curPlayer + 1].board
+
+            if verbose:
+                print('***********')
+                print("Turn ", str(it), "Player ", str(curPlayer))
+                print('Action Taken:', action)
+                print(board.pieces)
+
+            _, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
+            if curPlayer == 2:
+                players[0].set_board(board)
+            else:
+                players[2].set_board(board)
+
             # valids = self.game.getValidMoves(self.game.getCanonicalForm(board.pieces, curPlayer), curPlayer)
             #
             # if valids[action] == 0:
@@ -59,10 +66,6 @@ class Arena():
             #     log.error(f'Action {action} is not valid!')
             #     log.debug(f'valids = {valids}')
             #     assert valids[action] > 0
-
-            _, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
-            players[0].set_board(board)
-            players[2].set_board(board)
 
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
@@ -92,6 +95,8 @@ class Arena():
                 twoWon += 1
             else:
                 draws += 1
+            self.player1.board = Board(6)
+            self.player2.board = Board(6)
 
         self.player1, self.player2 = self.player2, self.player1
 

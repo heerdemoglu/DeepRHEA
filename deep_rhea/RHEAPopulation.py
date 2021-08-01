@@ -40,7 +40,7 @@ class RHEAPopulation:
         self.individuals = []
         self.pop_fitness = []
         for i in range(self.args.NUM_OF_INDIVIDUALS):
-            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=board)
+            indv = RHEAIndividual.RHEAIndividual(game=game, args=args, nnet=nnet, board=board, player=self.player)
             self.pop_fitness.append(indv.get_fitness())
             self.individuals.append(indv)
 
@@ -92,7 +92,8 @@ class RHEAPopulation:
 
         # Create and Return child individual along with its fitness:
         indv = RHEAIndividual.RHEAIndividual(game=self.game, args=self.args, nnet=self.nnet,
-                                             board=self.board, action_plan=draft_plan, opp_plan=draft_opp_plan)
+                                             board=self.board, action_plan=draft_plan, opp_plan=draft_opp_plan,
+                                             player=self.player)
 
         # Mutate and repair the genes of the new individual.
         for i in range(self.args.CROSSOVER_MUTATIONS):
@@ -191,6 +192,49 @@ class RHEAPopulation:
 
         # Play opponent action optimized by neural network:
         # Play a best policy valid move for the opponent:
+        # action_opponent, valid_action_indices, fitness = \
+        #     self.individuals[0].plan_valid_ply(self.game, self.board, -self.player)
+
+        # print('Debug - Individual Plan: ', self.individuals[0].get_gene())
+        # print('Debug - RHEA (+1) Action Executed: ', player_action)
+        # print('Debug - Opponent (-1) Action Executed: ', action_opponent)
+
+        # Play this turn to for the opponent player:
+        # self.individuals[0].play_ply(self.game, self.board, -self.player, action_opponent)
+
+        # Pop all initial actions of all individuals, append a neural network based output at the end
+        [self.individuals[i].action_plan.pop(0) for i in range(len(self.individuals))]
+        [self.individuals[i].opp_plan.pop(0) for i in range(len(self.individuals))]
+
+        # Update individual's game and boards as well.
+        # Check if new board configs create validity problems in remaining; remove and replace invalid individuals.
+        for i in range(len(self.individuals)):
+            self.individuals[i].game = self.game
+            self.individuals[i].board = self.board
+
+            # Append a valid (Neural network output) final action to the individual, completing the shift buffer.
+            _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
+
+        # print(self.debug_print_population())
+        return player_action
+
+    def self_play(self):
+        # This is used for testing the population evolution process on RHEAPopulationTest.py.
+        # Might incorporate co-evolution -- Store opponent's action plan as well and evolve both.
+        #  In such case; opponent evolves the best model which is then played; also removes validity problems.
+        #  However, this compresses the search space as each player individual will
+        #  have only a single opponent behavior.
+
+        # Note: (Neural Network's dual usage (for both players) mimic co-evolution.)
+
+        # Select best individual, get its first action:
+        player_action = self.individuals[0].action_plan[0]
+
+        # Play this action in the game:
+        self.individuals[0].play_ply(self.game, self.board, self.player, player_action)
+
+        # Play opponent action optimized by neural network:
+        # Play a best policy valid move for the opponent:
         action_opponent, valid_action_indices, fitness = \
             self.individuals[0].plan_valid_ply(self.game, self.board, -self.player)
 
@@ -215,7 +259,7 @@ class RHEAPopulation:
             _, _ = self.individuals[i].append_next_action_from_nn()  # next action for players are already handled.
 
         # print(self.debug_print_population())
-        return player_action
+        return player_action, action_opponent
 
     def debug_print_population(self):
         """Code for debugging and testing purposes. Shows the individual action plans in CMD-line."""

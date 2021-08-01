@@ -62,7 +62,7 @@ class Coach:
             # self.rhea.debug_print_population()
             best_indv = self.rhea.evolve()
 
-            action = self.rhea.select_and_execute_individual()
+            action, opp_action = self.rhea.self_play()
 
             action_vector = np.zeros(self.game.getActionSize())
             action_vector[best_indv.action_plan[0]] = 1
@@ -72,15 +72,19 @@ class Coach:
                 trainExamples.append([b, self.curPlayer, p, None])
 
             # trainExamples.append([board.pieces, self.curPlayer, action_vector, None])
-            board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),
-                                                                  self.curPlayer, action)
-            # print(' ')
+            # self.curPlayer = -self.curPlayer
+            # board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),
+            #                                                       self.curPlayer, action)
+            # print('Step/Turn: ', episodeStep)
+            # print('Player', self.curPlayer, ' plays: ', action)
+            # print('Player', -self.curPlayer, ' plays: ', opp_action)
             # print(board.pieces)
             # print('*******************')
 
             # reward is received when the game ends:
             r = self.game.getGameEnded(np.array(self.rhea.board.pieces), self.curPlayer)
             # self.rhea.board = board
+
             # Get board, action and give the reward to the player
             if r != 0:
                 self.rhea = RHEAPopulation.RHEAPopulation(game=self.game, nnet=self.nnet,
@@ -144,7 +148,7 @@ class Coach:
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena.Arena(p_rhea, n_rhea, self.game)
 
-            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare, verbose=False)
+            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare, verbose=True)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (n_wins, p_wins, draws))
             if p_wins + n_wins == 0 or float(n_wins) / (p_wins + n_wins) < self.args.updateThreshold:
