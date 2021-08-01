@@ -33,12 +33,12 @@ def main(home):
         'load_folder_file': (CHK_DIR, 'best.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
 
-        'NUM_OF_INDIVIDUALS': 8,
-        'INDIVIDUAL_LENGTH': 3,
+        'NUM_OF_INDIVIDUALS': 15,
+        'INDIVIDUAL_LENGTH': 5,
         'NUM_OF_BEST_INDIVIDUALS': 2,
-        'MAX_GENERATION_BUDGET': 8,
-        'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
-        'CROSSOVER_MUTATIONS': 1,  # must be less than number of individuals.
+        'MAX_GENERATION_BUDGET': 20,
+        'MUTATION_CHANCE': 0.5,  # Number of complete self-play games to simulate during a new iteration.
+        'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
     })
     # tensorboard --logdir=C:\Users\heerd\PycharmProjects\DeepRHEA\run\runs
 

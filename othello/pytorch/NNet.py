@@ -25,7 +25,7 @@ args = dotdict({
     'num_channels': 512,
 })
 
-writer = SummaryWriter(comment="AlphaZero")
+writer = SummaryWriter(comment="DeepRHEA_5Len_15Indv_20Budget_3Mut")
 
 
 class NNetWrapper(NeuralNet):
