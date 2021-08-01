@@ -69,7 +69,7 @@ class Coach:
 
             sym = self.game.getSymmetries(board.pieces, action_vector)
             for b, p in sym:
-                trainExamples.append([b.pieces, self.curPlayer, p, None])
+                trainExamples.append([b, self.curPlayer, p, None])
 
             # trainExamples.append([board.pieces, self.curPlayer, action_vector, None])
             board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),

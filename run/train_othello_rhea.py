@@ -20,7 +20,7 @@ def main(home):
 
     # Training arguments:
     args = dotdict({
-        'numIters': 100,
+        'numIters': 50,
         'numEps': 20,  # Number of complete self-play games to simulate during a new iteration.
         'tempThreshold': 15,  #
         'updateThreshold': 0.5,
