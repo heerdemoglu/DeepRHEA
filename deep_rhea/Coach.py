@@ -65,12 +65,13 @@ class Coach:
             action = self.rhea.select_and_execute_individual()
 
             action_vector = np.zeros(self.game.getActionSize())
+            action_vector[best_indv.action_plan[0]] = 1
 
-            # sym = self.game.getSymmetries(board.pieces, action_vector)
-            # for b, p in sym:
-            #     trainExamples.append([b, self.curPlayer, p, None])
+            sym = self.game.getSymmetries(board.pieces, action_vector)
+            for b, p in sym:
+                trainExamples.append([b.pieces, self.curPlayer, p, None])
 
-            trainExamples.append([board.pieces, self.curPlayer, action_vector, None])
+            # trainExamples.append([board.pieces, self.curPlayer, action_vector, None])
             board.pieces, self.curPlayer = self.game.getNextState(np.array(self.rhea.board.pieces),
                                                                   self.curPlayer, action)
             # print(' ')
