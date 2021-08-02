@@ -17,15 +17,15 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 args = dotdict({
-    'lr': 0.001,
+    'lr': 0.01,
     'dropout': 0.3,
     'epochs': 20,
-    'batch_size': 64,
+    'batch_size': 16,
     'cuda': torch.cuda.is_available(),
     'num_channels': 512,
 })
 
-writer = SummaryWriter(comment="DeepRHEA_5Len_15Indv_20Budget_3Mut")
+writer = SummaryWriter(comment="DeepRHEA_5Len_10Indv_10Budget_2Mut_Batch16_lr0-01")
 
 
 class NNetWrapper(NeuralNet):

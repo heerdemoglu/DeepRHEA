@@ -21,8 +21,8 @@ def main(home):
     # Training arguments:
     args = dotdict({
         'numIters': 50,
-        'numEps': 5,  # Number of complete self-play games to simulate during a new iteration.
-        'updateThreshold': 0.5,
+        'numEps': 20,  # Number of complete self-play games to simulate during a new iteration.
+        'updateThreshold': 0.55,
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.

@@ -148,7 +148,7 @@ class Coach:
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena.Arena(p_rhea, n_rhea, self.game)
 
-            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare, verbose=True)
+            p_wins, n_wins, draws = arena.playGames(self.args.arenaCompare, verbose=False)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (n_wins, p_wins, draws))
             if p_wins + n_wins == 0 or float(n_wins) / (p_wins + n_wins) < self.args.updateThreshold:
