@@ -31,11 +31,11 @@ if mini_othello:
 else:
     n1.load_checkpoint('run/models/checkpoint', 'best.pth.tar')
 
-args1 = dotdict({'NUM_OF_INDIVIDUALS': 15,
-                 'INDIVIDUAL_LENGTH': 3,
+args1 = dotdict({'NUM_OF_INDIVIDUALS': 10,
+                 'INDIVIDUAL_LENGTH': 5,
                  'NUM_OF_BEST_INDIVIDUALS': 2,
-                 'MAX_GENERATION_BUDGET': 15,
-                 'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
+                 'MAX_GENERATION_BUDGET': 10,
+                 'MUTATION_CHANCE': 0.5,  # Number of complete self-play games to simulate during a new iteration.
                  'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
                  })
 # mcts1 = MCTS(g, n1, args1)
