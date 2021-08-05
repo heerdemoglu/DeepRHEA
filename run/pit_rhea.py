@@ -24,12 +24,14 @@ rp = RandomPlayer(g).play
 gp = GreedyOthelloPlayer(g).play
 hp = HumanOthelloPlayer(g).play
 
+checkpoint_dir = r'C:\Users\heerd\PycharmProjects\DeepRHEA\run\models\deeprhea\checkpoint'
+
 # nnet players
 n1 = NNet(g)
 if mini_othello:
-    n1.load_checkpoint(r'C:\Users\heerd\PycharmProjects\DeepRHEA\run\models\checkpoint', 'best.pth.tar')
+    n1.load_checkpoint(checkpoint_dir, 'best.pth.tar')
 else:
-    n1.load_checkpoint('run/models/checkpoint', 'best.pth.tar')
+    n1.load_checkpoint(checkpoint_dir, 'best.pth.tar')
 
 args1 = dotdict({'NUM_OF_INDIVIDUALS': 10,
                  'INDIVIDUAL_LENGTH': 5,
@@ -48,7 +50,7 @@ if human_vs_cpu:
     player2 = hp
 else:
     n2 = NNet(g)
-    n2.load_checkpoint('run/models/checkpoint', 'best.pth.tar')
+    n2.load_checkpoint(checkpoint_dir, 'best.pth.tar')
     args2 = dotdict({'NUM_OF_INDIVIDUALS': 15,
                      'INDIVIDUAL_LENGTH': 3,
                      'NUM_OF_BEST_INDIVIDUALS': 2,
@@ -62,5 +64,5 @@ else:
     player2 = n2p  # Player 2 is neural network if it's cpu vs cpu.
 
 # arena = Arena(action1, player2, g, display=OthelloGame.display) 
-arena = Arena(action1, player2, g)
+arena = Arena(rhea, player2, g)
 print(arena.playGames(2, verbose=True))

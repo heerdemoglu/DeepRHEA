@@ -54,7 +54,7 @@ class Arena():
                 print(board.pieces)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
-            players[0].set_board(board)
+            players[0].set_board(board) # if not RHEA player then set board does not exist. fix this.
             players[2].set_board(board)
 
         if verbose:
