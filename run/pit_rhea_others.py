@@ -17,9 +17,9 @@ any agent.
 mini_othello = True  # Play in 6x6 instead of the normal 8x8.
 
 # Only one should be true:
-human_vs_cpu = False    # fixme: another option; check which states available
+human_vs_cpu = True    # fixme: another option; check which states available, fix human play as well. (same loop)
 random_vs_cpu = False  # Fixme: can go to 36 train (gets stuck, debug in the code, if two repeating 36, count score return game)
-greedy_vs_cpu = True
+greedy_vs_cpu = False
 rhea_vs_rhea = False
 
 if mini_othello:
