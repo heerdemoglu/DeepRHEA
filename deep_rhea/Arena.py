@@ -36,37 +36,44 @@ class Arena:
             or
                 draw result returned from the game that is neither 1, -1, nor 0.
         """
-        players = [self.player2, None, self.player1]
-        curPlayer = 1
-        if isinstance(players[curPlayer + 1], RHEAPopulation):
+        players = [self.player2, None, self.player1]            # Set the players
+        curPlayer = 1                                           # Start with P1[0]
+        if isinstance(players[curPlayer + 1], RHEAPopulation):  # If current player is RHEA, get its board
             board = players[curPlayer + 1].board
         else:
-            board = players[-curPlayer+1].board
+            board = players[-curPlayer+1].board                 # Else the other player is RHEA, get its board
+
         it = 0
-        while self.game.getGameEnded(board.pieces, curPlayer) == 0:
+        while self.game.getGameEnded(board.pieces, curPlayer) == 0:  # Continue until the end of the game
             it += 1
 
+            # If the current playing player is RHEA, execute the RHEA routine (with auto updates)
+            # ToDo: Refactor to match other agents. (Remove board requirement, give board to the Population for evo.)
             if isinstance(players[curPlayer + 1], RHEAPopulation):
                 # action = players[curPlayer + 1].action_plan[0]
                 players[curPlayer + 1].evolve()
                 action = players[curPlayer + 1].select_and_execute_individual()
                 players[curPlayer + 1].sort_population_fitness()
             else:
-                action = players[curPlayer+1](board.pieces)
+                # If the current player is not a RHEA player; then use the usual technique to update the game.
+                action = players[curPlayer+1](board.pieces, curPlayer)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
 
+            # Update the RHEA player's board with the next state.
             if isinstance(players[curPlayer+1], RHEAPopulation):
-                players[curPlayer+1].set_board(board)  # if not RHEA player then set board does not exist. fix this.
+                players[curPlayer+1].set_board(board)
             else:
                 players[-curPlayer+1].set_board(board)
 
+            # Print the outputs for visualization:
             if verbose:
                 print('***********')
                 print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken:', action)
                 print(board.pieces)
 
+        # Print output of the game when it ends:
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
             print(board.pieces)
@@ -101,6 +108,7 @@ class Arena:
             if isinstance(self.player2, RHEAPopulation):
                 self.player2.board = Board(6)
 
+        # Swaps players to test performance as both black and white players.
         self.player1, self.player2 = self.player2, self.player1
 
         for _ in tqdm(range(num), desc="Arena.playGames (2)"):
