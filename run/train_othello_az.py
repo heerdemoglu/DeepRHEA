@@ -2,6 +2,8 @@ import os
 import sys
 import logging
 import coloredlogs
+from torch.utils.tensorboard import SummaryWriter
+
 from alpha_zero.Coach import Coach
 from core_game.utils import dotdict
 from othello.pytorch.NNet import NNetWrapper
@@ -44,7 +46,8 @@ def main(home):
 
     # Create the game and the neural network:
     game = OthelloGame(n=6)
-    nnet = NNetWrapper(game)
+    writer = SummaryWriter(comment="DeepRHEA_5Len_10Indv_10Budget_2Mut_Batch128_lr0-001")
+    nnet = NNetWrapper(game, writer)
 
     # Either learn from checkpoints or start from scratch.
     if args.load_model:

@@ -1,5 +1,6 @@
 from torch.utils.tensorboard import SummaryWriter
 
+from alpha_zero.MCTS import MCTS
 from core_game.utils import dotdict
 from deep_rhea.Arena import Arena
 from deep_rhea.RHEAPopulation import RHEAPopulation
@@ -14,7 +15,12 @@ any agent.
 """
 
 mini_othello = True  # Play in 6x6 instead of the normal 8x8.
-human_vs_cpu = False
+
+# Only one should be true:
+human_vs_cpu = False    # fixme: another option; check which states available
+random_vs_cpu = False  # Fixme: can go to 36 train (gets stuck, debug in the code, if two repeating 36, count score return game)
+greedy_vs_cpu = True
+rhea_vs_rhea = False
 
 if mini_othello:
     g = OthelloGame(6)
@@ -46,13 +52,16 @@ args1 = dotdict({'NUM_OF_INDIVIDUALS': 10,
 # mcts1 = MCTS(g, n1, args1)
 
 rhea = RHEAPopulation(game=g, nnet=n1, args=args1, board=Board(6))
-
 action1 = rhea.evolve()
 
 if human_vs_cpu:
     player2 = hp
-else:
-    n2 = NNet(g,  writer)
+elif random_vs_cpu:
+    player2 = rp
+elif greedy_vs_cpu:
+    player2 = gp
+elif rhea_vs_rhea:
+    n2 = NNet(g, writer)
     n2.load_checkpoint(checkpoint_dir, 'rhea.pth.tar')
     args2 = dotdict({'NUM_OF_INDIVIDUALS': 15,
                      'INDIVIDUAL_LENGTH': 3,
@@ -61,12 +70,11 @@ else:
                      'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
                      'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
                      })
-    rhea2 = RHEAPopulation(game=g, nnet=n2, args=args2, player=-1, board=Board(6))
-    # n2p = lambda x: np.argmax(rhea2.getActionProb(x, temp=0))
+    player2 = RHEAPopulation(game=g, nnet=n2, args=args2, player=-1, board=Board(6))
+else:
+    # Implement MCTS
+    print('here')
 
-    # player2 = n2p  # Player 2 is neural network if it's cpu vs cpu.
-
-# arena = Arena(action1, player2, g, display=OthelloGame.display) 
-arena = Arena(rhea, rhea2, g)
+arena = Arena(rhea, player2, g)
 one_won, two_won, draw = arena.playGames(2, verbose=True)
 print('One won: ', one_won, ' Two won: ', two_won, 'Draw: ', draw)

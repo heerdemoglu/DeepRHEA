@@ -1,6 +1,6 @@
-import sys
 import logging
 import coloredlogs
+from torch.utils.tensorboard import SummaryWriter
 
 from deep_rhea.Coach import Coach
 from core_game.utils import dotdict
@@ -8,11 +8,10 @@ from othello.OthelloGame import OthelloGame
 from othello.pytorch.NNet import NNetWrapper
 
 
-def main(home):
+def main():
     # Directory Setup:
     # Fetch and setup to Apocrita directory.
-    HOME_DIR = home
-    CHK_DIR = "models/deeprhea/checkpoint"
+    CHK_DIR = "C:/Users/heerd/PycharmProjects/DeepRHEA/run/best_models"
 
     # Set the loggers:
     log = logging.getLogger(__name__)
@@ -28,8 +27,8 @@ def main(home):
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
         'arenaCompare': 5,  # Number of games to play during arena play to determine if new net will be accepted.
         'checkpoint': CHK_DIR,
-        'load_model': False,
-        'load_folder_file': (CHK_DIR, 'best.pth.tar'),
+        'load_model': True,
+        'load_folder_file': (CHK_DIR, 'rhea.pth.tar'),
         'numItersForTrainExamplesHistory': 20,
 
         'NUM_OF_INDIVIDUALS': 10,
@@ -43,7 +42,11 @@ def main(home):
 
     # Create the game and the neural network:
     game = OthelloGame(n=6)
-    nnet = NNetWrapper(game)
+    writer = SummaryWriter(comment="DeepRHEA_5Len_10Indv_10Budget_2Mut_Batch128_lr0-001")
+    nnet = NNetWrapper(game, writer)
+
+
+    # Wrote the parameters here:
 
     # Either learn from checkpoints or start from scratch.
     if args.load_model:
@@ -53,7 +56,7 @@ def main(home):
         log.warning('Not loading a checkpoint!')
 
     log.info('Loading the Coach...')
-    c = Coach(game, nnet, args)
+    c = Coach(game, nnet, args, writer)
 
     if args.load_model:
         log.info("Loading 'trainExamples' from file...")
@@ -64,5 +67,4 @@ def main(home):
 
 
 if __name__ == "__main__":
-    directory = sys.argv[0]
-    main(directory)
+    main()

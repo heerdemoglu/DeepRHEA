@@ -2,12 +2,13 @@ import logging
 
 from tqdm import tqdm
 
+from deep_rhea.RHEAPopulation import RHEAPopulation
 from othello.OthelloLogic import Board
 
 log = logging.getLogger(__name__)
 
 
-class Arena():
+class Arena:
     """
     An Arena class where any 2 agents can be pit against each other.
     """
@@ -37,25 +38,34 @@ class Arena():
         """
         players = [self.player2, None, self.player1]
         curPlayer = 1
-        board = players[curPlayer + 1].board
+        if isinstance(players[curPlayer + 1], RHEAPopulation):
+            board = players[curPlayer + 1].board
+        else:
+            board = players[-curPlayer+1].board
         it = 0
         while self.game.getGameEnded(board.pieces, curPlayer) == 0:
             it += 1
 
-            # action = players[curPlayer + 1].action_plan[0]
-            players[curPlayer + 1].evolve()
-            action = players[curPlayer + 1].select_and_execute_individual()
-            players[curPlayer + 1].sort_population_fitness()
+            if isinstance(players[curPlayer + 1], RHEAPopulation):
+                # action = players[curPlayer + 1].action_plan[0]
+                players[curPlayer + 1].evolve()
+                action = players[curPlayer + 1].select_and_execute_individual()
+                players[curPlayer + 1].sort_population_fitness()
+            else:
+                action = players[curPlayer+1](board.pieces)
+
+            board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
+
+            if isinstance(players[curPlayer+1], RHEAPopulation):
+                players[curPlayer+1].set_board(board)  # if not RHEA player then set board does not exist. fix this.
+            else:
+                players[-curPlayer+1].set_board(board)
 
             if verbose:
                 print('***********')
-                print("Turn ", str(it), "Player ", str(curPlayer))
+                print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken:', action)
                 print(board.pieces)
-
-            board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
-            players[0].set_board(board) # if not RHEA player then set board does not exist. fix this.
-            players[2].set_board(board)
 
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
@@ -86,8 +96,10 @@ class Arena():
             else:
                 draws += 1
 
-            self.player1.board = Board(6)
-            self.player2.board = Board(6)
+            if isinstance(self.player1, RHEAPopulation):
+                self.player1.board = Board(6)
+            if isinstance(self.player2, RHEAPopulation):
+                self.player2.board = Board(6)
 
         self.player1, self.player2 = self.player2, self.player1
 
