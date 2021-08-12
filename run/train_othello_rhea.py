@@ -25,24 +25,24 @@ def main():
 
         # During arena playoff, new nnet will be accepted if threshold or more of games are won.
         'maxlenOfQueue': 200000,  # Number of game examples to train the neural networks.
-        'arenaCompare': 5,  # Number of games to play during arena play to determine if new net will be accepted.
+        'arenaCompare': 10,  # Number of games to play during arena play to determine if new net will be accepted.
         'checkpoint': CHK_DIR,
         'load_model': True,
-        'load_folder_file': (CHK_DIR, 'rhea.pth.tar'),
+        'load_folder_file': (CHK_DIR, 'rhea.pth.tar', ''),
         'numItersForTrainExamplesHistory': 20,
 
         'NUM_OF_INDIVIDUALS': 10,
         'INDIVIDUAL_LENGTH': 5,
-        'NUM_OF_BEST_INDIVIDUALS': 2,
-        'MAX_GENERATION_BUDGET': 10,
-        'MUTATION_CHANCE': 0.5,  # Number of complete self-play games to simulate during a new iteration.
-        'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
+        'NUM_OF_BEST_INDIVIDUALS': 0,
+        'MAX_GENERATION_BUDGET': 20,
+        'MUTATION_CHANCE': 0.7,  # Number of complete self-play games to simulate during a new iteration.
+        'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
     })
     # tensorboard --logdir=C:\Users\heerd\PycharmProjects\DeepRHEA\run\runs
 
     # Create the game and the neural network:
     game = OthelloGame(n=6)
-    writer = SummaryWriter(comment="DeepRHEA_5Len_10Indv_10Budget_2Mut_Batch128_lr0-001")
+    writer = SummaryWriter(comment="Test1")
     nnet = NNetWrapper(game, writer)
 
 

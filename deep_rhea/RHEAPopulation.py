@@ -1,9 +1,6 @@
 import random
-
 import numpy as np
-
 import deep_rhea.RHEAIndividual as RHEAIndividual
-
 from othello.OthelloLogic import Board
 
 

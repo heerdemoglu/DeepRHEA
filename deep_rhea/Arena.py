@@ -26,6 +26,9 @@ class Arena:
         self.player1 = player1
         self.player2 = player2
         self.game = game
+        self.player1_score = []
+        self.player2_score = []
+        self.rhea_confidence = []
 
     def playGame(self, verbose=False):
         """
@@ -55,9 +58,12 @@ class Arena:
                 players[curPlayer + 1].evolve()
                 action = players[curPlayer + 1].select_and_execute_individual()
                 players[curPlayer + 1].sort_population_fitness()
+            elif isinstance(players[curPlayer + 1], MCTS):
+                # If the current player is not a RHEA player; then use the usual technique to update the game.
+                action = players[curPlayer + 1](board.pieces * curPlayer)
             else:
                 # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer+1](board.pieces * curPlayer)
+                action = players[curPlayer+1](board.pieces, curPlayer)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
 
@@ -72,15 +78,21 @@ class Arena:
                 print('***********')
                 print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken: ', action)
-                print('Game Score: ', self.game.getScore(board.pieces, curPlayer))
                 if isinstance(players[curPlayer+1], RHEAPopulation):
-                    print('RHEA Win Prediction: ', players[curPlayer+1].get_indv_fitness()[0])
+                    print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness)
+                    self.rhea_confidence.append(players[curPlayer+1].individuals[0].fitness)
+                print('Game Score: ', self.game.getScore(board.pieces, curPlayer))
+                if curPlayer == -1:
+                    self.player1_score.append(self.game.getScore(board.pieces, curPlayer))
+                else:
+                    self.player2_score.append(self.game.getScore(board.pieces, curPlayer))
                 print(board.pieces)
 
         # Print output of the game when it ends:
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
             print(board.pieces)
+
         return curPlayer * self.game.getGameEnded(board.pieces, curPlayer)
 
     def playGames(self, num, verbose=False):
@@ -112,7 +124,7 @@ class Arena:
             if isinstance(self.player2, RHEAPopulation):
                 self.player2.board = Board(6)
 
-        # Swaps players to test performance as both black and white players.
+        # # Swaps players to test performance as both black and white players.
         # self.player1, self.player2 = self.player2, self.player1
         #
         # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
@@ -123,5 +135,8 @@ class Arena:
         #         twoWon += 1
         #     else:
         #         draws += 1
+
+        print('P1 Scores: ', str(self.player1_score))
+        print('P2 Scores: ', str(self.player2_score))
 
         return oneWon, twoWon, draws
