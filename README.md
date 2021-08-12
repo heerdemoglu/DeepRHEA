@@ -4,6 +4,8 @@ This project aims to construct an agent thatuses Deep Neural Networks and RHEA t
 
 # Setup and Run:
 
+Note: Training examples, logs, models and runtimes are not included with this GitHub repository as it exceeds LFS sizes. These files are available upon request.
+
 ToDo.
 
 # Referenced Repositories:
