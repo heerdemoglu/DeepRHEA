@@ -11,12 +11,13 @@ Some possible games that are in this category include Chess, Go, Checkers and Ot
 * pit.py is used to play an actual game between agents.
 * train.py files are used to train AlphaZero and DeepRHEA agents.
 
+Note: Training examples, logs, models and runtimes are not included with this GitHub repository as it exceeds LFS sizes. These files are available upon request.
+
 # Referenced Repositories:
 
 The aim of this project is to make an analogous version to AlphaGo using RHEA instead of MCTS. 
 This project extends upon the following repository. RHEAIndividual and RHEAPopulation is written to replace
 MCTS with RHEA implementation. Some modifications to the Arena.py, Coach.py and Pit.py was made to accommodate
-
 
 ## Alpha Zero General, Surag Nair et. al. 
 
@@ -24,8 +25,6 @@ The repository is created by Surag Nair and the repository can be reached throug
 
 This repository implements some games where agents inspired from AlphaGo is trained. This repository is used as a baseline to train AlphaGo agent; where DeepRHEA agent 
 will be coupled with the same environment for comparison purposes.
-
-
 
 # Package Structure:
 
