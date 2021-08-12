@@ -11,32 +11,35 @@ import torch.optim as optim
 
 from core_game.utils import dotdict, AverageMeter
 from othello.pytorch import OthelloNNet as onnet
-from torch.utils.tensorboard import SummaryWriter
-
-
-
 
 args = dotdict({
     'lr': 0.001,
     'dropout': 0.3,
     'epochs': 50,
-    'batch_size': 128,
+    'batch_size': 64,
     'cuda': torch.cuda.is_available(),
     'num_channels': 512,
 })
 
-writer = SummaryWriter(comment="DeepRHEA_5Len_10Indv_10Budget_2Mut_Batch128_lr0-001")
-
 
 class NNetWrapper(NeuralNet):
-    def __init__(self, game):
+    def __init__(self, game, writer):
+        super().__init__(game)
         self.nnet = onnet.OthelloNNet(game, args)
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
         self.epoch_count = 0
+        self.writer = writer
 
         if args.cuda:
             self.nnet.cuda()
+
+        writer.add_text('Learning Rate:', str(args.lr), 0)
+        writer.add_text('CUDA Device:', str(args.cuda), 0)
+        writer.add_text('Epochs:', str(args.epochs), 0)
+        writer.add_text('Batch Size:', str(args.batch_size), 0)
+        writer.add_text('Num Channels:', str(args.num_channels), 0)
+        writer.add_text('Dropout:', str(args.dropout), 0)
 
     def train(self, examples):
         """
@@ -44,6 +47,7 @@ class NNetWrapper(NeuralNet):
         """
         optimizer = optim.Adam(self.nnet.parameters())
 
+        start = time.time()
         for epoch in range(args.epochs):
             print('EPOCH ::: ' + str(epoch + 1))
             self.nnet.train()
@@ -82,9 +86,13 @@ class NNetWrapper(NeuralNet):
                 optimizer.step()
             self.epoch_count += 1
 
-            # Write losses to tensorboard
-            writer.add_scalar("Loss - Training (Pi): ", pi_losses.avg, self.epoch_count)
-            writer.add_scalar("Loss - Training (V): ", v_losses.avg, self.epoch_count)
+            finish = time.time()
+
+            # Write losses to tensorboard:
+            self.writer.add_scalar("Loss - Training (Pi): ", pi_losses.avg, self.epoch_count)
+            self.writer.add_scalar("Loss - Training (V): ", v_losses.avg, self.epoch_count)
+            self.writer.add_scalar("Total Loss:", pi_losses.avg+v_losses.avg, self.epoch_count)
+        self.writer.add_scalar("Training time (per epoch): ", finish-start)
 
     def predict(self, board):
         """
@@ -102,7 +110,7 @@ class NNetWrapper(NeuralNet):
         with torch.no_grad():
             pi, v = self.nnet(board)
 
-        # print('PREDICTION TIME TAKEN : {0:03f}'.format(time.time()-start))
+        self.writer.add_scalar("Inference time (per epoch): ", time.time()-start)
         return torch.exp(pi).data.cpu().numpy()[0], v.data.cpu().numpy()[0]
 
     def loss_pi(self, targets, outputs):

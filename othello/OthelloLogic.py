@@ -15,10 +15,10 @@ x is the column, y is the row.
 class Board:
 
     # list of all 8 directions on the board, as (x,y) offsets
-    __directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
+    __directions = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1)]
 
     def __init__(self, n):
-        "Set up initial board configuration."
+        """Set up initial board configuration."""
 
         self.n = n
         # Create the empty board array.
@@ -78,13 +78,13 @@ class Board:
         of the returned moves is (3,7) because everything from there to (3,4)
         is flipped.
         """
-        (x,y) = square
+        (x, y) = square
 
         # determine the color of the piece.
         color = self[x][y]
 
         # skip empty source squares.
-        if color==0:
+        if color == 0:
             return None
 
         # search all possible directions.
@@ -165,4 +165,3 @@ class Board:
             yield move
             move=list(map(sum,zip(move,direction)))
             #move = (move[0]+direction[0],move[1]+direction[1])
-

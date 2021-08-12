@@ -20,10 +20,10 @@ class Coach:
     in Game and NeuralNet. args are specified in main_rhea.py.
     """
 
-    def __init__(self, game, nnet, args):
+    def __init__(self, game, nnet, args, writer):
         self.game = game
         self.nnet = nnet
-        self.pnet = self.nnet.__class__(self.game)  # the competitor network
+        self.pnet = self.nnet.__class__(self.game, writer)  # the competitor network
         self.args = args
         self.rhea = RHEAPopulation.RHEAPopulation(game=game, nnet=nnet, args=args, board=Board(6))
         self.rhea.evolve()
