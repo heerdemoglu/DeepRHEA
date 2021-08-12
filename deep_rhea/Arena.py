@@ -2,6 +2,7 @@ import logging
 
 from tqdm import tqdm
 
+from alpha_zero.MCTS import MCTS
 from deep_rhea.RHEAPopulation import RHEAPopulation
 from othello.OthelloLogic import Board
 
@@ -56,7 +57,7 @@ class Arena:
                 players[curPlayer + 1].sort_population_fitness()
             else:
                 # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer+1](board.pieces, curPlayer)
+                action = players[curPlayer+1](board.pieces * curPlayer)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
 
@@ -70,7 +71,10 @@ class Arena:
             if verbose:
                 print('***********')
                 print("Turn ", str(it), "Player ", str(-curPlayer))
-                print('Action Taken:', action)
+                print('Action Taken: ', action)
+                print('Game Score: ', self.game.getScore(board.pieces, curPlayer))
+                if isinstance(players[curPlayer+1], RHEAPopulation):
+                    print('RHEA Win Prediction: ', players[curPlayer+1].get_indv_fitness()[0])
                 print(board.pieces)
 
         # Print output of the game when it ends:
@@ -109,15 +113,15 @@ class Arena:
                 self.player2.board = Board(6)
 
         # Swaps players to test performance as both black and white players.
-        self.player1, self.player2 = self.player2, self.player1
-
-        for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-            gameResult = self.playGame(verbose=verbose)
-            if gameResult == -1:
-                oneWon += 1
-            elif gameResult == 1:
-                twoWon += 1
-            else:
-                draws += 1
+        # self.player1, self.player2 = self.player2, self.player1
+        #
+        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
+        #     gameResult = self.playGame(verbose=verbose)
+        #     if gameResult == -1:
+        #         oneWon += 1
+        #     elif gameResult == 1:
+        #         twoWon += 1
+        #     else:
+        #         draws += 1
 
         return oneWon, twoWon, draws

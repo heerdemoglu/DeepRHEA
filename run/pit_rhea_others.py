@@ -16,9 +16,9 @@ any agent.
 
 mini_othello = True  # Play in 6x6 instead of the normal 8x8.
 
-# Only one should be true:
-human_vs_cpu = True    # fixme: another option; check which states available, fix human play as well. (same loop)
-random_vs_cpu = False  # Fixme: can go to 36 train (gets stuck, debug in the code, if two repeating 36, count score return game)
+# Only one should be true: (If all false compete with MCTS)
+human_vs_cpu = False
+random_vs_cpu = False
 greedy_vs_cpu = False
 rhea_vs_rhea = False
 
@@ -42,13 +42,13 @@ if mini_othello:
 else:
     n1.load_checkpoint(checkpoint_dir, 'rhea8.pth.tar')
 
-args1 = dotdict({'NUM_OF_INDIVIDUALS': 10,
-                 'INDIVIDUAL_LENGTH': 5,
-                 'NUM_OF_BEST_INDIVIDUALS': 2,
-                 'MAX_GENERATION_BUDGET': 10,
-                 'MUTATION_CHANCE': 0.5,  # Number of complete self-play games to simulate during a new iteration.
-                 'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
-                 })
+args1 = dotdict({'NUM_OF_INDIVIDUALS': 30,
+                     'INDIVIDUAL_LENGTH': 10,
+                     'NUM_OF_BEST_INDIVIDUALS': 5,
+                     'MAX_GENERATION_BUDGET': 20,
+                     'MUTATION_CHANCE': 0.4,  # Number of complete self-play games to simulate during a new iteration.
+                     'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
+                     })
 # mcts1 = MCTS(g, n1, args1)
 
 rhea = RHEAPopulation(game=g, nnet=n1, args=args1, board=Board(6))
@@ -63,18 +63,21 @@ elif greedy_vs_cpu:
 elif rhea_vs_rhea:
     n2 = NNet(g, writer)
     n2.load_checkpoint(checkpoint_dir, 'rhea.pth.tar')
-    args2 = dotdict({'NUM_OF_INDIVIDUALS': 15,
-                     'INDIVIDUAL_LENGTH': 3,
-                     'NUM_OF_BEST_INDIVIDUALS': 2,
-                     'MAX_GENERATION_BUDGET': 15,
-                     'MUTATION_CHANCE': 0.8,  # Number of complete self-play games to simulate during a new iteration.
-                     'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
+    args2 = dotdict({'NUM_OF_INDIVIDUALS': 10,
+                     'INDIVIDUAL_LENGTH': 10,
+                     'NUM_OF_BEST_INDIVIDUALS': 5,
+                     'MAX_GENERATION_BUDGET': 20,
+                     'MUTATION_CHANCE': 0.4,  # Number of complete self-play games to simulate during a new iteration.
+                     'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
                      })
     player2 = RHEAPopulation(game=g, nnet=n2, args=args2, player=-1, board=Board(6))
 else:
-    # Implement MCTS
-    print('here')
+    n2 = NNet(g, writer)
+    n2.load_checkpoint(checkpoint_dir, 'mcts.pth.tar')
+    args2 = dotdict({'numMCTSSims': 50, 'cpuct': 1.0})
+    mcts2 = MCTS(g, n2, args2)
+    player2 = lambda x: np.argmax(mcts2.getActionProb(x, temp=0))
 
 arena = Arena(rhea, player2, g)
-one_won, two_won, draw = arena.playGames(2, verbose=True)
+one_won, two_won, draw = arena.playGames(10, verbose=True)
 print('One won: ', one_won, ' Two won: ', two_won, 'Draw: ', draw)
