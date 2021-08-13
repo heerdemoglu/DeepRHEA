@@ -58,12 +58,18 @@ class Arena:
                 players[curPlayer + 1].evolve()
                 action = players[curPlayer + 1].select_and_execute_individual()
                 players[curPlayer + 1].sort_population_fitness()
-            elif isinstance(players[curPlayer + 1], MCTS):
-                # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer + 1](board.pieces * curPlayer)
             else:
-                # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer+1](board.pieces, curPlayer)
+                try:
+                    action = players[curPlayer + 1](board.pieces * curPlayer)
+                except TypeError:
+                    action = players[curPlayer+1](board.pieces, curPlayer)
+
+            # elif isinstance(players[curPlayer + 1], MCTS):
+            #     # If the current player is not a RHEA player; then use the usual technique to update the game.
+            #     action = players[curPlayer + 1](board.pieces * curPlayer)
+            # else:
+            #     # If the current player is not a RHEA player; then use the usual technique to update the game.
+            #     action = players[curPlayer+1](board.pieces, curPlayer)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
 
@@ -81,7 +87,7 @@ class Arena:
                 if isinstance(players[curPlayer+1], RHEAPopulation):
                     print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness)
                     self.rhea_confidence.append(players[curPlayer+1].individuals[0].fitness)
-                print('Game Score: ', self.game.getScore(board.pieces, curPlayer))
+                print('Game Score (For player 1): ', self.game.getScore(board.pieces, 1))
                 if curPlayer == -1:
                     self.player1_score.append(self.game.getScore(board.pieces, curPlayer))
                 else:
@@ -93,7 +99,7 @@ class Arena:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
             print(board.pieces)
 
-        return curPlayer * self.game.getGameEnded(board.pieces, curPlayer)
+        return self.game.getGameEnded(board.pieces, curPlayer)
 
     def playGames(self, num, verbose=False):
         """

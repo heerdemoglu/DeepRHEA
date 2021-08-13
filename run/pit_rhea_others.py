@@ -18,9 +18,15 @@ mini_othello = True  # Play in 6x6 instead of the normal 8x8.
 
 # Only one should be true: (If all false compete with MCTS)
 human_vs_cpu = False
-random_vs_cpu = True
-greedy_vs_cpu = False
+random_vs_cpu = False
+greedy_vs_cpu = True
 rhea_vs_rhea = False
+
+print('VS HUMAN: ', human_vs_cpu)
+print('VS random: ', random_vs_cpu)
+print('VS greedy: ', greedy_vs_cpu)
+print('VS rhea: ', rhea_vs_rhea)
+
 
 if mini_othello:
     g = OthelloGame(6)
@@ -42,10 +48,10 @@ if mini_othello:
 else:
     n1.load_checkpoint(checkpoint_dir, 'rhea8.pth.tar')
 
-args1 = dotdict({'NUM_OF_INDIVIDUALS': 10,
+args1 = dotdict({'NUM_OF_INDIVIDUALS': 15,
                      'INDIVIDUAL_LENGTH': 5,
                      'NUM_OF_BEST_INDIVIDUALS': 0,
-                     'MAX_GENERATION_BUDGET': 40,
+                     'MAX_GENERATION_BUDGET': 25,
                      'MUTATION_CHANCE': 0.7,  # Number of complete self-play games to simulate during a new iteration.
                      'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
                      })
@@ -67,14 +73,14 @@ elif rhea_vs_rhea:
                      'INDIVIDUAL_LENGTH': 5,
                      'NUM_OF_BEST_INDIVIDUALS': 0,
                      'MAX_GENERATION_BUDGET': 10,
-                     'MUTATION_CHANCE': 0.3,  # Number of complete self-play games to simulate during a new iteration.
-                     'CROSSOVER_MUTATIONS': 2,  # must be less than number of individuals.
+                     'MUTATION_CHANCE': 0.7,  # Number of complete self-play games to simulate during a new iteration.
+                     'CROSSOVER_MUTATIONS': 3,  # must be less than number of individuals.
                      })
     player2 = RHEAPopulation(game=g, nnet=n2, args=args2, player=-1, board=Board(6))
 else:
     n2 = NNet(g, writer)
     n2.load_checkpoint(checkpoint_dir, 'mcts.pth.tar')
-    args2 = dotdict({'numMCTSSims': 5, 'cpuct': 1.0})
+    args2 = dotdict({'numMCTSSims': 20, 'cpuct': 1.0})
     mcts2 = MCTS(g, n2, args2)
     player2 = lambda x: np.argmax(mcts2.getActionProb(x, temp=0))
 

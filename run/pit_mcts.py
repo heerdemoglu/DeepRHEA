@@ -1,3 +1,5 @@
+from torch.utils.tensorboard import SummaryWriter
+
 from alpha_zero.Arena import Arena
 from alpha_zero.MCTS import MCTS
 from core_game.utils import dotdict
@@ -13,7 +15,15 @@ any agent.
 """
 
 mini_othello = True  # Play in 6x6 instead of the normal 8x8.
+
+# Only one should be true: (If all false compete with MCTS)
 human_vs_cpu = True
+random_vs_cpu = False
+greedy_vs_cpu = False
+
+print('VS HUMAN: ', human_vs_cpu)
+print('VS random: ', random_vs_cpu)
+print('VS greedy: ', greedy_vs_cpu)
 
 if mini_othello:
     g = OthelloGame(6)
@@ -25,24 +35,28 @@ rp = RandomPlayer(g).play
 gp = GreedyOthelloPlayer(g).play
 hp = HumanOthelloPlayer(g).play
 
-checkpoint_dir = r'C:\Users\heerd\PycharmProjects\DeepRHEA\run\models\az\checkpoint'
-
+checkpoint_dir = r'C:\Users\heerd\PycharmProjects\DeepRHEA\run\best_models'
+writer = SummaryWriter(log_dir='pit', comment='mcts_run1')
 # nnet players
-n1 = NNet(g)
+n1 = NNet(g, writer)
 if mini_othello:
-    n1.load_checkpoint(checkpoint_dir, 'best.pth.tar')
+    n1.load_checkpoint(checkpoint_dir, 'mcts.pth.tar')
 else:
-    n1.load_checkpoint(checkpoint_dir, 'best.pth.tar')
-args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
+    n1.load_checkpoint(checkpoint_dir, 'mcts8.pth.tar')
+args1 = dotdict({'numMCTSSims': 20, 'cpuct':1.0})
 mcts1 = MCTS(g, n1, args1)
 n1p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
 
 if human_vs_cpu:
     player2 = hp
+elif random_vs_cpu:
+    player2 = rp
+elif greedy_vs_cpu:
+    player2 = gp
 else:
-    n2 = NNet(g)
-    n2.load_checkpoint(checkpoint_dir, 'best.pth.tar')
-    args2 = dotdict({'numMCTSSims': 50, 'cpuct': 1.0})
+    n2 = NNet(g, writer)
+    n2.load_checkpoint(checkpoint_dir, 'mcts.pth.tar')
+    args2 = dotdict({'numMCTSSims': 20, 'cpuct': 1.0})
     mcts2 = MCTS(g, n2, args2)
     n2p = lambda x: np.argmax(mcts2.getActionProb(x, temp=0))
 
@@ -50,4 +64,4 @@ else:
 
 arena = Arena(n1p, player2, g, display=OthelloGame.display)
 
-print(arena.playGames(2, verbose=True))
+print(arena.playGames(20, verbose=True))
