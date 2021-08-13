@@ -1,0 +1,3689 @@
+C:\Users\heerd\miniconda3\envs\thesis\python.exe "C:\Program Files\JetBrains\PyCharm 2021.1.3\plugins\python\helpers\pydev\pydevconsole.py" --mode=client --port=51683
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\heerd\\PycharmProjects\\DeepRHEA', 'C:/Users/heerd/PycharmProjects/DeepRHEA'])
+Python 3.7.10 (default, Feb 26 2021, 13:06:18) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.22.0 -- An enhanced Interactive Python. Type '?' for help.
+PyDev console: using IPython 7.22.0
+Python 3.7.10 (default, Feb 26 2021, 13:06:18) [MSC v.1916 64 bit (AMD64)] on win32
+runfile('C:/Users/heerd/PycharmProjects/DeepRHEA/run/pit_mcts.py', wdir='C:/Users/heerd/PycharmProjects/DeepRHEA/run')
+VS HUMAN:  False
+VS random:  False
+VS greedy:  False
+Arena.playGames (1):   0%|          | 0/10 [00:00<?, ?it/s]Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- O O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- X O O O - |
+3 |X X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- X O O O - |
+3 |X X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- X X O O - |
+3 |X X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- X O O O - |
+3 |X X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- X O X O - |
+3 |X X X X - - |
+4 |- - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X O - |
+3 |X O X X - - |
+4 |- - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X X X |
+3 |X O X X - - |
+4 |- - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X X X |
+3 |X O O X - - |
+4 |- - O O - - |
+5 |- - - - O - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X X X |
+3 |X O X X - - |
+4 |- X O O - - |
+5 |- - - - O - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X X X |
+3 |X O O O O - |
+4 |- X O O - - |
+5 |- - - - O - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O X X X X |
+3 |X O X O X - |
+4 |- X X X - - |
+5 |- - X - O - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O X X X X |
+3 |X O X O O O |
+4 |- X X X - - |
+5 |- - X - O - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -12
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O X X X X |
+3 |X O X O X X |
+4 |- X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -9
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O X X X X |
+3 |O O X O X X |
+4 |O X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -12
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X X X |
+3 |O O X O X X |
+4 |O X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -9
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |- O X X - - |
+2 |O O X X X X |
+3 |O O X O X X |
+4 |O X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |X X X X - - |
+2 |O X X X X X |
+3 |O O X O X X |
+4 |O X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - - |
+2 |O X X X X X |
+3 |O O X O X X |
+4 |O X X X - X |
+5 |- - X - O - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - - |
+2 |X X X X X X |
+3 |X O X O X X |
+4 |X X X X - X |
+5 |X - X - O - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X X X O X |
+3 |X O X O X X |
+4 |X X X X - X |
+5 |X - X - O - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X X O |
+2 |X X X X X X |
+3 |X O X O X X |
+4 |X X X X - X |
+5 |X - X - O - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X X O |
+2 |X X X X X O |
+3 |X O X O X O |
+4 |X X X X - O |
+5 |X - X - O O |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X X O |
+2 |X X X X X O |
+3 |X O X X X O |
+4 |X X X X X O |
+5 |X - X - O O |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X O X O |
+2 |X X X O X O |
+3 |X O X O X O |
+4 |X X O O O O |
+5 |X - X O O O |
+-----------------------
+Game over: Turn  32 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X O X O |
+2 |X X X O X O |
+3 |X O X X X O |
+4 |X X X O O O |
+5 |X X X O O O |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  10%|█         | 1/10 [00:03<00:28,  3.21s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - X O O - |
+3 |- X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- O O O O - |
+3 |- X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- X O O O - |
+3 |X X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O O O - |
+3 |X X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X O - |
+3 |X X X X - - |
+4 |- - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X O - |
+3 |O O X X - - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X O - |
+3 |O O X X - - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X O - |
+3 |O O O O O - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X X - |
+3 |O O O O O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O O O O O |
+3 |O O O O O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X O - - |
+5 |- - X - O - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- - X X O - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- O O O O - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O X X X |
+3 |O O O X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |- O X X - X |
+2 |O O O X X X |
+3 |O O O X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |X X X X - X |
+2 |O X O X X X |
+3 |O O X X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - X |
+2 |O X O X X X |
+3 |O O X X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - X |
+2 |X X O X X X |
+3 |X O X X X X |
+4 |X - X X - X |
+5 |X O O O O - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X O X X X O |
+4 |X - X X - O |
+5 |X O O O O O |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X X X O |
+4 |X X X X - O |
+5 |X O O O O O |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X O X O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Turn  33 Player  1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X O X O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Game over: Turn  33 Result  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X O O |
+2 |X X O X O O |
+3 |X X X O O O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  20%|██        | 2/10 [00:04<00:18,  2.30s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - X O O - |
+3 |- X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- O O O O - |
+3 |- X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- X O O O - |
+3 |X X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O O O - |
+3 |X X X O - - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X O - |
+3 |X X X X - - |
+4 |- - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O O O X O - |
+3 |O O X X - - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X O - |
+3 |O O X X - - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X O - |
+3 |O O O O O - |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O X X X - |
+3 |O O O O O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - - |
+2 |O O O O O O |
+3 |O O O O O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X O - - |
+5 |- - X - O - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- - X X O - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O O X X |
+3 |O O O X O X |
+4 |O - X X - - |
+5 |- O O O O - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - X |
+2 |O O O X X X |
+3 |O O O X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |- O X X - X |
+2 |O O O X X X |
+3 |O O O X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |X X X X - X |
+2 |O X O X X X |
+3 |O O X X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - X |
+2 |O X O X X X |
+3 |O O X X X X |
+4 |O - X X - X |
+5 |- O O O O - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - X |
+2 |X X O X X X |
+3 |X O X X X X |
+4 |X - X X - X |
+5 |X O O O O - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X O X X X O |
+4 |X - X X - O |
+5 |X O O O O O |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X X X O |
+4 |X X X X - O |
+5 |X O O O O O |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X O X O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Turn  33 Player  1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X - O |
+2 |X X O X X O |
+3 |X X X O X O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Game over: Turn  33 Result  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O O O O |
+1 |X X X X O O |
+2 |X X O X O O |
+3 |X X X O O O |
+4 |X X X X O O |
+5 |X O O O O O |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  30%|███       | 3/10 [00:06<00:12,  1.80s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O X O - |
+3 |- X X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X X - |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X X - |
+3 |- O X O X X |
+4 |- - O - O - |
+5 |- - - - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X X - |
+3 |- O X X X X |
+4 |- - O X O - |
+5 |- - - - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O - O X O - |
+3 |- O X O X X |
+4 |- - O X O - |
+5 |- - - - - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O - O X O - |
+3 |X X X O X X |
+4 |- - O X O - |
+5 |- - - - - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O - O X O - |
+3 |O O X O X X |
+4 |O - O X O - |
+5 |- - - - - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O - O X X X |
+3 |O O X O X X |
+4 |O - O X O - |
+5 |- - - - - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O - O X X O |
+3 |O O X O X O |
+4 |O - O X O O |
+5 |- - - - - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O X X X X O |
+3 |O O X O X O |
+4 |O - O X O O |
+5 |- - - - - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - O |
+2 |O X X X X O |
+3 |O O X O X O |
+4 |O - O O O O |
+5 |- - - O - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |- X X X - O |
+2 |O X X X X O |
+3 |O O X O X O |
+4 |O - O O O O |
+5 |- - - O - - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  5
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |O X X X - O |
+2 |O O X X X O |
+3 |O O O O X O |
+4 |O - O O O O |
+5 |- - - O - - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X - |
+1 |O X X X - O |
+2 |O O X X X O |
+3 |O O O X X O |
+4 |O - O O X O |
+5 |- - - O - X |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  9
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X - |
+1 |O O O X - O |
+2 |O O X O X O |
+3 |O O O X O O |
+4 |O - O O X O |
+5 |- - - O - X |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |O O O X - X |
+2 |O O X O X X |
+3 |O O O X O X |
+4 |O - O O X X |
+5 |- - - O - X |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |O O O X - X |
+2 |O O X O X X |
+3 |O O O X O X |
+4 |O - O O O X |
+5 |- - - O O X |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O O X - X |
+2 |X O X O X X |
+3 |X O O X O X |
+4 |X - O O O X |
+5 |X - - O O X |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O O O O X |
+2 |X O X O O X |
+3 |X O O X O X |
+4 |X - O O O X |
+5 |X - - O O X |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O O O O X |
+2 |X O X O O X |
+3 |X O X X X X |
+4 |X - X X O X |
+5 |X - X X X X |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -9
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O O O O X |
+2 |X O X O O X |
+3 |X O X O X X |
+4 |X - O X O X |
+5 |X O X X X X |
+-----------------------
+Game over: Turn  32 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O O O O X |
+2 |X O X O O X |
+3 |X O X O X X |
+4 |X X X X O X |
+5 |X O X X X X |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  40%|████      | 4/10 [00:07<00:09,  1.54s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O X O - |
+3 |- X X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X X - |
+4 |- - X - - - |
+5 |- - X - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X O X - |
+4 |- - O - - - |
+5 |- O X - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X O X - |
+4 |- - O - - - |
+5 |X X X - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X O O O |
+4 |- - O - - - |
+5 |X X X - - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X O O |
+4 |- - O X - - |
+5 |X X X - - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X O O O |
+4 |- - O O O - |
+5 |X X X - - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X O O |
+4 |- - O X O - |
+5 |X X X X - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O O O O - |
+2 |O - O X O - |
+3 |- O X X O O |
+4 |- - O X O - |
+5 |X X X X - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O X - |
+2 |O - O X O - |
+3 |- O X X O O |
+4 |- - O X O - |
+5 |X X X X - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O O O |
+2 |O - O X O - |
+3 |- O X X O O |
+4 |- - O X O - |
+5 |X X X X - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O X X |
+2 |O - O X X X |
+3 |- O X X X O |
+4 |- - O X O - |
+5 |X X X X - - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O X X |
+2 |O - O O X X |
+3 |- O X X O O |
+4 |- - O X O O |
+5 |X X X X - - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O X X |
+2 |O - O O X X |
+3 |- O X X O X |
+4 |- - O X X X |
+5 |X X X X - X |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O O O X X |
+2 |O - O O X X |
+3 |- O X X O X |
+4 |- - O X O X |
+5 |X X X X O X |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |- O X O X X |
+2 |O X X X X X |
+3 |- O X X O X |
+4 |- - O X O X |
+5 |X X X X O X |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X X |
+1 |O O X O X X |
+2 |O O X X X X |
+3 |- O O X O X |
+4 |- - O O O X |
+5 |X X X X O X |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X - X X X X |
+1 |O X X O X X |
+2 |O O X X X X |
+3 |- O O X O X |
+4 |- - O O O X |
+5 |X X X X O X |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |O O O O X X |
+2 |O O X O X X |
+3 |- O O X O X |
+4 |- - O O O X |
+5 |X X X X O X |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -16
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O X O X X |
+2 |X X X O X X |
+3 |X X X X O X |
+4 |- - O O O X |
+5 |X X X X O X |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O X O X X |
+2 |X X O O X X |
+3 |X O X X O X |
+4 |O - O O O X |
+5 |X X X X O X |
+-----------------------
+Game over: Turn  32 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O X X X X |
+1 |X O X O X X |
+2 |X X O O X X |
+3 |X X X X O X |
+4 |O X X X X X |
+5 |X X X X O X |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  50%|█████     | 5/10 [00:08<00:07,  1.45s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O - - - |
+2 |- - O O - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X - - |
+3 |- X O X - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - O X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X - - - |
+1 |- - X X - - |
+2 |- - X X O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X O - - |
+1 |- - X O - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- - X X - - |
+2 |- - X O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O O O - |
+3 |- X O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |- - O X O - |
+3 |- X X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X O - |
+3 |- O X X X - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O X X - |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - - |
+2 |O - O O O O |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - X X X - |
+1 |- O X X - X |
+2 |O - O O X X |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O X X X - |
+1 |- O O X - X |
+2 |O - O O X X |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |- X O X - X |
+2 |O - X O X X |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |- X O X - X |
+2 |O O O O X X |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |O X O O X X |
+3 |- O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |O O O O X X |
+3 |O O X X X X |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -16
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X O X O X X |
+3 |X X X X X X |
+4 |X - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X O X O X X |
+3 |X X O O X X |
+4 |X - O O - - |
+5 |- - - - - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -18
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X O X O X X |
+3 |X X X O X X |
+4 |X - X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -13
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X O X O X X |
+3 |X O O O X X |
+4 |X O X X - - |
+5 |- - X - - - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -20
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X O O X X |
+4 |X X X X - - |
+5 |- X X - - - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -17
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X O O X X |
+4 |X O X X - - |
+5 |O X X - - - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -20
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X O X X X |
+4 |X O X X X - |
+5 |O X X - - - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X O O X X |
+4 |X O X O X - |
+5 |O O O O - - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -16
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X X O X X |
+4 |X O X X X - |
+5 |O O O O X - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X - X |
+2 |X X X O X X |
+3 |X X X O X X |
+4 |X O X X O - |
+5 |O O O O O O |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X - |
+1 |X X O X X X |
+2 |X X X X X X |
+3 |X X X O X X |
+4 |X O X X O - |
+5 |O O O O O O |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X O |
+1 |X X O X O X |
+2 |X X X O X X |
+3 |X X O O X X |
+4 |X O X X O - |
+5 |O O O O O O |
+-----------------------
+Game over: Turn  32 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X O |
+1 |X X O X O X |
+2 |X X X O X X |
+3 |X X O O X X |
+4 |X O X X X X |
+5 |O O O O O O |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  60%|██████    | 6/10 [00:09<00:05,  1.40s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X X X - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - X O X - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - X O X - |
+3 |- - X X - - |
+4 |- - X O - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O X X - - |
+4 |- - X O - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O X X - - |
+4 |- - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O O X - - |
+4 |- - O X - - |
+5 |- - O X - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O O X - - |
+4 |- - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O O O - - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - - X - - |
+2 |- - O X X - |
+3 |- O O X - - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - - X - - |
+2 |- - O X X - |
+3 |- O O O O - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - - X - - |
+2 |- - O X X X |
+3 |- O O O X - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - - X - - |
+2 |- - O X X X |
+3 |- O O O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - - |
+2 |- - X X X X |
+3 |- O X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |- - X X O O |
+3 |- O X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |- - X X O O |
+3 |- O X X O O |
+4 |- - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |- O O O O O |
+3 |- O X X O O |
+4 |- - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |X O O O O O |
+3 |- X X X O O |
+4 |- - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |X O O O O O |
+3 |O O O O O O |
+4 |- - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - X - - |
+1 |- - X X - O |
+2 |X O X O O O |
+3 |X X O O O O |
+4 |X - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |- - O X - O |
+2 |X O X O O O |
+3 |X X O O O O |
+4 |X - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- O X X - - |
+1 |- - X X - O |
+2 |X O X O O O |
+3 |X X O O O O |
+4 |X - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- - X X - O |
+2 |X O X O O O |
+3 |X X O O O O |
+4 |X - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- - X X - O |
+2 |X O X X O O |
+3 |X X O O X O |
+4 |X - X X X X |
+5 |- X X X - X |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- - X X - O |
+2 |X O X X O O |
+3 |X X O O O O |
+4 |X - X O O X |
+5 |- X X X O X |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- - X X - O |
+2 |X O X X O O |
+3 |X X X O O O |
+4 |X X X O O X |
+5 |- X X X O X |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  5
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- - X X - O |
+2 |X O X X O O |
+3 |X X X O O O |
+4 |X X X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |- - X X - X |
+2 |X O X X O X |
+3 |X X X O O X |
+4 |X X X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  5
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |O - X X - X |
+2 |O O X X O X |
+3 |O X X O O X |
+4 |O X X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  2
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |O X X X - X |
+2 |O X X X O X |
+3 |O X X O O X |
+4 |O X X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  7
+   0 1 2 3 4 5 
+-----------------------
+0 |O O O O O X |
+1 |O O X X - X |
+2 |O X O X O X |
+3 |O X X O O X |
+4 |O X X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  33 Player  1
+Game Score (For player 1):  7
+   0 1 2 3 4 5 
+-----------------------
+0 |O O O O O X |
+1 |O O X X - X |
+2 |O X O X O X |
+3 |O X X O O X |
+4 |O X X O O X |
+5 |O O O O O X |
+-----------------------
+Game over: Turn  33 Result  1
+   0 1 2 3 4 5 
+-----------------------
+0 |O O O O O X |
+1 |O O O O O X |
+2 |O X O O O X |
+3 |O X O O O X |
+4 |O O X O O X |
+5 |O O O O O X |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  70%|███████   | 7/10 [00:11<00:04,  1.45s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- O O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O O X - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O O O O - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O X O O - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O X O O - |
+3 |- X X O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |- X X O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |O O O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |X X O O - - |
+4 |X - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- O - X - - |
+2 |X X O O O - |
+3 |X X O O - - |
+4 |X - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- O - X - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O X - - |
+4 |X - O X - - |
+5 |- - O X - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O X - - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O O O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - O - |
+1 |- O X O - - |
+2 |X X X X O - |
+3 |X X X O O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - - O - |
+1 |- O O O - - |
+2 |X X X O O - |
+3 |X X X O O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -12
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X O - |
+1 |- O X X - - |
+2 |X X X X O - |
+3 |X X X X O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X O - - |
+2 |X X X X O - |
+3 |X X X X O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X O - - |
+2 |X X X X O - |
+3 |X X X X X X |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X O - - |
+2 |X X O X O - |
+3 |X X X O O X |
+4 |X - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X X - |
+2 |X X O X O - |
+3 |X X X O O X |
+4 |X - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X X - |
+2 |X O O X O - |
+3 |X O X O O X |
+4 |X O O O O - |
+5 |- X X X - - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X X - |
+2 |X O O X O - |
+3 |X O X O O X |
+4 |X X O O O - |
+5 |X X X X - - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X O - |
+2 |X O O X O O |
+3 |X O X O O X |
+4 |X X O O O - |
+5 |X X X X - - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X O - |
+2 |X O O X O O |
+3 |X O X O O X |
+4 |X X O X O - |
+5 |X X X X X - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O - |
+1 |- O X X O - |
+2 |X O O X O O |
+3 |X O X O O O |
+4 |X X O X O O |
+5 |X X X X X - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |- O X X X - |
+2 |X O O X O O |
+3 |X O X O O O |
+4 |X X O X O O |
+5 |X X X X X - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  7
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |- O O O O O |
+2 |X O O X O O |
+3 |X O X O O O |
+4 |X X O X O O |
+5 |X X X X X - |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |- O O O O X |
+2 |X O O X O X |
+3 |X O X O O X |
+4 |X X O X O X |
+5 |X X X X X X |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- O O O O X |
+1 |- O O O O X |
+2 |X O O X O X |
+3 |X O X O O X |
+4 |X X O X O X |
+5 |X X X X X X |
+-----------------------
+Turn  33 Player  1
+Game Score (For player 1):  -19
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X X |
+1 |- X O O O X |
+2 |X O X X O X |
+3 |X O X X O X |
+4 |X X O X X X |
+5 |X X X X X X |
+-----------------------
+Game over: Turn  33 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X X X X X X |
+1 |O O O O O X |
+2 |X O X X O X |
+3 |X O X X O X |
+4 |X X O X X X |
+5 |X X X X X X |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  80%|████████  | 8/10 [00:12<00:02,  1.38s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- O O O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O O X - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O O O O - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O X O O - |
+3 |- X X X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |- O X O O - |
+3 |- X X O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |- X X O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |O O O O - - |
+4 |- - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - X - - |
+2 |X X X O O - |
+3 |X X O O - - |
+4 |X - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- O - X - - |
+2 |X X O O O - |
+3 |X X O O - - |
+4 |X - O - - - |
+5 |- - - - - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- O - X - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - O X - - |
+5 |- - - - - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X X X - - |
+4 |X - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O X - - |
+4 |X - O X - - |
+5 |- - O X - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O X - - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X O O O - |
+4 |X - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O - O - - |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O O O - - |
+2 |X X O O O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O O O X - |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - - |
+1 |- O O O O O |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - - X |
+1 |- O O O X O |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O - O X |
+1 |- O O O O O |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O X X X |
+1 |- O X X O O |
+2 |X X O X O - |
+3 |X X X O O - |
+4 |X X X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O X X X |
+1 |- O X X O O |
+2 |X X O O O - |
+3 |X X O O O - |
+4 |X O X X - - |
+5 |O X X X - - |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -16
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O X X X |
+1 |- O X X X X |
+2 |X X X X X X |
+3 |X X O O X - |
+4 |X O X X - - |
+5 |O X X X - - |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- - O X X X |
+1 |O O X X X X |
+2 |O O X X X X |
+3 |O X O O X - |
+4 |O O X X - - |
+5 |O X X X - - |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X - O X X X |
+1 |O X X X X X |
+2 |O O X X X X |
+3 |O X O O X - |
+4 |O O X X - - |
+5 |O X X X - - |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O X X X X |
+3 |O X O O X - |
+4 |O O X X - - |
+5 |O X X X - - |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O X X X X |
+3 |O X O X X - |
+4 |O O X X X - |
+5 |O X X X - - |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O X X X X |
+3 |O X O X X - |
+4 |O O X O X - |
+5 |O O O O O - |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O X X X X |
+3 |O X O X X - |
+4 |O O X O X - |
+5 |O O O O O - |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  6
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O O X X X |
+3 |O X O O X - |
+4 |O O X O O - |
+5 |O O O O O O |
+-----------------------
+Turn  33 Player  1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X X X X |
+2 |O O O X X X |
+3 |O X O O X - |
+4 |O O X X X X |
+5 |O O O O O O |
+-----------------------
+Game over: Turn  33 Result  1
+   0 1 2 3 4 5 
+-----------------------
+0 |X O O X X X |
+1 |O O X O X X |
+2 |O O O X O X |
+3 |O X O O O O |
+4 |O O X X O O |
+5 |O O O O O O |
+-----------------------
+Turn  1 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O X - - |
+4 |- - - - - - |
+5 |- - - - - - |
+-----------------------
+Arena.playGames (1):  90%|█████████ | 9/10 [00:14<00:01,  1.41s/it]Turn  2 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X O - - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  3 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - - - - |
+2 |- - X X X - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  4 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - X O X - |
+3 |- - O O - - |
+4 |- - - O - - |
+5 |- - - - - - |
+-----------------------
+Turn  5 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - X O X - |
+3 |- - X X - - |
+4 |- - X O - - |
+5 |- - - - - - |
+-----------------------
+Turn  6 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O X X - - |
+4 |- - X O - - |
+5 |- - - - - - |
+-----------------------
+Turn  7 Player  1
+Game Score (For player 1):  -2
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O X X - - |
+4 |- - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  8 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X - |
+3 |- O O O O - |
+4 |- - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  9 Player  1
+Game Score (For player 1):  0
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X X |
+3 |- O O O X - |
+4 |- - X X - - |
+5 |- - - X - - |
+-----------------------
+Turn  10 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X X |
+3 |- O O O X - |
+4 |- - O X - - |
+5 |- - O X - - |
+-----------------------
+Turn  11 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X X |
+3 |- O O X X - |
+4 |- - X X - - |
+5 |- X X X - - |
+-----------------------
+Turn  12 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - - O - - |
+2 |- - O O X X |
+3 |- O O O X - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  13 Player  1
+Game Score (For player 1):  -8
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - X O - - |
+2 |- - X X X X |
+3 |- O X O X - |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  14 Player  -1
+Game Score (For player 1):  -3
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - X O - - |
+2 |- - X X O X |
+3 |- O X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  15 Player  1
+Game Score (For player 1):  -6
+   0 1 2 3 4 5 
+-----------------------
+0 |- - - - - - |
+1 |- - X O - - |
+2 |- - X X O X |
+3 |X X X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  16 Player  -1
+Game Score (For player 1):  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - - - - |
+1 |- - O O - - |
+2 |- - X O O X |
+3 |X X X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  17 Player  1
+Game Score (For player 1):  -4
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - - - - |
+1 |- - O O X - |
+2 |- - X X O X |
+3 |X X X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  18 Player  -1
+Game Score (For player 1):  1
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - - - - |
+1 |- - O O X - |
+2 |- O O O O X |
+3 |X X X O O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  19 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |- - X X X - |
+2 |- X O X O X |
+3 |X X X X O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  20 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |- - X X X - |
+2 |O O O X O X |
+3 |X X X X O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  21 Player  1
+Game Score (For player 1):  -12
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X - |
+2 |X X O X O X |
+3 |X X X X O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  22 Player  -1
+Game Score (For player 1):  -9
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X O |
+2 |X X O X O O |
+3 |X X X X O O |
+4 |- - X X O - |
+5 |- X X X - - |
+-----------------------
+Turn  23 Player  1
+Game Score (For player 1):  -12
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X O |
+2 |X X O X O O |
+3 |X X X X O O |
+4 |- - X X X - |
+5 |- X X X - X |
+-----------------------
+Turn  24 Player  -1
+Game Score (For player 1):  -9
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X O |
+2 |X X O X O O |
+3 |X X X X O O |
+4 |- - X X O - |
+5 |- X X X O X |
+-----------------------
+Turn  25 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X O |
+2 |X X O X O O |
+3 |X X X X X O |
+4 |- - X X X X |
+5 |- X X X O X |
+-----------------------
+Turn  26 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - - |
+1 |X - X X X O |
+2 |X X O X O O |
+3 |X X X X X O |
+4 |- - X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  27 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - X |
+1 |X - X X X X |
+2 |X X O X O X |
+3 |X X X X X X |
+4 |- - X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  28 Player  -1
+Game Score (For player 1):  -11
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - X |
+1 |X - X X X X |
+2 |X X O X O X |
+3 |X O X X X X |
+4 |O - X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  29 Player  1
+Game Score (For player 1):  -14
+   0 1 2 3 4 5 
+-----------------------
+0 |- O - X - X |
+1 |X - X X X X |
+2 |X X O X O X |
+3 |X X X X X X |
+4 |O X X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  30 Player  -1
+Game Score (For player 1):  -7
+   0 1 2 3 4 5 
+-----------------------
+0 |O O - X - X |
+1 |O - X X X X |
+2 |O X O X O X |
+3 |O X X X X X |
+4 |O X X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  31 Player  1
+Game Score (For player 1):  -10
+   0 1 2 3 4 5 
+-----------------------
+0 |O O - X - X |
+1 |O X X X X X |
+2 |O X X X O X |
+3 |O X X X X X |
+4 |O X X X X X |
+5 |O O O O O X |
+-----------------------
+Turn  32 Player  -1
+Game Score (For player 1):  3
+   0 1 2 3 4 5 
+-----------------------
+0 |O O O X - X |
+1 |O O O O X X |
+2 |O X O X O X |
+3 |O X O X X X |
+4 |O X O X X X |
+5 |O O O O O X |
+-----------------------
+Game over: Turn  32 Result  -1
+   0 1 2 3 4 5 
+-----------------------
+0 |O O O X X X |
+1 |O O O X X X |
+2 |O X X X O X |
+3 |O X O X X X |
+4 |O X O X X X |
+5 |O O O O O X |
+-----------------------
+(4, 6, 0)
+Arena.playGames (1): 100%|██████████| 10/10 [00:15<00:00,  1.53s/it]

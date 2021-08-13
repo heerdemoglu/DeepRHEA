@@ -16,7 +16,7 @@ args = dotdict({
     'cuda': torch.cuda.is_available(),
     'num_channels': 512, })
 
-#
+# Print network parameters:
 nnet = OthelloNNet(game, args)
 board_x, board_y = game.getBoardSize()
 print(summary(nnet, input_size=(args.batch_size, board_x, board_y)))

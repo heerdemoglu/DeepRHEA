@@ -55,7 +55,7 @@ class Arena():
             except TypeError:
                 action = players[curPlayer + 1](board * curPlayer)
 
-            valids = self.game.getValidMoves(self.game.getCanonicalForm(board, -curPlayer), -curPlayer)
+            # valids = self.game.getValidMoves(self.game.getCanonicalForm(board, -curPlayer), -curPlayer)
 
             # if valids[action] == 0:
             #     log.error(f'Action {action} is not valid!')
