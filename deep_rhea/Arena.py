@@ -29,6 +29,9 @@ class Arena:
         self.player1_score = []
         self.player2_score = []
         self.rhea_confidence = []
+        self.rhea_action_chosen = []
+        self.rhea_end = []
+        self.wins = []
 
     def playGame(self, verbose=False):
         """
@@ -58,6 +61,7 @@ class Arena:
                 players[curPlayer + 1].evolve()
                 action = players[curPlayer + 1].select_and_execute_individual()
                 players[curPlayer + 1].sort_population_fitness()
+                self.rhea_action_chosen.append(action)
             else:
                 try:
                     action = players[curPlayer + 1](board.pieces * curPlayer)
@@ -85,7 +89,7 @@ class Arena:
                 print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken: ', action)
                 if isinstance(players[curPlayer+1], RHEAPopulation):
-                    print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness)
+                    print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness[0])
                     self.rhea_confidence.append(players[curPlayer+1].individuals[0].fitness)
                 print('Game Score (For player 1): ', self.game.getScore(board.pieces, 1))
                 if curPlayer == -1:
@@ -97,6 +101,7 @@ class Arena:
         # Print output of the game when it ends:
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
+            self.rhea_end.append(it)
             print(board.pieces)
 
         return self.game.getGameEnded(board.pieces, curPlayer)
@@ -118,6 +123,7 @@ class Arena:
         draws = 0
         for _ in tqdm(range(num), desc="Arena.playGames (1)"):
             gameResult = self.playGame(verbose=verbose)
+            self.wins.append(gameResult)
             if gameResult == 1:
                 oneWon += 1
             elif gameResult == -1:
@@ -144,5 +150,9 @@ class Arena:
 
         print('P1 Scores: ', str(self.player1_score))
         print('P2 Scores: ', str(self.player2_score))
+        print('RHEA Action Chosen:', str(self.rhea_action_chosen))
+        print('RHEA Confidence:', str(self.rhea_confidence))
+        print('Game ends:', str(self.rhea_end))
+        print('Who won:', str(self.wins))
 
         return oneWon, twoWon, draws

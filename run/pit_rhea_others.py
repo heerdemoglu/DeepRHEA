@@ -19,7 +19,7 @@ mini_othello = True  # Play in 6x6 instead of the normal 8x8.
 # Only one should be true: (If all false compete with MCTS)
 human_vs_cpu = False
 random_vs_cpu = False
-greedy_vs_cpu = True
+greedy_vs_cpu = False
 rhea_vs_rhea = False
 
 print('VS HUMAN: ', human_vs_cpu)
