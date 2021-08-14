@@ -4,8 +4,7 @@ from tqdm import tqdm
 
 log = logging.getLogger(__name__)
 
-
-class Arena():
+class Arena:
     """
     An Arena class where any 2 agents can be pit against each other.
     """
@@ -55,12 +54,6 @@ class Arena():
             except TypeError:
                 action = players[curPlayer + 1](board * curPlayer)
 
-            # valids = self.game.getValidMoves(self.game.getCanonicalForm(board, -curPlayer), -curPlayer)
-
-            # if valids[action] == 0:
-            #     log.error(f'Action {action} is not valid!')
-            #     log.debug(f'valids = {valids}')
-            #     assert valids[action] > 0
             board, curPlayer = self.game.getNextState(board, curPlayer, action)
         if verbose:
             assert self.display
@@ -91,16 +84,5 @@ class Arena():
                 twoWon += 1
             else:
                 draws += 1
-
-        # self.player1, self.player2 = self.player2, self.player1
-        #
-        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-        #     gameResult = self.playGame(verbose=verbose)
-        #     if gameResult == -1:
-        #         oneWon += 1
-        #     elif gameResult == 1:
-        #         twoWon += 1
-        #     else:
-        #         draws += 1
 
         return oneWon, twoWon, draws

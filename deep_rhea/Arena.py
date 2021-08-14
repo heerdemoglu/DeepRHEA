@@ -56,6 +56,7 @@ class Arena:
 
             # If the current playing player is RHEA, execute the RHEA routine (with auto updates)
             # ToDo: Refactor to match other agents. (Remove board requirement, give board to the Population for evo.)
+            # RHEAPopulation uses boards differently than other agents.
             if isinstance(players[curPlayer + 1], RHEAPopulation):
                 # action = players[curPlayer + 1].action_plan[0]
                 players[curPlayer + 1].evolve()
@@ -63,6 +64,7 @@ class Arena:
                 players[curPlayer + 1].sort_population_fitness()
                 self.rhea_action_chosen.append(action)
             else:
+                # Fixed: MCTS uses except block; rest use try block.
                 try:
                     action = players[curPlayer + 1](board.pieces * curPlayer)
                 except TypeError:
@@ -88,6 +90,7 @@ class Arena:
                 print('***********')
                 print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken: ', action)
+                # Show RHEA specific results:
                 if isinstance(players[curPlayer+1], RHEAPopulation):
                     print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness[0])
                     self.rhea_confidence.append(players[curPlayer+1].individuals[0].fitness)
@@ -136,18 +139,7 @@ class Arena:
             if isinstance(self.player2, RHEAPopulation):
                 self.player2.board = Board(6)
 
-        # # Swaps players to test performance as both black and white players.
-        # self.player1, self.player2 = self.player2, self.player1
-        #
-        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-        #     gameResult = self.playGame(verbose=verbose)
-        #     if gameResult == -1:
-        #         oneWon += 1
-        #     elif gameResult == 1:
-        #         twoWon += 1
-        #     else:
-        #         draws += 1
-
+        # These scores are printed; manually log under gameplay_logs; used in confidence_value_vis.py
         print('P1 Scores: ', str(self.player1_score))
         print('P2 Scores: ', str(self.player2_score))
         print('RHEA Action Chosen:', str(self.rhea_action_chosen))

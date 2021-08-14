@@ -99,6 +99,9 @@ class RHEAIndividual:
         return action, game, board, fitness
 
     def plan_valid_ply(self, game, board, player):
+        """
+        Plans a valid half-turn given the board config player id and game rules.
+        """
 
         temp_game = deepcopy(game)
 
@@ -122,6 +125,9 @@ class RHEAIndividual:
 
     @staticmethod
     def play_ply(game, board, player, action):
+        """
+        Executes the action in given game board.
+        """
         # Play this turn to for the player:
         board.pieces = game.getNextState(np.array(board.pieces), player, action)[0]
         move = (int(action / board.n), action % board.n)
