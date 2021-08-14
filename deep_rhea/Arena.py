@@ -29,6 +29,9 @@ class Arena:
         self.player1_score = []
         self.player2_score = []
         self.rhea_confidence = []
+        self.rhea_action_chosen = []
+        self.rhea_end = []
+        self.wins = []
 
     def playGame(self, verbose=False):
         """
@@ -53,17 +56,26 @@ class Arena:
 
             # If the current playing player is RHEA, execute the RHEA routine (with auto updates)
             # ToDo: Refactor to match other agents. (Remove board requirement, give board to the Population for evo.)
+            # RHEAPopulation uses boards differently than other agents.
             if isinstance(players[curPlayer + 1], RHEAPopulation):
                 # action = players[curPlayer + 1].action_plan[0]
                 players[curPlayer + 1].evolve()
                 action = players[curPlayer + 1].select_and_execute_individual()
                 players[curPlayer + 1].sort_population_fitness()
-            elif isinstance(players[curPlayer + 1], MCTS):
-                # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer + 1](board.pieces * curPlayer)
+                self.rhea_action_chosen.append(action)
             else:
-                # If the current player is not a RHEA player; then use the usual technique to update the game.
-                action = players[curPlayer+1](board.pieces, curPlayer)
+                # Fixed: MCTS uses except block; rest use try block.
+                try:
+                    action = players[curPlayer + 1](board.pieces * curPlayer)
+                except TypeError:
+                    action = players[curPlayer+1](board.pieces, curPlayer)
+
+            # elif isinstance(players[curPlayer + 1], MCTS):
+            #     # If the current player is not a RHEA player; then use the usual technique to update the game.
+            #     action = players[curPlayer + 1](board.pieces * curPlayer)
+            # else:
+            #     # If the current player is not a RHEA player; then use the usual technique to update the game.
+            #     action = players[curPlayer+1](board.pieces, curPlayer)
 
             board.pieces, curPlayer = self.game.getNextState(board.pieces, curPlayer, action)
 
@@ -78,10 +90,11 @@ class Arena:
                 print('***********')
                 print("Turn ", str(it), "Player ", str(-curPlayer))
                 print('Action Taken: ', action)
+                # Show RHEA specific results:
                 if isinstance(players[curPlayer+1], RHEAPopulation):
-                    print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness)
+                    print('RHEA Selected Indv Fitness: ', players[curPlayer+1].individuals[0].fitness[0])
                     self.rhea_confidence.append(players[curPlayer+1].individuals[0].fitness)
-                print('Game Score: ', self.game.getScore(board.pieces, curPlayer))
+                print('Game Score (For player 1): ', self.game.getScore(board.pieces, 1))
                 if curPlayer == -1:
                     self.player1_score.append(self.game.getScore(board.pieces, curPlayer))
                 else:
@@ -91,9 +104,10 @@ class Arena:
         # Print output of the game when it ends:
         if verbose:
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board.pieces, 1)))
+            self.rhea_end.append(it)
             print(board.pieces)
 
-        return curPlayer * self.game.getGameEnded(board.pieces, curPlayer)
+        return self.game.getGameEnded(board.pieces, curPlayer)
 
     def playGames(self, num, verbose=False):
         """
@@ -112,6 +126,7 @@ class Arena:
         draws = 0
         for _ in tqdm(range(num), desc="Arena.playGames (1)"):
             gameResult = self.playGame(verbose=verbose)
+            self.wins.append(gameResult)
             if gameResult == 1:
                 oneWon += 1
             elif gameResult == -1:
@@ -124,19 +139,12 @@ class Arena:
             if isinstance(self.player2, RHEAPopulation):
                 self.player2.board = Board(6)
 
-        # # Swaps players to test performance as both black and white players.
-        # self.player1, self.player2 = self.player2, self.player1
-        #
-        # for _ in tqdm(range(num), desc="Arena.playGames (2)"):
-        #     gameResult = self.playGame(verbose=verbose)
-        #     if gameResult == -1:
-        #         oneWon += 1
-        #     elif gameResult == 1:
-        #         twoWon += 1
-        #     else:
-        #         draws += 1
-
+        # These scores are printed; manually log under gameplay_logs; used in confidence_value_vis.py
         print('P1 Scores: ', str(self.player1_score))
         print('P2 Scores: ', str(self.player2_score))
+        print('RHEA Action Chosen:', str(self.rhea_action_chosen))
+        print('RHEA Confidence:', str(self.rhea_confidence))
+        print('Game ends:', str(self.rhea_end))
+        print('Who won:', str(self.wins))
 
         return oneWon, twoWon, draws

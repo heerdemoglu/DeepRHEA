@@ -111,9 +111,9 @@ class RHEAPopulation:
         elites = self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
         elites_fitness = self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
 
-        # Remove elites from current generation as they will not be used in evolution.
-        del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
-        del self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        # # Remove elites from current generation as they will not be used in evolution.
+        # del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        # del self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
 
         # Calculate the rankings, apply them to sorted population:
         # See: https://stackoverflow.com/questions/34961489/rank-selection-in-ga
@@ -135,6 +135,10 @@ class RHEAPopulation:
             cumulative_probabilities.append(round(prob, 3))  # cap floating points at 3 decimal places.
 
         # Add elites to new population, pick rest of the individuals by Rank Selection, cross over and mutate.
+        # Remove elites from current generation as they will not be used in evolution.
+        del self.individuals[:self.args.NUM_OF_BEST_INDIVIDUALS]
+        del self.pop_fitness[:self.args.NUM_OF_BEST_INDIVIDUALS]
+
         new_population = []
         new_fitness = []
         [new_population.append(elite) for elite in elites]

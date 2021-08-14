@@ -13,6 +13,22 @@ Some possible games that are in this category include Chess, Go, Checkers and Ot
 
 Note: Training examples, logs, models and runtimes are not included with this GitHub repository as it exceeds LFS sizes. These files are available upon request.
 
+## Main runtime scripts:
+As there are two major agents with different steps required to
+train and run them; there is not a single python script that runs the project code
+all at once. Training can be ended anytime and the produced model can be used in a 
+competition agent. Additionally, these open source codes allow playing with hyperparameters
+and testing agent performances. Logs are kept automatically in described folders in the
+repository.
+
+### Competition Scripts:
+* pit_mcts.py: Pits MCTS agent with other agents (MCTS as player 1.)
+* pit_rhea_others.py: Pits RHEA agent with other agents (RHEA as player 1.)
+
+### Training Scripts:
+* train_othello_az.py: Trains MCTS agent with self-play,training,competition regime.
+* train_othello_rhea.py: Trains RHEA agent with self-play,training,competition regime.
+
 # Referenced Repositories:
 
 The aim of this project is to make an analogous version to AlphaGo using RHEA instead of MCTS. 
